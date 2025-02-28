@@ -44,6 +44,8 @@ const SheetForm = () => {
         </select>
         <label>No of Sheets</label>
         <input type="text" name="number" required className="border-2" />
+        <label>Weight</label>
+        <input type="text" name="number" required className="border-2" />
         <label>Date Purchased</label>
         <input type="date" placeholder="enter date" className="border-2" />
         <select
