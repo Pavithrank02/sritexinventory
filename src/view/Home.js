@@ -1,9 +1,10 @@
 import React from 'react'
 import { SidebarDemo } from '../components/SideComponent'
+import SheetForm from '../components/SheetForm'
 
 const Home = () => {
   return (
-    <div><SidebarDemo /></div>
+    <div><SheetForm /></div>
   )
 }
 
