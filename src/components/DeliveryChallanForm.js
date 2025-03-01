@@ -28,10 +28,9 @@ const DeliveryChallanForm = () => {
   };
 
   const addItem = () => {
-    const slNo = 0
     setFormData({
       ...formData,
-      items: [...formData.items, { slNo: slNo + 1, description: "", quantity: "" }],
+      items: [...formData.items, {  description: "", quantity: "" }],
     });
   };
 
