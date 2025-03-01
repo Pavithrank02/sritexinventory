@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const SheetForm = () => {
+const NutBoltsForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const boltType = ["sheet type", "ms", "ss"];
   const boltSize = [
@@ -117,12 +117,14 @@ const SheetForm = () => {
         <label>Date Purchased</label>
         <input type="date" placeholder="enter date" className="border-2" />
 
-        <label>Date Delivered</label>
-        <input type="date" placeholder="enter date" className="border-2" />
+        <label>No of Faulty nuts</label>
+        <input type="text" name="number" required className="border-2" />
+        <label>No of Faulty bolts</label>
+        <input type="text" name="number" required className="border-2" />
        
       </form>
     </div>
   );
 };
 
-export default SheetForm;
+export default NutBoltsForm;
