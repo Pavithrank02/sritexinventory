@@ -71,7 +71,7 @@ const ChannelPattaForm = () => {
             );
           })}
         </select>
-        <label>No of Channel</label>
+        <label>No. of Channel</label>
         <input type="text" name="number" required className="border-2" />
         <label>Weight</label>
         <input type="text" name="number" required className="border-2" />
@@ -102,7 +102,7 @@ const ChannelPattaForm = () => {
             );
           })}
         </select>
-        <label>No of Angles</label>
+        <label>No. of Angles</label>
         <label>Date Purchased</label>
         <input type="date" placeholder="enter date" className="border-2" />
         <label>Date Delivered</label>

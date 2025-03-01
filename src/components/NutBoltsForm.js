@@ -28,100 +28,144 @@ const NutBoltsForm = () => {
   };
 
   return (
-    <div>
-      <p>Nuts and Bolts List</p>
-      <form className="flex flex-col w-1/2 ">
-        <input type="text" name="metal type" required className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {boltType.map((type, index) => {
-            return (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {boltSize.map((type, index) => {
-            return (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-        <label>No of items</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Weight</label>
-        <input type="text" name="number" required className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {nutSize.map((type, index) => {
-            return (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-        <label>No of items</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Weight</label>
-        <input type="text" name="number" required className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {nuttType.map((type, index) => {
-            return (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-        <label>No of items</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Weight</label>
-        <input type="text" name="number" required className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {washerSize.map((type, index) => {
-            return (
-              <option key={index} value={type}>
-                {type}
-              </option>
-            );
-          })}
-        </select>
-        <label>No of items</label>
-        <input type="text" name="number" required className="border-2" />
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Nuts and Bolts Form</h1>
 
-        <label>Weight</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Date Purchased</label>
-        <input type="date" placeholder="enter date" className="border-2" />
+      <form className="grid grid-cols-2 gap-4">
+        <div>
+          <label>Metal Type</label>
+          <input type="text" name="metal type" required className="border p-2 w-full" />
+        </div>
 
-        <label>No of Faulty nuts</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>No of Faulty bolts</label>
-        <input type="text" name="number" required className="border-2" />
-       
+        <div>
+          <label>Bolt Type</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {boltType.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Bolt Size</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {boltSize.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Quantity</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Weight</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Nut Size</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {nutSize.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Quantity</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Weight</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Nut Type</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {nuttType.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Quantity</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Weight</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Washer Size</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {washerSize.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Quantity</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Weight</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Date Purchased</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>No of Faulty Nuts</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>No of Faulty Bolts</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
       </form>
     </div>
   );

@@ -25,50 +25,79 @@ const SheetForm = () => {
   };
 
   return (
-    <div>
-      <p>Metal Sheet List</p>
-      <form className="flex flex-col w-1/2 ">
-        <input type="text" name="metal type" required className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {sheetType.map((type, index) => {
-            return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Metal Sheet Form</h1>
+
+      <form className="grid grid-cols-2 gap-4">
+        <div>
+          <label>Metal Type</label>
+          <input type="text" name="metal type" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Sheet Type</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {sheetType.map((type, index) => (
               <option key={index} value={type}>
                 {type}
               </option>
-            );
-          })}
-        </select>
-        <label>No of Sheets</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Weight</label>
-        <input type="text" name="number" required className="border-2" />
-        <label>Date Purchased</label>
-        <input type="date" placeholder="enter date" className="border-2" />
-        <select
-          className="border-2"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {sheetSize.map((type, index) => {
-            return (
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>No of Sheets</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Weight</label>
+          <input type="text" name="number" required className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Date Purchased</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Sheet Size</label>
+          <select
+            className="border p-2 w-full"
+            value={selectedOption}
+            onChange={handleChange}
+          >
+            {sheetSize.map((type, index) => (
               <option key={index} value={type}>
                 {type}
               </option>
-            );
-          })}
-        </select>
-        <label>Date Delivered</label>
-        <input type="date" placeholder="enter date" className="border-2" />
-        <label>Drawing sent Date</label>
-        <input type="date" placeholder="enter date" className="border-2" />
-        <label>Sheet Returned Date</label>
-        <input type="date" placeholder="enter date" className="border-2" />
-        <label>Balance Sheet</label>
-        <input type="date" placeholder="enter date" className="border-2" />
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label>Date Delivered</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Drawing Sent Date</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Sheet Returned Date</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
+
+        <div>
+          <label>Balance Sheet</label>
+          <input type="date" placeholder="enter date" className="border p-2 w-full" />
+        </div>
       </form>
     </div>
   );
