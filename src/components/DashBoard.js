@@ -11,6 +11,7 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import { SidebarDemo } from "./SideComponent";
 
 const data = {
   bolts: [
@@ -47,104 +48,110 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const Dashboard = () => {
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen">
-      {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-6 mb-8">
-        {Object.entries(data.summary).map(([key, value], index) => (
-          <motion.div
-            key={index}
-            className="p-4 bg-white shadow-xl rounded-xl text-center border-l-4 border-indigo-500 transform hover:scale-105 transition duration-200"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 * index }}
-          >
-            <h2 className="text-lg font-semibold capitalize text-gray-700">
-              {key.replace(/_/g, " ")}
-            </h2>
-            <p className="text-3xl text-indigo-600 font-bold">{value}</p>
-          </motion.div>
-        ))}
-      </div>
+    <div className="flex flex-row">
+      <SidebarDemo />
+      <div className="p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen">
+        {/* Summary Cards */}
+        <div className="grid grid-cols-4 gap-6 mb-8">
+          {Object.entries(data.summary).map(([key, value], index) => (
+            <motion.div
+              key={index}
+              className="p-4 bg-white shadow-xl rounded-xl text-center border-l-4 border-indigo-500 transform hover:scale-105 transition duration-200"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index }}
+            >
+              <h2 className="text-lg font-semibold capitalize text-gray-700">
+                {key.replace(/_/g, " ")}
+              </h2>
+              <p className="text-3xl text-indigo-600 font-bold">{value}</p>
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Bar Chart for Bolts */}
-      <motion.div
-        className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-blue-500"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
-          Bolts Stock vs. Required
-        </h2>
-        <BarChart width={600} height={300} data={data.bolts}>
-          <XAxis dataKey="size" stroke="#4B5563" />
-          <YAxis stroke="#4B5563" />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="stock" fill="#1D4ED8" name="Stock" />
-          <Bar dataKey="required" fill="#10B981" name="Required" />
-        </BarChart>
-      </motion.div>
+        {/* Bar Chart for Bolts */}
+        <motion.div
+          className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-blue-500"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Bolts Stock vs. Required
+          </h2>
+          <BarChart width={600} height={300} data={data.bolts}>
+            <XAxis dataKey="size" stroke="#4B5563" />
+            <YAxis stroke="#4B5563" />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="stock" fill="#1D4ED8" name="Stock" />
+            <Bar dataKey="required" fill="#10B981" name="Required" />
+          </BarChart>
+        </motion.div>
 
-      {/* Pie Chart for Nuts */}
-      <motion.div
-        className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-500"
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
-          Nuts Stock Distribution
-        </h2>
-        <PieChart width={400} height={400}>
-          <Pie
-            data={data.nuts}
-            dataKey="stock"
-            nameKey="size"
-            cx="50%"
-            cy="50%"
-            outerRadius={120}
-            fill="#10B981"
-            label
-          >
-            {data.nuts.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-        </PieChart>
-      </motion.div>
+        {/* Pie Chart for Nuts */}
+        <motion.div
+          className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-green-500"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Nuts Stock Distribution
+          </h2>
+          <PieChart width={400} height={400}>
+            <Pie
+              data={data.nuts}
+              dataKey="stock"
+              nameKey="size"
+              cx="50%"
+              cy="50%"
+              outerRadius={120}
+              fill="#10B981"
+              label
+            >
+              {data.nuts.map((_, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </motion.div>
 
-      {/* Washer Table */}
-      <motion.div
-        className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-yellow-500"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-xl font-bold mb-4 text-gray-800">
-          Washer Requirements
-        </h2>
-        <table className="w-full bg-white rounded-lg shadow">
-          <thead>
-            <tr className="bg-yellow-500 text-white">
-              <th className="border-b p-3 text-left text-sm">Size</th>
-              <th className="border-b p-3 text-left text-sm">Required</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.washers.map((washer, index) => (
-              <tr
-                key={index}
-                className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-              >
-                <td className="p-3 border-b text-sm">{washer.size}</td>
-                <td className="p-3 border-b text-sm">{washer.required}</td>
+        {/* Washer Table */}
+        <motion.div
+          className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-yellow-500"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Washer Requirements
+          </h2>
+          <table className="w-full bg-white rounded-lg shadow">
+            <thead>
+              <tr className="bg-yellow-500 text-white">
+                <th className="border-b p-3 text-left text-sm">Size</th>
+                <th className="border-b p-3 text-left text-sm">Required</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </motion.div>
+            </thead>
+            <tbody>
+              {data.washers.map((washer, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                >
+                  <td className="p-3 border-b text-sm">{washer.size}</td>
+                  <td className="p-3 border-b text-sm">{washer.required}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </motion.div>
+      </div>
     </div>
   );
 };
