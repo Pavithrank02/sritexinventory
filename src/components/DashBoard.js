@@ -11,6 +11,7 @@ import {
   Legend,
 } from "recharts";
 import { motion } from "framer-motion";
+import CountUp from "react-countup"; // Import the CountUp library
 import { SidebarDemo } from "./SideComponent";
 
 const data = {
@@ -50,13 +51,13 @@ const Dashboard = () => {
   return (
     <div className="flex flex-row">
       <SidebarDemo />
-      <div className="p-6 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen">
+      <div className="p-6 bg-gradient-to-br bg-customBgColor-bg to-gray-300 min-h-screen">
         {/* Summary Cards */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           {Object.entries(data.summary).map(([key, value], index) => (
             <motion.div
               key={index}
-              className="p-4 bg-white shadow-xl rounded-xl text-center border-l-4 border-indigo-500 transform hover:scale-105 transition duration-200"
+              className="p-4 bg-white shadow-xl rounded-xl text-center border-l-4 border-customBorderColor transform hover:scale-105 transition duration-200"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
@@ -64,7 +65,10 @@ const Dashboard = () => {
               <h2 className="text-lg font-semibold capitalize text-gray-700">
                 {key.replace(/_/g, " ")}
               </h2>
-              <p className="text-3xl text-indigo-600 font-bold">{value}</p>
+              {/* Use CountUp for animated numbers */}
+              <p className="text-3xl text-customTextColor font-bold">
+                <CountUp end={value} duration={2} />
+              </p>
             </motion.div>
           ))}
         </div>

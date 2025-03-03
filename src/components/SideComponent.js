@@ -9,8 +9,8 @@ import {
   IconTruckDelivery,
 } from "@tabler/icons-react";
 import { NavLink, Outlet } from "react-router-dom";
-import { motion } from "framer-motion";
 import { cn } from "../lib/utils.ts";
+import img from "../assets/images/sritex.jpg";
 
 export function SidebarDemo() {
   const links = [
@@ -44,40 +44,58 @@ export function SidebarDemo() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-auto">
       {/* Sidebar */}
       <div
         className={cn(
-          "fixed top-0 left-0 h-full bg-white dark:bg-neutral-900 shadow-lg transition-all duration-300",
-          open ? "w-64" : "w-16"
+          "flex justify-center items-center fixed h-full bg-customBgColor-bg dark:bg-customBgColor-bg shadow-lg transition-all duration-300",
+          open ? "w-64" : "w-24"
         )}
       >
         <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="flex flex-col h-full">
+          <SidebarBody className="flex flex-col bg-customBgColor-bg">
+            {/* Logo Section */}
             <div
               className={cn(
-                "flex items-center justify-between px-4 py-2",
-                open ? "space-x-2" : "justify-center"
+                "flex items-center justify-center px-4 py-4 border-b border-neutral-300 dark:border-neutral-700",
+                open ? "justify-between" : "justify-center"
               )}
             >
-              {open ? <Logo /> : <LogoIcon />}
-             
+              {open ? (
+                <div className="flex items-center gap-2">
+                  <img src={img} alt="Sritex Logo" className="h-8 w-auto" />
+                  <span className="text-lg font-bold text-customTextColor dark:text-white">
+                    Sritex Inventory
+                  </span>
+                </div>
+              ) : (
+                <img
+                  src={img}
+                  alt="Sritex Logo"
+                  className="h-8 w-8 rounded-full"
+                />
+              )}
             </div>
-            <div className="mt-8 flex flex-col gap-2 overflow-y-auto">
+
+            {/* Links Section */}
+            <div className="mt-4 flex flex-col gap-2 overflow-y-auto">
               {links.map((link, idx) => (
                 <NavLink
                   key={idx}
                   to={link.href}
                   className={({ isActive }) =>
                     cn(
-                      "flex items-center gap-4 p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-neutral-700 rounded-md",
-                      isActive && "bg-gray-400 dark:bg-neutral-600",
+                      "flex items-center gap-4 p-2 text-customTextColor dark:text-customTextColor-light hover:bg-customTextColor-light dark:hover:bg-customTextColor-white rounded-md",
+                      isActive &&
+                        "bg-customBgColor-bg dark:bg-customBgColor-bg",
                       open ? "justify-start" : "justify-center"
                     )
                   }
                 >
                   {link.icon}
-                  {open && <span className="text-sm">{link.label}</span>}
+                  {open && (
+                    <span className="text-sm font-extrabold">{link.label}</span>
+                  )}
                 </NavLink>
               ))}
             </div>
@@ -88,7 +106,7 @@ export function SidebarDemo() {
       {/* Main Content */}
       <div
         className={cn(
-          "ml-16 flex-1 transition-all duration-300",
+          "ml-24 flex-1 transition-all duration-300",
           open && "ml-64"
         )}
       >
@@ -99,18 +117,3 @@ export function SidebarDemo() {
     </div>
   );
 }
-
-export const Logo = () => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    className="flex items-center space-x-2"
-  >
-    <div className="h-5 w-6 bg-black dark:bg-white rounded-lg flex-shrink-0" />
-    <span className="font-medium text-black dark:text-white">Sritex Inventory</span>
-  </motion.div>
-);
-
-export const LogoIcon = () => (
-  <div className="h-5 w-6 bg-black dark:bg-white rounded-lg flex-shrink-0" />
-);
