@@ -13,6 +13,7 @@ import { cn } from "../lib/utils.ts";
 import img from "../assets/images/sritex.jpg";
 
 export function SidebarDemo() {
+  const [open, setOpen] = useState(false);
   const links = [
     {
       label: "Dashboard",
@@ -40,8 +41,6 @@ export function SidebarDemo() {
       icon: <IconNut className="h-5 w-5 flex-shrink-0" />,
     },
   ];
-
-  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex h-screen w-auto">
@@ -76,7 +75,6 @@ export function SidebarDemo() {
                 />
               )}
             </div>
-
             {/* Links Section */}
             <div className="mt-4 flex flex-col gap-2 overflow-y-auto">
               {links.map((link, idx) => (
