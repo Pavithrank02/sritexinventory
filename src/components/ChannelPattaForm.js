@@ -43,20 +43,20 @@ const ChannelPattaForm = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row h-screen w-full">
       <SidebarDemo />
-      <div className="flex-1 bg-gray-50 dark:bg-neutral-900 p-6">
+      <div className="flex-1 bg-gray-50 dark:bg-neutral-900 p-6 ">
         <h1 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
           Channel and Patta List
         </h1>
-        <form className="flex flex-col space-y-4 max-w-lg bg-white dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700">
+        <form className="h-screen w-5/6 bg-customBgColor-bg dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 grid grid-cols-1 md:grid-cols-2 space-x-1 items-center justify-center">
           {/* Channel Type */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
               Channel Type
             </label>
             <select
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
               value={selectedOption}
               onChange={handleChange}
             >
@@ -74,7 +74,7 @@ const ChannelPattaForm = () => {
               Channel Size
             </label>
             <select
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               value={selectedOption}
               onChange={handleChange}
             >
@@ -93,7 +93,7 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="number"
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               placeholder="Enter the number of channels"
               required
             />
@@ -106,7 +106,7 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="number"
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               placeholder="Enter weight"
               required
             />
@@ -118,7 +118,7 @@ const ChannelPattaForm = () => {
               Angle Type
             </label>
             <select
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               value={selectedOption}
               onChange={handleChange}
             >
@@ -136,7 +136,7 @@ const ChannelPattaForm = () => {
               Angle Size
             </label>
             <select
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               value={selectedOption}
               onChange={handleChange}
             >
@@ -155,7 +155,7 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="date"
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               required
             />
           </div>
@@ -165,18 +165,20 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="date"
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               required
             />
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-          >
-            Submit
-          </button>
+          <div className="col-span-2 flex justify-center items-center">
+            <button
+              type="submit"
+              className="w-96 bg-customBgColor hover:bg-customTextColor-light text-white font-semibold py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+            >
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </div>

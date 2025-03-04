@@ -151,7 +151,7 @@ const Dashboard = () => {
                 {items.map((item, index) => (
                   <tr
                     key={index}
-                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                    className={index % 2 === 0 ? "bg-gray-50" : "bg-customBgColor-bg"}
                   >
                     <td className="p-3 border-b text-sm">{item.size}</td>
                     <td className="p-3 border-b text-sm">{item.stock}</td>

@@ -3,14 +3,14 @@ import { SidebarDemo } from "./SideComponent";
 
 const SheetForm = () => {
   const [selectedOption, setSelectedOption] = useState("");
-  const sheetType = ["sheet type", "ms", "ss"];
+  const sheetType = ["Sheet Type", "MS", "SS"];
   const sheetSize = [
-    "mm",
-    " 1",
+    "MM",
+    "1",
     "1.2",
     "1.6",
     "2",
-    " 2.5",
+    "2.5",
     "3",
     "4",
     "5",
@@ -26,17 +26,16 @@ const SheetForm = () => {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row bg-white min-h-screen">
       <SidebarDemo />
-      <div className="p-4">
-        <h1 className="text-xl font-bold mb-4">Metal Sheet Form</h1>
-
-        <form className="grid grid-cols-2 gap-4">
-         
+      <div className="p-8 w-full">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">Metal Sheet Form</h1>
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-customBgColor-bg p-6 rounded-lg shadow-lg">
+          {/* Sheet Type */}
           <div>
-            <label>Sheet Type</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Sheet Type</label>
             <select
-              className="border p-2 w-full"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
               value={selectedOption}
               onChange={handleChange}
             >
@@ -48,84 +47,102 @@ const SheetForm = () => {
             </select>
           </div>
 
+          {/* No of Sheets */}
           <div>
-            <label>No of Sheets</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">No of Sheets</label>
             <input
               type="text"
               name="number"
               required
-              className="border p-2 w-full"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Weight */}
           <div>
-            <label>Weight</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Weight</label>
             <input
               type="text"
               name="number"
               required
-              className="border p-2 w-full"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Date Purchased */}
           <div>
-            <label>Date Purchased</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Date Purchased</label>
             <input
               type="date"
-              placeholder="enter date"
-              className="border p-2 w-full"
+              placeholder="Enter date"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Sheet Size */}
           <div>
-            <label>Sheet Size</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Sheet Size</label>
             <select
-              className="border p-2 w-full"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
               value={selectedOption}
               onChange={handleChange}
             >
-              {sheetSize.map((type, index) => (
-                <option key={index} value={type}>
-                  {type}
+              {sheetSize.map((size, index) => (
+                <option key={index} value={size}>
+                  {size}
                 </option>
               ))}
             </select>
           </div>
 
+          {/* Date Delivered */}
           <div>
-            <label>Date Delivered</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Date Delivered</label>
             <input
               type="date"
-              placeholder="enter date"
-              className="border p-2 w-full"
+              placeholder="Enter date"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Drawing Sent Date */}
           <div>
-            <label>Drawing Sent Date</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Drawing Sent Date</label>
             <input
               type="date"
-              placeholder="enter date"
-              className="border p-2 w-full"
+              placeholder="Enter date"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Sheet Returned Date */}
           <div>
-            <label>Sheet Returned Date</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Sheet Returned Date</label>
             <input
               type="date"
-              placeholder="enter date"
-              className="border p-2 w-full"
+              placeholder="Enter date"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
           </div>
 
+          {/* Balance Sheet */}
           <div>
-            <label>Balance Sheet</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1">Balance Sheet</label>
             <input
               type="date"
-              placeholder="enter date"
-              className="border p-2 w-full"
+              placeholder="Enter date"
+              className="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-customTextColor-light focus:outline-none"
             />
+          </div>
+
+          {/* Submit Button */}
+          <div className="col-span-2 items-center">
+            <button
+              type="submit"
+              className=" w-1/2 py-3 bg-customBgColor text-white rounded-lg hover:bg-customTextColor-light transition focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>
