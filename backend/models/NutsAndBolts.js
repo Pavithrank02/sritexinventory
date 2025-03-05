@@ -1,61 +1,97 @@
 const mongoose = require('mongoose');
 
-const NutsAndBoltsSchema = new mongoose.Schema({
-    size: {
+const NutsAndBoltsSchema = new mongoose.Schema(
+  {
+    metalType: {
         type: String,
-        required: true, // For example: "1x3/8"
-        trim: true,
+        enum: ['MS', 'SS', 'Aluminum', 'Other'], // Specify valid options here
+        default: 'Other', // Default value if none is provided
+      },// Remove 'required: true'
+    boltType: {
+      type: String,
+      required: true,
+      enum: ['Sheet Type', 'MS', 'SS'], // Ensure only valid bolt types
     },
-    boltQuantityAvailable: {
-        type: Number,
-        required: true, // Number of bolts available in stock
-        min: 0,
+    boltSize: {
+      type: String,
+      required: true, // Example: "1x3/8"
+      enum: [
+        '1x3/8',
+        '3/4x3/8',
+        '2x3/8',
+        '1x5/16',
+        '3/4x5/16',
+        '1 1/2x5/16',
+        '3/4x1/2',
+        '11/2x1/2',
+        '1/2x1/4',
+        '3/4x1/4',
+        '1x1/4',
+        '12',
+        '16',
+      ],
     },
-    boltRequiredForMachine: {
-        type: Number,
-        required: false, // Number of bolts required for a machine
-        min: 0,
+    boltQuantity: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-    nutQuantityAvailable: {
-        type: Number,
-        required: true, // Number of nuts available in stock
-        min: 0,
+    boltWeight: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-    nutQuantityRequiredForMachine: {
-        type: Number,
-        required: false, // Number of nuts required for a machine
-        min: 0,
+    nutType: {
+      type: String,
+      required: true,
+      enum: ['Sheet Type', 'MS', 'SS'], // Ensure only valid nut types
     },
-    boltRequired: {
-        type: Number,
-        required: false, // Number of additional bolts needed
-        min: 0,
+    nutSize: {
+      type: String,
+      required: true,
+      enum: ['3/8', '5/16', '1/2', '1/4', '12', '16'],
     },
-    nutRequired: {
-        type: Number,
-        required: false, // Number of additional nuts needed
-        min: 0,
+    nutQuantity: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-    washerRequired: {
-        type: Number,
-        required: false, // Number of washers needed, optional
-        default: 0,
+    nutWeight: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-    washerQuantityAvailable: {
-        type: Number,
-        required: true,
-        min: 0, // Stock cannot be negative
+    washerSize: {
+      type: String,
+      required: true,
+      enum: ['3/8', '5/16', '1/2', '1/4', '12', '16'],
     },
-    material: {
-        type: String,
-        required: true,
-        enum: ['Steel', 'Stainless Steel', 'Brass', 'Aluminum'],
+    washerQuantity: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-    category: {
-        type: String,
-        required: true,
-        enum: ['Nuts', 'Bolts', 'Washers', 'Screws'],
+    washerWeight: {
+      type: Number,
+      required: true,
+      min: 0,
     },
-}, { timestamps: true });
+    datePurchased: {
+      type: Date,
+      required: true,
+    },
+    faultyNuts: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    faultyBolts: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model('NutsAndBolts', NutsAndBoltsSchema);

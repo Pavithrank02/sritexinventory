@@ -7,31 +7,46 @@ const router = express.Router();
 router.post('/add', async (req, res) => {
     try {
         const {
-            size,
-            boltQuantityAvailable,
-            boltRequiredForMachine,
-            nutQuantityAvailable,
-            nutQuantityRequiredForMachine,
-            boltRequired,
-            nutRequired,
-            washerRequired
+            boltType,
+            boltSize,
+            boltQuantity,
+            boltWeight,
+            nutType,
+            nutSize,
+            nutQuantity,
+            nutWeight,
+            washerSize,
+            washerQuantity,
+            washerWeight,
+            datePurchased,
+            faultyNuts,
+            faultyBolts,
         } = req.body;
+        if (isNaN(faultyNuts) || isNaN(faultyBolts)) {
+            return res.status(400).json({ message: 'Faulty Nuts and Bolts must be numbers.' });
+          }
+      
 
         // Create a new document
         const newItem = new NutsAndBolts({
-            size,
-            boltQuantityAvailable,
-            boltRequiredForMachine,
-            nutQuantityAvailable,
-            nutQuantityRequiredForMachine,
-            boltRequired,
-            nutRequired,
-            washerRequired,
+            boltType,
+            boltSize,
+            boltQuantity,
+            boltWeight,
+            nutType,
+            nutSize,
+            nutQuantity,
+            nutWeight,
+            washerSize,
+            washerQuantity,
+            washerWeight,
+            datePurchased,
+            faultyNuts,
+            faultyBolts,
         });
 
         // Save the document to the database
         const savedItem = await newItem.save();
-
         res.status(201).json({ message: 'Item added successfully', data: savedItem });
     } catch (error) {
         res.status(500).json({ message: 'Error adding item', error });
@@ -47,21 +62,26 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: 'Error fetching items', error });
     }
 });
-// Add or update stock
+
+// Update stock or add new stock entry
 router.post('/update-stock', async (req, res) => {
-  const { size, material, category, currentStock } = req.body;
+    try {
+        const { id, boltQuantity, nutQuantity, washerQuantity } = req.body;
 
-  try {
-      const updatedItem = await NutsAndBolts.findOneAndUpdate(
-          { size, material, category },
-          { currentStock },
-          { new: true, upsert: true } // Upsert creates a new document if it doesn't exist
-      );
-      res.status(200).json({ message: 'Stock updated successfully', data: updatedItem });
-  } catch (error) {
-      res.status(500).json({ message: 'Error updating stock', error });
-  }
+        const updatedItem = await NutsAndBolts.findByIdAndUpdate(
+            id, // Use the unique ID to identify the document
+            { boltQuantity, nutQuantity, washerQuantity }, // Fields to update
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedItem) {
+            return res.status(404).json({ message: 'Item not found' });
+        }
+
+        res.status(200).json({ message: 'Stock updated successfully', data: updatedItem });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating stock', error });
+    }
 });
-
 
 module.exports = router;
