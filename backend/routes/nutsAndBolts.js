@@ -1,86 +1,50 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const NutsAndBolts = require('../models/NutsAndBolts');
 
 const router = express.Router();
 
-// Add a new item
-router.post('/add', async (req, res) => {
+// Add or Update item
+router.put('/add-or-update', async (req, res) => {
     try {
-        const {
-            boltType,
-            boltSize,
-            boltQuantity,
-            boltWeight,
-            nutType,
-            nutSize,
-            nutQuantity,
-            nutWeight,
-            washerSize,
-            washerQuantity,
-            washerWeight,
-            datePurchased,
-            faultyNuts,
-            faultyBolts,
-        } = req.body;
-        if (isNaN(faultyNuts) || isNaN(faultyBolts)) {
-            return res.status(400).json({ message: 'Faulty Nuts and Bolts must be numbers.' });
-          }
-      
+        const { _id, ...data } = req.body; // Extract _id from the request body
 
-        // Create a new document
-        const newItem = new NutsAndBolts({
-            boltType,
-            boltSize,
-            boltQuantity,
-            boltWeight,
-            nutType,
-            nutSize,
-            nutQuantity,
-            nutWeight,
-            washerSize,
-            washerQuantity,
-            washerWeight,
-            datePurchased,
-            faultyNuts,
-            faultyBolts,
-        });
-
-        // Save the document to the database
-        const savedItem = await newItem.save();
-        res.status(201).json({ message: 'Item added successfully', data: savedItem });
-    } catch (error) {
-        res.status(500).json({ message: 'Error adding item', error });
-    }
-});
-
-// Fetch all items
-router.get('/', async (req, res) => {
-    try {
-        const items = await NutsAndBolts.find(); // Retrieve all documents
-        res.status(200).json({ message: 'Items retrieved successfully', data: items });
-    } catch (error) {
-        res.status(500).json({ message: 'Error fetching items', error });
-    }
-});
-
-// Update stock or add new stock entry
-router.post('/update-stock', async (req, res) => {
-    try {
-        const { id, boltQuantity, nutQuantity, washerQuantity } = req.body;
-
-        const updatedItem = await NutsAndBolts.findByIdAndUpdate(
-            id, // Use the unique ID to identify the document
-            { boltQuantity, nutQuantity, washerQuantity }, // Fields to update
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedItem) {
-            return res.status(404).json({ message: 'Item not found' });
+        // Validate _id if provided
+        if (_id && !mongoose.isValidObjectId(_id)) {
+            return res.status(400).json({ message: 'Invalid ID format.' });
         }
 
-        res.status(200).json({ message: 'Stock updated successfully', data: updatedItem });
+        // If _id exists, update the document
+        if (_id) {
+            const updatedItem = await NutsAndBolts.findByIdAndUpdate(_id, data, { new: true });
+            if (!updatedItem) {
+                return res.status(404).json({ message: 'Item not found.' });
+            }
+            return res.status(200).json({ message: 'Item updated successfully.', data: updatedItem });
+        }
+
+        // Otherwise, create a new document
+        const newItem = new NutsAndBolts(data);
+        const savedItem = await newItem.save();
+        return res.status(201).json({ message: 'Item added successfully.', data: savedItem });
     } catch (error) {
-        res.status(500).json({ message: 'Error updating stock', error });
+        console.error('Error in add-or-update:', error);
+        res.status(500).json({ message: 'Error adding or updating item.', error: error.message });
+    }
+});
+
+// Fetch all items with pagination
+router.get('/', async (req, res) => {
+    try {
+        const { limit = 10, skip = 0 } = req.query;
+
+        const items = await NutsAndBolts.find()
+            .limit(Number(limit))
+            .skip(Number(skip));
+        res.status(200).json({ message: 'Items retrieved successfully.', data: items });
+    } catch (error) {
+        console.error('Error fetching items:', error);
+        res.status(500).json({ message: 'Error fetching items.', error: error.message });
     }
 });
 

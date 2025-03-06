@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const NutsAndBoltsSchema = new mongoose.Schema(
   {
     metalType: {
-        type: String,
-        enum: ['MS', 'SS', 'Aluminum', 'Other'], // Specify valid options here
-        default: 'Other', // Default value if none is provided
-      },// Remove 'required: true'
+      type: String,
+      enum: ['MS', 'SS', 'Aluminum', 'Other'],
+      default: 'Other',
+    },
     boltType: {
       type: String,
       required: true,
-      enum: ['Sheet Type', 'MS', 'SS'], // Ensure only valid bolt types
+      enum: ['Sheet Type', 'MS', 'SS'],
     },
     boltSize: {
       type: String,
-      required: true, // Example: "1x3/8"
+      required: true,
       enum: [
         '1x3/8',
         '3/4x3/8',
@@ -44,7 +44,7 @@ const NutsAndBoltsSchema = new mongoose.Schema(
     nutType: {
       type: String,
       required: true,
-      enum: ['Sheet Type', 'MS', 'SS'], // Ensure only valid nut types
+      enum: ['Sheet Type', 'MS', 'SS'],
     },
     nutSize: {
       type: String,

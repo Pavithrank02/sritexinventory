@@ -3,7 +3,6 @@ import { SidebarDemo } from "./SideComponent";
 
 const NutBoltsForm = () => {
   const [formData, setFormData] = useState({
-    
     metalType: "Other",
     boltType: "",
     boltSize: "",
@@ -45,60 +44,84 @@ const NutBoltsForm = () => {
     washerSize: ["3/8", "5/16", "1/2", "1/4", "12", "16"],
   };
 
+  const handleGet = async() => {
+    try{
+
+      const response = await fetch(`http://localhost:5000/nuts-and-bolts/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+    if (response.ok) {
+      const result = await response.json();
+   
+      console.log("Response:", result);
+      
+  } else {
+      const error = await response.json();
+      alert(`Error: ${error.message}`);
+  }
+} catch (error) {
+  console.error("Error submitting form:", error);
+  alert("Failed to submit form. Please try again later.");
+}
+    }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    for (const field in formData) {
-      if (formData[field] === "") {
-        alert(`Please fill the ${field} form.`);
+    // Ensure all fields are filled
+    if (Object.values(formData).some(value => value === "")) {
+        alert("Please fill out all fields.");
         return;
-      }
     }
 
+    // Ensure numeric fields are valid numbers
     if (
-      isNaN(formData.boltQuantity) ||
-      isNaN(formData.boltWeight) ||
-      isNaN(formData.nutQuantity) ||
-      isNaN(formData.nutWeight) ||
-      isNaN(formData.washerQuantity) ||
-      isNaN(formData.washerWeight) ||
-      isNaN(formData.faultyNuts) ||
-      isNaN(formData.faultyBolts)
+        ["boltQuantity", "boltWeight", "nutQuantity", "nutWeight", "washerQuantity", "washerWeight", "faultyNuts", "faultyBolts"].some(
+            (key) => isNaN(Number(formData[key]))
+        )
     ) {
-      alert("Quantities and weights must be numbers.");
-      return;
+        alert("Quantities and weights must be valid numbers.");
+        return;
     }
+
+   
 
     try {
-      const response = await fetch("http://localhost:5000/nuts-and-bolts/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch(`http://localhost:5000/nuts-and-bolts/add-or-update`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
 
-      if (response.ok) {
-        const result = await response.json();
-        alert("Form submitted successfully!");
-        console.log("Response:", result);
-        resetForm();
-      } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
-      }
+        if (response.ok) {
+            const result = await response.json();
+            alert(formData._id ? "Data updated successfully!" : "Data added successfully!");
+            console.log("Response:", result);
+            resetForm();
+        } else {
+            const error = await response.json();
+            alert(`Error: ${error.message}`);
+        }
     } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Failed to submit form. Please try again later.");
+        console.error("Error submitting form:", error);
+        alert("Failed to submit form. Please try again later.");
     }
-  };
+};
+
+
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch("http://localhost:5000/nuts-and-bolts/update-stock", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -122,7 +145,6 @@ const NutBoltsForm = () => {
 
   const resetForm = () => {
     setFormData({
-      
       metalType: "Other",
       boltType: "",
       boltSize: "",
@@ -192,9 +214,10 @@ const NutBoltsForm = () => {
       <div className="p-8 w-full">
         <h1 className="text-xl font-bold mb-4">Nuts and Bolts Form</h1>
         <form
-          onSubmit={isUpdateMode ? handleUpdate : handleSubmit}
+          onSubmit={ handleGet}
           className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-customBgColor-bg p-6 rounded-lg shadow-lg"
         >
+        
           {renderSelect("Metal Type", "metalType", ["MS", "SS", "Aluminum", "Other"])}
           {renderSelect("Bolt Type", "boltType", options.boltType)}
           {renderSelect("Bolt Size", "boltSize", options.boltSize)}
