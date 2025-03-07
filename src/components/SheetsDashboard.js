@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
+import axios from "axios";
 
 const data = [
   { material: "1.2mm Sheet- 2500X1250(8x4)", noOfSheets: 2, balance: 0 },
@@ -17,7 +18,24 @@ const totalSheets = data.reduce((acc, item) => acc + item.noOfSheets, 0);
 const pendingSheets = data.reduce((acc, item) => acc + item.balance, 0);
 const receivedSheets = totalSheets - pendingSheets;
 
-const Dashboard = () => {
+const SheetDashboard = () => {
+
+  const [sheetData, setSheetData] = useState([])
+
+  useEffect(() => {
+    const fetchData = async() =>{
+      try{
+        const res = await axios.get("http://localhost:5000/sheetforms");
+        setSheetData(res.data);
+        console.log(res.data)
+      }catch (error) {
+        console.error("Error fetching sheet data:", error);
+      }
+    }
+    fetchData();
+  },[])
+
+  
   return (
     <div className="p-6 bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen">
       {/* Summary Cards */}
@@ -100,4 +118,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default SheetDashboard;

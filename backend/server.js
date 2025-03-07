@@ -2,16 +2,20 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-require("dotenv").config();
 
-const NutsAndBolts = require("./models/NutsAndBolts");
+require("dotenv").config();
+const sheetFormRoutes = require('./routes/sheetFormRoutes.js');
+
 const nutsAndBoltsRoutes = require("./routes/nutsAndBolts.js");
 
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
+app.use('/sheet-forms', sheetFormRoutes);
+
 
 // Validate environment variables
 if (!process.env.MONGO_URI) {
