@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={< SheetsDashboard/>} />
+        <Route path="/" element={< Dashboard/>} />
         <Route path="sheets" element={<SheetForm />} />
         <Route path="channel" element={<ChannelPattaForm />} />
         <Route path="dc" element={<DeliveryChallanForm />} />

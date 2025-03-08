@@ -25,7 +25,7 @@ const SheetDashboard = () => {
   useEffect(() => {
     const fetchData = async() =>{
       try{
-        const res = await axios.get("http://localhost:5000/sheetforms");
+        const res = await axios.get("http://localhost:5000/sheet-forms");
         setSheetData(res.data);
         console.log(res.data)
       }catch (error) {

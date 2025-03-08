@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import logoBase64 from "../assets/images/logoBase64.js";
 import { SidebarDemo } from "./SideComponent";
 
 const DeliveryChallanForm = () => {
@@ -39,8 +40,8 @@ const DeliveryChallanForm = () => {
     const doc = new jsPDF();
 
     // Add logo
-    const logo = "data:image/png;base64,PUT_YOUR_BASE64_LOGO_HERE"; // Replace with your base64 logo
-    doc.addImage(logo, "PNG", 10, 10, 50, 20);
+   // Replace with your base64 logo
+    doc.addImage(logoBase64, "PNG", 10, 10, 50, 20);
 
     // Add header
     doc.setFontSize(12);

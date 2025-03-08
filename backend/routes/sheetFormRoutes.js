@@ -52,18 +52,13 @@ router.post("/sheetforms", async (req, res) => {
     res.status(500).json({ message: "Error saving form data.", error: error.message });
   }
 });
-router.get('/sheet', async (req, res) => {
-    try {
-        const { limit = 10, skip = 0 } = req.query;
-
-        const items = await sheetForm.find()
-            .limit(Number(limit))
-            .skip(Number(skip));
-        res.status(200).json({ message: 'Items retrieved successfully.', data: items });
-    } catch (error) {
-        console.error('Error fetching items:', error);
-        res.status(500).json({ message: 'Error fetching items.', error: error.message });
-    }
+router.get("/", async (req, res) => {
+  try {
+      const data = await sheetForm.find();
+      res.status(200).json({ success: true, data });
+  } catch (error) {
+      res.status(500).json({ success: false, message: "Error fetching data", error: error.message });
+  }
 });
 
 module.exports = router;
