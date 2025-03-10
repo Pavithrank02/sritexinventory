@@ -5,8 +5,8 @@ const cors = require("cors");
 
 require("dotenv").config();
 const sheetFormRoutes = require('./routes/sheetFormRoutes.js');
-
 const nutsAndBoltsRoutes = require("./routes/nutsAndBolts.js");
+const channelPattaRoutes = require("./routes/channelPattaRoutes");
 
 const app = express();
 
@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 app.use('/sheet-forms', sheetFormRoutes);
+app.use("/channel-patta", channelPattaRoutes);
 
 
 // Validate environment variables

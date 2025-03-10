@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { SidebarDemo } from "./SideComponent";
+import axios from "axios";
 
 const ChannelPattaForm = () => {
-  const [selectedOption, setSelectedOption] = useState("");
   const channelType = ["Channel Type", "MS", "SS"];
   const angleType = ["Angle Type", "MS", "SS"];
   const channelSize = [
@@ -38,8 +38,44 @@ const ChannelPattaForm = () => {
     "16",
   ];
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
+  const [formData, setFormData] = useState({
+    channelType: "",
+    channelSize: "",
+    noOfChannels: "",
+    weight: "",
+    angleType: "",
+    angleSize: "",
+    datePurchased: "",
+    dateDelivered: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/channel-patta/add",
+        formData
+      );
+      alert(response.data.message);
+      setFormData({
+        channelType: "",
+        channelSize: "",
+        noOfChannels: "",
+        weight: "",
+        angleType: "",
+        angleSize: "",
+        datePurchased: "",
+        dateDelivered: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to submit data.");
+    }
   };
 
   return (
@@ -49,15 +85,19 @@ const ChannelPattaForm = () => {
         <h1 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
           Channel and Patta List
         </h1>
-        <form className="h-screen w-5/6 bg-customBgColor-bg dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 grid grid-cols-1 md:grid-cols-2 space-x-1 items-center justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="h-screen w-5/6 bg-customBgColor-bg dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 grid grid-cols-1 md:grid-cols-2 space-x-1 items-center justify-center"
+        >
           {/* Channel Type */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
               Channel Type
             </label>
             <select
+              name="channelType"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
-              value={selectedOption}
+              value={formData.channelType}
               onChange={handleChange}
             >
               {channelType.map((type, index) => (
@@ -74,8 +114,9 @@ const ChannelPattaForm = () => {
               Channel Size
             </label>
             <select
+              name="channelSize"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
-              value={selectedOption}
+              value={formData.channelSize}
               onChange={handleChange}
             >
               {channelSize.map((size, index) => (
@@ -93,8 +134,11 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="number"
+              name="noOfChannels"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               placeholder="Enter the number of channels"
+              value={formData.noOfChannels}
+              onChange={handleChange}
               required
             />
           </div>
@@ -106,8 +150,11 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="number"
+              name="weight"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               placeholder="Enter weight"
+              value={formData.weight}
+              onChange={handleChange}
               required
             />
           </div>
@@ -118,8 +165,9 @@ const ChannelPattaForm = () => {
               Angle Type
             </label>
             <select
+              name="angleType"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
-              value={selectedOption}
+              value={formData.angleType}
               onChange={handleChange}
             >
               {angleType.map((type, index) => (
@@ -136,8 +184,9 @@ const ChannelPattaForm = () => {
               Angle Size
             </label>
             <select
+              name="angleSize"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
-              value={selectedOption}
+              value={formData.angleSize}
               onChange={handleChange}
             >
               {angleSize.map((size, index) => (
@@ -155,6 +204,9 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="date"
+              name="datePurchased"
+              value={formData.datePurchased}
+              onChange={handleChange}
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               required
             />
@@ -165,6 +217,9 @@ const ChannelPattaForm = () => {
             </label>
             <input
               type="date"
+              name="dateDelivered"
+              value={formData.dateDelivered}
+              onChange={handleChange}
               className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               required
             />
