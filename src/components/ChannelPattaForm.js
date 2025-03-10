@@ -42,9 +42,10 @@ const ChannelPattaForm = () => {
     channelType: "",
     channelSize: "",
     noOfChannels: "",
-    weight: "",
+    channelweight: "",
     angleType: "",
     angleSize: "",
+    angleweight: "",
     datePurchased: "",
     dateDelivered: "",
   });
@@ -66,9 +67,10 @@ const ChannelPattaForm = () => {
         channelType: "",
         channelSize: "",
         noOfChannels: "",
-        weight: "",
+        channelweight: "",
         angleType: "",
         angleSize: "",
+        angleweight: "",
         datePurchased: "",
         dateDelivered: "",
       });
@@ -146,14 +148,14 @@ const ChannelPattaForm = () => {
           {/* Weight */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
-              Weight (kg)
+              Channel Weight (kg)
             </label>
             <input
               type="number"
               name="weight"
               className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
               placeholder="Enter weight"
-              value={formData.weight}
+              value={formData.channelweight}
               onChange={handleChange}
               required
             />
@@ -195,6 +197,20 @@ const ChannelPattaForm = () => {
                 </option>
               ))}
             </select>
+          </div>
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            Angle Weight (kg)
+            </label>
+            <input
+              type="number"
+              name="weight"
+              className="w-full border  border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+              placeholder="Enter weight"
+              value={formData.angleweight}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           {/* Dates */}

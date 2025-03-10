@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 app.use('/sheet-forms', sheetFormRoutes);
+app.use('/nut-bolt', nutsAndBoltsRoutes);
 app.use("/channel-patta", channelPattaRoutes);
 
 
