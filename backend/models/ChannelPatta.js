@@ -1,13 +1,17 @@
 const mongoose = require("mongoose");
 
-const channelPattaSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   channelType: { type: String, required: true },
   channelSize: { type: String, required: true },
   noOfChannels: { type: Number, required: true },
-  channelweight: { type: Number, required: true },
+  channelWeight: { type: Number, required: true },
   angleType: { type: String, required: true },
   angleSize: { type: String, required: true },
-  angleweight: { type: Number, required: true },
+  angleWeight: { type: Number, required: true },
+});
+
+const channelPattaSchema = new mongoose.Schema({
+  items: [itemSchema],
   datePurchased: { type: Date, required: true },
   dateDelivered: { type: Date, required: true },
 });
