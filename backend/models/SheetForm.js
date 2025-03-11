@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
-const SheetFormSchema = new mongoose.Schema({
+const ItemSchema = new mongoose.Schema({
   sheetType: { type: String, required: true },
+  sheetSize: { type: String, required: true },
   noOfSheets: { type: Number, required: true },
   weight: { type: Number, required: true },
+});
+
+const SheetFormSchema = new mongoose.Schema({
+  items: [ItemSchema],
   datePurchased: { type: Date, required: true },
-  sheetSize: { type: String, required: true },
   dateDelivered: { type: Date, required: true },
-  drawingSentDate: { type: Date, required: true },
-  sheetReturnedDate: { type: Date, required: true },
-  balanceSheet: { type: Date, required: true },
+  drawingSentDate: { type: Date },
+  sheetReturnedDate: { type: Date },
+  balanceSheet: { type: String },
 });
 
 module.exports = mongoose.model("SheetForm", SheetFormSchema);

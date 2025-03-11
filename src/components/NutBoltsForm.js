@@ -3,24 +3,28 @@ import { SidebarDemo } from "./SideComponent";
 
 const NutBoltsForm = () => {
   const [formData, setFormData] = useState({
-    metalType: "Other",
-    boltType: "",
-    boltSize: "",
-    boltQuantity: "",
-    boltWeight: "",
-    nutType: "",
-    nutSize: "",
-    nutQuantity: "",
-    nutWeight: "",
-    washerSize: "",
-    washerQuantity: "",
-    washerWeight: "",
-    datePurchased: "",
-    faultyNuts: "",
-    faultyBolts: "",
+    items: [
+      {
+        metalType: "Other",
+        boltType: "",
+        boltSize: "",
+        boltQuantity: "",
+        boltWeight: "",
+        nutType: "",
+        nutSize: "",
+        nutQuantity: "",
+        nutWeight: "",
+        washerSize: "",
+        washerQuantity: "",
+        washerWeight: "",
+        faultyNuts: "",
+        faultyBolts: "",
+      },
+    ],
+    datePurchased: new Date().toISOString().split("T")[0],
   });
 
-  const [isUpdateMode, setIsUpdateMode] = useState(false); // Track whether it's update mode
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
 
   const options = {
     boltType: ["Sheet Type", "MS", "SS"],
@@ -44,132 +48,139 @@ const NutBoltsForm = () => {
     washerSize: ["3/8", "5/16", "1/2", "1/4", "12", "16"],
   };
 
-  const handleGet = async() => {
-    try{
-
-      const response = await fetch(`http://localhost:5000/nuts-and-bolts/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-    if (response.ok) {
-      const result = await response.json();
-   
-      console.log("Response:", result);
-      
-  } else {
-      const error = await response.json();
-      alert(`Error: ${error.message}`);
-  }
-} catch (error) {
-  console.error("Error submitting form:", error);
-  alert("Failed to submit form. Please try again later.");
-}
-    }
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure all fields are filled
-    if (Object.values(formData).some(value => value === "")) {
-        alert("Please fill out all fields.");
-        return;
+    const { items, datePurchased } = formData;
+
+    // Validate items and datePurchased
+    const emptyFields = [];
+
+    if (!datePurchased) {
+      emptyFields.push("Date Purchased");
     }
 
-    // Ensure numeric fields are valid numbers
-    if (
-        ["boltQuantity", "boltWeight", "nutQuantity", "nutWeight", "washerQuantity", "washerWeight", "faultyNuts", "faultyBolts"].some(
-            (key) => isNaN(Number(formData[key]))
-        )
-    ) {
-        alert("Quantities and weights must be valid numbers.");
-        return;
-    }
-
-  
-
-    try {
-        const response = await fetch(`http://localhost:5000/nuts-and-bolts/add-or-update`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (response.ok) {
-            const result = await response.json();
-            alert(formData._id ? "Data updated successfully!" : "Data added successfully!");
-            console.log("Response:", result);
-            resetForm();
-        } else {
-            const error = await response.json();
-            alert(`Error: ${error.message}`);
+    items.forEach((item, itemIndex) => {
+      Object.entries(item).forEach(([key, value]) => {
+        if (value === "") {
+          emptyFields.push(`Item ${itemIndex + 1}: ${key}`);
         }
-    } catch (error) {
-        console.error("Error submitting form:", error);
-        alert("Failed to submit form. Please try again later.");
-    }
-};
-
-
-
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:5000/nuts-and-bolts/update-stock", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
       });
+    });
+
+    if (emptyFields.length > 0) {
+      alert(
+        `Please fill out the following fields:\n- ${emptyFields.join("\n- ")}`
+      );
+      return;
+    }
+    try {
+      const response = await fetch(
+        `http://localhost:5000/nuts-and-bolts/add-or-update`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       if (response.ok) {
         const result = await response.json();
-        alert("Stock updated successfully!");
-        console.log("Updated Item:", result);
+        alert(
+          formData._id
+            ? "Data updated successfully!"
+            : "Data added successfully!"
+        );
+        console.log("Response:", result);
         resetForm();
       } else {
         const error = await response.json();
         alert(`Error: ${error.message}`);
       }
     } catch (error) {
-      console.error("Error updating stock:", error);
-      alert("Failed to update stock. Please try again later.");
+      console.error("Error submitting form:", error);
+      alert("Failed to submit form. Please try again later.");
     }
   };
 
   const resetForm = () => {
     setFormData({
-      metalType: "Other",
-      boltType: "",
-      boltSize: "",
-      boltQuantity: "",
-      boltWeight: "",
-      nutType: "",
-      nutSize: "",
-      nutQuantity: "",
-      nutWeight: "",
-      washerSize: "",
-      washerQuantity: "",
-      washerWeight: "",
+      items: [
+        {
+          metalType: "Other",
+          boltType: "",
+          boltSize: "",
+          boltQuantity: "",
+          boltWeight: "",
+          nutType: "",
+          nutSize: "",
+          nutQuantity: "",
+          nutWeight: "",
+          washerSize: "",
+          washerQuantity: "",
+          washerWeight: "",
+          faultyNuts: "",
+          faultyBolts: "",
+        },
+      ],
       datePurchased: "",
-      faultyNuts: "",
-      faultyBolts: "",
     });
     setIsUpdateMode(false);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e, index = null) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    if (index === null) {
+      // Update top-level fields like datePurchased
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    } else {
+      // Update specific item fields
+      const updatedItems = [...formData.items];
+      updatedItems[index] = { ...updatedItems[index], [name]: value };
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        items: updatedItems,
+      }));
+    }
   };
 
-  const renderInput = (label, name, type = "text", placeholder = "") => (
+  const addItem = () => {
+    setFormData({
+      ...formData,
+      items: [
+        ...formData.items,
+        {
+          metalType: "Other",
+          boltType: "",
+          boltSize: "",
+          boltQuantity: "",
+          boltWeight: "",
+          nutType: "",
+          nutSize: "",
+          nutQuantity: "",
+          nutWeight: "",
+          washerSize: "",
+          washerQuantity: "",
+          washerWeight: "",
+          faultyNuts: "",
+          faultyBolts: "",
+        },
+      ],
+    });
+  };
+
+  const removeItem = (index) => {
+    const updatedItems = formData.items.filter((_, i) => i !== index);
+    setFormData({ ...formData, items: updatedItems });
+  };
+
+  const renderInput = (label, name, index, type = "text", placeholder = "") => (
     <div>
       <label className="block text-sm font-medium text-gray-600 mb-1">
         {label}
@@ -177,8 +188,8 @@ const NutBoltsForm = () => {
       <input
         type={type}
         name={name}
-        value={formData[name]}
-        onChange={handleChange}
+        value={formData.items[index][name]}
+        onChange={(e) => handleChange(e, index)}
         placeholder={placeholder}
         className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
@@ -186,21 +197,21 @@ const NutBoltsForm = () => {
     </div>
   );
 
-  const renderSelect = (label, name, optionsArray) => (
+  const renderSelect = (label, name, index, optionsArray) => (
     <div>
       <label className="block text-sm font-medium text-gray-600 mb-1">
         {label}
       </label>
       <select
         name={name}
-        value={formData[name]}
-        onChange={handleChange}
+        value={formData.items[index][name]}
+        onChange={(e) => handleChange(e, index)}
         className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       >
         <option value="">Select {label}</option>
-        {optionsArray.map((option, index) => (
-          <option key={index} value={option}>
+        {optionsArray.map((option, i) => (
+          <option key={i} value={option}>
             {option}
           </option>
         ))}
@@ -209,43 +220,95 @@ const NutBoltsForm = () => {
   );
 
   return (
-    <div className="flex flex-row justify-center">
+    <div className="flex flex-row justify-center bg-gray-100 min-h-screen">
       <SidebarDemo />
-      <div className="p-8 w-full">
-        <h1 className="text-xl font-bold mb-4">Nuts and Bolts Form</h1>
+      <div className="p-8 w-full max-w-7xl">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800">
+          Nuts and Bolts Form
+        </h1>
         <form
-          onSubmit={ handleGet}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-customBgColor-bg p-6 rounded-lg shadow-lg"
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white p-8 rounded-xl shadow-2xl w-full"
         >
-        
-          {renderSelect("Metal Type", "metalType", ["MS", "SS", "Aluminum", "Other"])}
-          {renderSelect("Bolt Type", "boltType", options.boltType)}
-          {renderSelect("Bolt Size", "boltSize", options.boltSize)}
-          {renderInput("Bolt Quantity", "boltQuantity")}
-          {renderInput("Bolt Weight", "boltWeight")}
-          {renderSelect("Nut Type", "nutType", options.nutType)}
-          {renderSelect("Nut Size", "nutSize", options.nutSize)}
-          {renderInput("Nut Quantity", "nutQuantity")}
-          {renderInput("Nut Weight", "nutWeight")}
-          {renderSelect("Washer Size", "washerSize", options.washerSize)}
-          {renderInput("Washer Quantity", "washerQuantity")}
-          {renderInput("Washer Weight", "washerWeight")}
-          {renderInput("Date Purchased", "datePurchased", "date")}
-          {renderInput("No of Faulty Nuts", "faultyNuts")}
-          {renderInput("No of Faulty Bolts", "faultyBolts")}
-          <button
-            type="submit"
-            className="w-96 bg-customBgColor hover:bg-customTextColor-light text-white font-semibold py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
-          >
-            {isUpdateMode ? "Update Stock" : "Submit"}
-          </button>
-          <button
-            type="button"
-            onClick={resetForm}
-            className="w-96 bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-          >
-            Reset Form
-          </button>
+          {formData.items.map((item, index) => (
+            <div
+              key={index}
+              className="col-span-1 border p-6 rounded-lg shadow-md bg-gray-50 dark:bg-neutral-800"
+            >
+              <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
+                Item {index + 1}
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {renderSelect("Metal Type", "metalType", index, [
+                  "MS",
+                  "SS",
+                  "Aluminum",
+                  "Other",
+                ])}
+                {renderSelect("Bolt Type", "boltType", index, options.boltType)}
+                {renderSelect("Bolt Size", "boltSize", index, options.boltSize)}
+                {renderInput("Bolt Quantity", "boltQuantity", index)}
+                {renderInput("Bolt Weight", "boltWeight", index)}
+                {renderSelect("Nut Type", "nutType", index, options.nutType)}
+                {renderSelect("Nut Size", "nutSize", index, options.nutSize)}
+                {renderInput("Nut Quantity", "nutQuantity", index)}
+                {renderInput("Nut Weight", "nutWeight", index)}
+                {renderSelect(
+                  "Washer Size",
+                  "washerSize",
+                  index,
+                  options.washerSize
+                )}
+                {renderInput("Washer Quantity", "washerQuantity", index)}
+                {renderInput("Washer Weight", "washerWeight", index)}
+                {renderInput("No of Faulty Nuts", "faultyNuts", index)}
+                {renderInput("No of Faulty Bolts", "faultyBolts", index)}
+              </div>
+              <button
+                type="button"
+                onClick={() => removeItem(index)}
+                className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-2 rounded-lg mt-4"
+              >
+                Remove Item
+              </button>
+            </div>
+          ))}
+
+          <div className="lg:col-span-2">
+            <button
+              type="button"
+              onClick={addItem}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg mb-6"
+            >
+              Add Item
+            </button>
+            <input
+              type="date"
+              value={formData.datePurchased}
+              onChange={(e) => {
+                console.log("Date Purchased:", e.target.value);
+                setFormData((prev) => ({
+                  ...prev,
+                  datePurchased: e.target.value,
+                }));
+              }}
+            />
+            <div className="grid grid-cols-2 gap-4 mt-6">
+              <button
+                type="submit"
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md"
+              >
+                {isUpdateMode ? "Update Stock" : "Submit"}
+              </button>
+              <button
+                type="button"
+                onClick={resetForm}
+                className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-3 rounded-lg shadow-md"
+              >
+                Reset Form
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
