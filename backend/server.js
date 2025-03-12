@@ -4,20 +4,20 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 
 require("dotenv").config();
-const sheetFormRoutes = require('./routes/sheetFormRoutes.js');
+const sheetFormRoutes = require("./routes/sheetFormRoutes.js");
 const nutsAndBoltsRoutes = require("./routes/nutsAndBolts.js");
 const channelPattaRoutes = require("./routes/channelPattaRoutes");
-
+const componentRoutes = require("./routes/ComponentRoute");
 const app = express();
 
 // Middleware
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
-app.use('/sheet-forms', sheetFormRoutes);
-app.use('/nut-bolt', nutsAndBoltsRoutes);
+app.use("/sheet-forms", sheetFormRoutes);
+app.use("/nut-bolt", nutsAndBoltsRoutes);
 app.use("/channel-patta", channelPattaRoutes);
-
+app.use("/api/components", componentRoutes);
 
 // Validate environment variables
 if (!process.env.MONGO_URI) {
@@ -39,51 +39,6 @@ mongoose.connect(process.env.MONGO_URI, {
 mongoose.connection.on("disconnected", () => {
     console.error("MongoDB disconnected. Attempting to reconnect...");
 });
-
-// Routes
-app.use("/nuts-and-bolts", nutsAndBoltsRoutes);
-
-// app.put("/nuts-and-bolts/update/:id", async (req, res) => {
-//     const { id } = req.params;
-//     const updatedData = req.body;
-
-//     // Validate ID
-//     if (!mongoose.isValidObjectId(id)) {
-//         return res.status(400).json({
-//             success: false,
-//             message: "Invalid ID format. Must be a valid MongoDB ObjectId.",
-//         });
-//     }
-
-//     try {
-//         // Update document
-//         const updatedDocument = await NutsAndBolts.findByIdAndUpdate(
-//             id,
-//             updatedData,
-//             { new: true } // Return updated document
-//         );
-
-//         if (!updatedDocument) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: "Document not found.",
-//             });
-//         }
-
-//         res.status(200).json({
-//             success: true,
-//             message: "Document updated successfully!",
-//             data: updatedDocument,
-//         });
-//     } catch (error) {
-//         console.error("Error updating document:", error.message);
-//         res.status(500).json({
-//             success: false,
-//             message: "Failed to update the document.",
-//             error: error.message,
-//         });
-//     }
-// });
 
 // Graceful shutdown
 process.on("SIGINT", async () => {

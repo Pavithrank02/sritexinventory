@@ -22,6 +22,7 @@ const SheetDashboard = () => {
 
   const [sheetData, setSheetData] = useState([])
 
+
   useEffect(() => {
     const fetchData = async() =>{
       try{
@@ -101,7 +102,7 @@ const SheetDashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {sheetData.map((item, index) => (
               <tr
                 key={index}
                 className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
