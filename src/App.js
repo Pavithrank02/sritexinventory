@@ -6,15 +6,15 @@ import NutBoltsForm from "./components/NutBoltsForm";
 import SheetForm from "./components/SheetForm";
 import Dashboard from "./components/DashBoard";
 import SheetsDashboard from "./components/SheetsDashboard";
-import MachineData from "./components/MachineData";
+import MachineDashboard from "./components/MachineData";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={< SheetsDashboard/>} />
+        <Route path="/" element={< Dashboard/>} />
         <Route path="sheets" element={<SheetForm />} />
-        <Route path="machine" element={<MachineData />} />
+        <Route path="machine" element={<MachineDashboard />} />
         <Route path="channel" element={<ChannelPattaForm />} />
         <Route path="dc" element={<DeliveryChallanForm />} />
         <Route path="nuts" element={<NutBoltsForm />} />
