@@ -7,7 +7,7 @@ require("dotenv").config();
 const sheetFormRoutes = require("./routes/sheetFormRoutes.js");
 const nutsAndBoltsRoutes = require("./routes/nutsAndBolts.js");
 const channelPattaRoutes = require("./routes/channelPattaRoutes");
-const componentRoutes = require("./routes/ComponentRoute");
+const mainDataRoutes = require("./routes/mainDataRoutes"); // Update the path as needed
 const app = express();
 
 // Middleware
@@ -17,7 +17,7 @@ app.use(cors());
 app.use("/sheet-forms", sheetFormRoutes);
 app.use("/nut-bolt", nutsAndBoltsRoutes);
 app.use("/channel-patta", channelPattaRoutes);
-app.use("/api/components", componentRoutes);
+app.use("/api/maindata", mainDataRoutes);
 
 // Validate environment variables
 if (!process.env.MONGO_URI) {

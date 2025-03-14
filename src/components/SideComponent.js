@@ -7,6 +7,7 @@ import {
   IconPerspective,
   IconRuler2,
   IconTruckDelivery,
+  IconBuildingFactory,
 } from "@tabler/icons-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { cn } from "../lib/utils.ts";
@@ -39,6 +40,11 @@ export function SidebarDemo() {
       label: "Nuts and Bolts",
       href: "/nuts",
       icon: <IconNut className="h-5 w-5 flex-shrink-0" />,
+    },
+    {
+      label: "Machine",
+      href: "/machine",
+      icon: <IconBuildingFactory className="h-5 w-5 flex-shrink-0" />,
     },
   ];
 
