@@ -233,7 +233,7 @@ const NutBoltsForm = () => {
           {formData.items.map((item, index) => (
             <div
               key={index}
-              className="col-span-1 border p-6 rounded-lg shadow-md bg-gray-50 dark:bg-neutral-800"
+              className="col-span-full border p-6 rounded-lg shadow-md bg-gray-50 dark:bg-neutral-800"
             >
               <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
                 Item {index + 1}

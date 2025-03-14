@@ -14,6 +14,9 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import { SidebarDemo } from "./SideComponent.js";
+import Plot from "react-plotly.js";
+import { Chart as ChartJS, registerables } from "chart.js";
+ChartJS.register(...registerables);
 
 const boltSize = [
   "1x3/8",
@@ -229,6 +232,27 @@ const MachineDashboard = () => {
     updatedBoltDetails[index].quantity = parseInt(quantity, 10) || 0;
     setFormData({ ...formData, boltDetails: updatedBoltDetails });
   };
+  // Pie Chart Data for Washer Quantities
+  const bolt3DChartData = {
+    x: components.map((bolt) => bolt.component_name),
+    y: components.map((bolt) => bolt.quantity),
+    z: components.map((bolt) => bolt.quantity), // For visual depth
+    type: "bar3d", // Using Plotly's 3D bar chart
+  };
+
+  // Data for Heatmap (Nut and Washer Sizes vs Quantities)
+  const heatmapData = [
+    {
+      x: ["Nut", "Washer"],
+      y: nutShow.map((nut) => nut.size),
+      z: [
+        nutShow.map((nut) => nut.quantity),
+        washerShow.map((washer) => washer.quantity),
+      ],
+      type: "heatmap",
+      colorscale: "Viridis",
+    },
+  ];
 
   const handleAddOrUpdate = () => {
     if (!formData.component_name) {
@@ -288,7 +312,7 @@ const MachineDashboard = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen bg-gray-50 dark:bg-neutral-900">
+    <div className="flex flex-row h-screen bg-customBgColor-bg dark:bg-neutral-900">
       <SidebarDemo />
       <div className="flex-1 p-2  ">
         <div className="p-4 ">
@@ -299,19 +323,24 @@ const MachineDashboard = () => {
           >
             <Card className="col-span-full md:col-span-full ">
               <CardContent>
-                <h2 className="text-xl font-bold mb-4">Component CRUD Table</h2>
+                <h2 className="text-xl font-bold mb-4 text-customTextColor">
+                  Machine based Component Details
+                </h2>
 
                 <div className="p-4 space-y-4">
-                  <Button onClick={handleOpenModal}>Add Component</Button>
+                  <Button onClick={handleOpenModal}>Add Components</Button>
 
                   <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                    <h2 className="text-xl font-bold mb-4">Add Component</h2>
+                    <h2 className="text-xl font-bold mb-4 text-customTextColor">
+                      Add Nut, Bolt, Washer
+                    </h2>
                     <div className="flex flex-wrap gap-2 mb-4">
                       <Input
                         placeholder="Component Name"
                         name="component_name"
                         value={formData.component_name}
                         onChange={handleInputChange}
+                        className="border border-customBorderColor"
                       />
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Bolt Size
@@ -335,6 +364,7 @@ const MachineDashboard = () => {
                         name="boltquantity"
                         value={formData.boltquantity}
                         onChange={handleInputChange}
+                        className="border border-customBorderColor"
                       />
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Nut
@@ -357,6 +387,7 @@ const MachineDashboard = () => {
                         name="nutQuantity"
                         value={formData.nutQuantity}
                         onChange={handleInputChange}
+                        className="border border-customBorderColor"
                       />
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Washer
@@ -380,11 +411,15 @@ const MachineDashboard = () => {
                         name="washerQuantity"
                         value={formData.washerQuantity}
                         onChange={handleInputChange}
+                        className="border border-customBorderColor"
                       />
                     </div>
 
-                    <div className="flex gap-2">
-                      <Button onClick={handleAddOrUpdate}>
+                    <div className="flex gap-2 ">
+                      <Button
+                        onClick={handleAddOrUpdate}
+                        className="bg-customBgColor"
+                      >
                         {editingIndex !== null ? "Update" : "Add"}
                       </Button>
                       <Button variant="link" onClick={handleCloseModal}>
@@ -394,16 +429,24 @@ const MachineDashboard = () => {
                   </Modal>
                 </div>
 
-                <table className="w-full border-collapse border border-gray-300">
-                  <thead>
-                    <tr>
-                      <th className="border border-gray-300 p-2">
+                <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg">
+                  <thead className="bg-customBgColor-bg">
+                    <tr className="bg-customBgColor-bg">
+                      <th className="border border-customBorderColor p-2 ">
                         Component Name
                       </th>
-                      <th className="border border-gray-300 p-2">Bolt Size</th>
-                      <th className="border border-gray-300 p-2">Quantity</th>
-                      <th className="border border-gray-300 p-2">Edit</th>
-                      <th className="border border-gray-300 p-2">Delete</th>
+                      <th className="border border-customBorderColor p-2 ">
+                        Bolt Size
+                      </th>
+                      <th className="border border-customBorderColor p-2 ">
+                        Quantity
+                      </th>
+                      <th className="border border-customBorderColor p-2 ">
+                        Edit
+                      </th>
+                      <th className="border border-customBorderColor p-2 ">
+                        Delete
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -414,27 +457,27 @@ const MachineDashboard = () => {
                       return filteredBoltDetails.map((bolt, boltIndex) => (
                         <tr
                           key={`${index}-${boltIndex}`}
-                          className="hover:bg-gray-100"
+                          className="hover:bg-gray-100 "
                         >
                           {boltIndex === 0 && (
                             <td
                               rowSpan={filteredBoltDetails.length}
-                              className="border border-gray-300 p-2 text-center align-middle"
+                              className="border border-customBorderColor p-2 text-center align-middle"
                             >
                               {component.component_name}
                             </td>
                           )}
-                          <td className="border border-gray-300 p-2">
+                          <td className="border border-customBorderColor p-2">
                             {bolt.size}
                           </td>
-                          <td className="border border-gray-300 p-2 text-center">
+                          <td className="border border-customBorderColor p-2 text-center">
                             {bolt.quantity}
                           </td>
                           {boltIndex === 0 && (
                             <>
                               <td
                                 rowSpan={filteredBoltDetails.length}
-                                className="border border-gray-300 p-2 text-center align-middle"
+                                className="border border-customBorderColor p-2 text-center align-middle"
                               >
                                 <Button
                                   variant="link"
@@ -445,7 +488,7 @@ const MachineDashboard = () => {
                               </td>
                               <td
                                 rowSpan={filteredBoltDetails.length}
-                                className="border border-gray-300 p-2 text-center align-middle"
+                                className="border border-customBorderColor p-2 text-center align-middle"
                               >
                                 <Button
                                   variant="link"
@@ -466,13 +509,21 @@ const MachineDashboard = () => {
             </Card>
             <Card className="col-span-full md:col-span-full">
               <CardContent>
-                <table className="w-full border-collapse border border-gray-300">
+                <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg">
                   <thead>
                     <tr>
-                      <th className="border border-gray-300 p-2">Nut Size</th>
-                      <th className="border border-gray-300 p-2">Quantity</th>
-                      <th className="border border-gray-300 p-2">Edit</th>
-                      <th className="border border-gray-300 p-2">Delete</th>
+                      <th className="border border-customBorderColor p-2">
+                        Nut Size
+                      </th>
+                      <th className="border border-customBorderColor p-2">
+                        Quantity
+                      </th>
+                      <th className="border border-customBorderColor p-2">
+                        Edit
+                      </th>
+                      <th className="border border-customBorderColor p-2">
+                        Delete
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -485,17 +536,17 @@ const MachineDashboard = () => {
                           key={`${index}-${nutIndex}`}
                           className="hover:bg-gray-100"
                         >
-                          <td className="border border-gray-300 p-2">
+                          <td className="border border-customBorderColor p-2">
                             {nut.size}
                           </td>
-                          <td className="border border-gray-300 p-2 text-center">
+                          <td className="border border-customBorderColor p-2 text-center">
                             {nut.quantity}
                           </td>
                           {nutIndex === 0 && (
                             <>
                               <td
                                 rowSpan={filteredNutDetails.length}
-                                className="border border-gray-300 p-2 text-center align-middle"
+                                className="border border-customBorderColor p-2 text-center align-middle"
                               >
                                 <Button
                                   variant="link"
@@ -506,7 +557,7 @@ const MachineDashboard = () => {
                               </td>
                               <td
                                 rowSpan={filteredNutDetails.length}
-                                className="border border-gray-300 p-2 text-center align-middle"
+                                className="border border-customBorderColor p-2 text-center align-middle"
                               >
                                 <Button
                                   variant="link"
@@ -528,15 +579,21 @@ const MachineDashboard = () => {
 
             <Card className="col-span-full md:col-span-full">
               <CardContent>
-                <table className="w-full border-collapse border border-gray-300">
+                <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg">
                   <thead>
                     <tr>
-                      <th className="border border-gray-300 p-2">
+                      <th className="border border-customBorderColor p-2">
                         Washer Size
                       </th>
-                      <th className="border border-gray-300 p-2">Quantity</th>
-                      <th className="border border-gray-300 p-2">Edit</th>
-                      <th className="border border-gray-300 p-2">Delete</th>
+                      <th className="border border-customBorderColor p-2">
+                        Quantity
+                      </th>
+                      <th className="border border-customBorderColor p-2">
+                        Edit
+                      </th>
+                      <th className="border border-customBorderColor p-2">
+                        Delete
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -551,17 +608,17 @@ const MachineDashboard = () => {
                             key={`${index}-${washerIndex}`}
                             className="hover:bg-gray-100"
                           >
-                            <td className="border border-gray-300 p-2">
+                            <td className="border border-customBorderColor p-2">
                               {washer.size}
                             </td>
-                            <td className="border border-gray-300 p-2 text-center">
+                            <td className="border border-customBorderColor p-2 text-center">
                               {washer.quantity}
                             </td>
                             {washerIndex === 0 && (
                               <>
                                 <td
                                   rowSpan={filteredWasherDetails.length}
-                                  className="border border-gray-300 p-2 text-center align-middle"
+                                  className="border border-customBorderColor p-2 text-center align-middle"
                                 >
                                   <Button
                                     variant="link"
@@ -572,7 +629,7 @@ const MachineDashboard = () => {
                                 </td>
                                 <td
                                   rowSpan={filteredWasherDetails.length}
-                                  className="border border-gray-300 p-2 text-center align-middle"
+                                  className="border border-customBorderColor p-2 text-center align-middle"
                                 >
                                   <Button
                                     variant="link"
@@ -617,11 +674,41 @@ const MachineDashboard = () => {
                       name="Total Quantity"
                     />
                   </BarChart>
+                  
                 </ResponsiveContainer>
               </CardContent>
             </Card>
           </motion.div>
         </div>
+        <div style={{ padding: "20px" }}>
+      <h1>Advanced Dashboard</h1>
+      <div style={{ marginBottom: "50px" }}>
+        <h2>3D Bar Chart: Bolt Quantities</h2>
+        <Plot
+          data={[bolt3DChartData]}
+          layout={{
+            title: "Bolt Quantities by Component",
+            scene: {
+              xaxis: { title: "Components" },
+              yaxis: { title: "Quantities" },
+              zaxis: { title: "Depth (Quantities)" },
+            },
+          }}
+        />
+      </div>
+      <div style={{ marginBottom: "50px" }}>
+        <h2>Heatmap: Nut and Washer Quantities</h2>
+        <Plot
+          data={heatmapData}
+          layout={{
+            title: "Heatmap of Nut and Washer Sizes vs Quantities",
+            xaxis: { title: "Type" },
+            yaxis: { title: "Sizes" },
+          }}
+        />
+      </div>
+    </div>
+      
       </div>
     </div>
   );
