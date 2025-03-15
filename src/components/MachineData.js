@@ -240,7 +240,7 @@ const MachineDashboard = () => {
     type: "bar3d", // Using Plotly's 3D bar chart
   };
 
-  // Data for Heatmap (Nut and Washer Sizes vs Quantities)
+  // Data for Heatmap (Nut and Washer Sizes vs Quantities
   const heatmapData = [
     {
       x: ["Nut", "Washer"],
