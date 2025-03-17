@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const MainData = require("../models/MainSchema.js"); // Update the path as needed
 
+
 // Create new MainData
 router.post("/", async (req, res) => {
   try {
@@ -38,9 +39,9 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a specific MainData entry by ID
-router.put("/api/maindata/:id", async (req, res) => {
+router.put("/:_id", async (req, res) => {
   const { _id } = req.params;
-  console.log(_id)
+  
   const {
     component_name,
     boltsize,
@@ -52,29 +53,75 @@ router.put("/api/maindata/:id", async (req, res) => {
   } = req.body;
 
   try {
-    const updatedData = {
-      component_name,
-      boltDetails: [{ size: boltsize, quantity: parseInt(boltquantity, 10) || 0 }],
-      nutDetails: [{ size: nutSize, quantity: parseInt(nutQuantity, 10) || 0 }],
-      washerDetails: [{ size: washerSize, quantity: parseInt(washerQuantity, 10) || 0 }],
-    };
+    const document = await MainData.findById(_id);
 
-    const updatedDocument = await MainData.findByIdAndUpdate(
-      _id,
-      { $set: updatedData },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedDocument) {
-      return res.status(404).json({ message: "Data not found" });
+    if (!document) {
+      return res.status(404).json({ message: "Document not found" });
     }
 
-    res.json(updatedDocument);
+    // Update boltData
+    const boltIndex = document.boltData.findIndex(
+      (data) => data.component_name === component_name
+    );
+    if (boltIndex !== -1) {
+      // Update existing boltData
+      document.boltData[boltIndex].boltDetails.push({
+        size: boltsize,
+        quantity: boltquantity,
+      });
+    } else {
+      // Add new boltData
+      document.boltData.push({
+        component_name,
+        boltDetails: [{ size: boltsize, quantity: boltquantity }],
+      });
+    }
+
+    // Update nutData
+    const nutIndex = document.nutData.findIndex((data) =>
+      data.nutDetails.some((detail) => detail.size === nutSize)
+    );
+    if (nutIndex !== -1) {
+      // Update existing nutDetails
+      document.nutData[nutIndex].nutDetails.push({
+        size: nutSize,
+        quantity: nutQuantity,
+      });
+    } else {
+      // Add new nutData
+      document.nutData.push({
+        nutDetails: [{ size: nutSize, quantity: nutQuantity }],
+      });
+    }
+
+    // Update washerData
+    const washerIndex = document.washerData.findIndex((data) =>
+      data.washerDetails.some((detail) => detail.size === washerSize)
+    );
+    if (washerIndex !== -1) {
+      // Update existing washerDetails
+      document.washerData[washerIndex].washerDetails.push({
+        size: washerSize,
+        quantity: washerQuantity,
+      });
+    } else {
+      // Add new washerData
+      document.washerData.push({
+        washerDetails: [{ size: washerSize, quantity: washerQuantity }],
+      });
+    }
+
+    await document.save();
+    res.json(document);
   } catch (error) {
-    console.error("Error updating data:", error);
-    res.status(500).json({ message: "Error updating data" });
+    console.error("Error updating document:", error);
+    res.status(500).json({ message: "Error updating document" });
   }
 });
+
+
+
+
 
 // Delete a specific MainData entry by ID
 router.delete("/:id", async (req, res) => {

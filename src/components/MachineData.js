@@ -55,21 +55,21 @@ const MachineDashboard = () => {
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/maindata").then((resp)=>{
-          console.log("inside", resp.data)
-          resp.data.map(data =>{
-            setComponents(data?.boltData );
-        setNutShow(data?.nutData);
-        setWasherShow(data?.washerData);
-          })
-        });
-        
-       
-        // 
+        const res = await axios
+          .get("http://localhost:5000/api/maindata")
+          .then((resp) => {
+            console.log("inside", resp.data);
+            resp.data.map((data) => {
+              setComponents(data?.boltData);
+              setNutShow(data?.nutData);
+              setWasherShow(data?.washerData);
+            });
+          });
+
+        //
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -85,55 +85,71 @@ const MachineDashboard = () => {
     });
   };
 
- 
-  const handleAddOrUpdate = async () => {
-    if (!formData.component_name) {
-      alert("Component Name is required.");
-      return;
+  const handleAddOrUpdate = async (event) => {
+    event.preventDefault();
+    const requiredFields = {
+      component_name: "Component Name",
+      boltsize: "Bolt Size",
+      boltquantity: "Bolt Quantity",
+      nutSize: "Nut Size",
+      nutQuantity: "Nut Quantity",
+      washerSize: "Washer Size",
+      washerQuantity: "Washer Quantity",
+    };
+    
+    for (const field in requiredFields) {
+      if (!formData[field] || formData[field].trim() === "") {
+        alert(`${requiredFields[field]} is required.`);
+        return;
+      }
     }
   
     try {
-      let selectedId = components[editingIndex]?._id;
-    
-      if (!selectedId) {
-        const res = await axios.get("http://localhost:5000/api/maindata");
-        console.log("Fetched ID:", res.data[0]._id);
-        selectedId = res.data[0]._id; // Works because selectedId is declared with let
-      }
-    
-      const response = await axios.put(
-        `http://localhost:5000/api/maindata/${selectedId}`,
-        formData
-      );
-    
-      if (response.status === 200) {
-        const updatedComponents = [...components];
-        updatedComponents[editingIndex] = response.data;
-        setComponents(updatedComponents);
-        console.log("Update successful:", response.data);
-      }
-    } catch (error) {
-      console.error("Error updating component:", error);
-      const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
-      alert(errorMessage);
-    }
-    
+      // Fetch the document
+      const res = await axios.get("http://localhost:5000/api/maindata");
+      console.log("Fetched document:", res.data);
+      const document = res.data[0];
+
+      console.log(document._id)
+
      
   
-    setFormData({
-      component_name: "",
-      boltsize: "",
-      boltquantity: "",
-      nutSize: "",
-      nutQuantity: "",
-      washerSize: "",
-      washerQuantity: "",
-    });
-    setIsModalOpen(false);
-    setEditingIndex(null);
+      if (!document) {
+        throw new Error("Document not found");
+      }
+  
+      // Prepare formData for backend
+      const updatedData = {
+        component_name: formData.component_name,
+        boltsize: formData.boltsize,
+        boltquantity: parseInt(formData.boltquantity, 10) || 0,
+        nutSize: formData.nutSize,
+        nutQuantity: parseInt(formData.nutQuantity, 10) || 0,
+        washerSize: formData.washerSize,
+        washerQuantity: parseInt(formData.washerQuantity, 10) || 0,
+      };
+      console.log(`PUT URL: http://localhost:5000/api/maindata/${document._id}`);
+      // Send the updated data to the backend
+      const response = await axios.put(
+        `http://localhost:5000/api/maindata/${document._id}`,
+        updatedData
+      );
+      console.log("res",response)
+  
+      if (response.status === 200) {
+        alert("Document updated successfully!");
+        setComponents(response.data.boltData); // Update state if necessary
+        handleCloseModal();
+      } else {
+        throw new Error("Failed to update document");
+      }
+    } catch (error) {
+      console.error("Error updating document:", error);
+      alert(error.message || "Failed to update the document. Please try again.");
+    }
   };
   
-   
+
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const handleEdit = (index) => {
@@ -165,104 +181,102 @@ const MachineDashboard = () => {
 
                 <div className="p-4 space-y-4">
                   <Button onClick={handleOpenModal}>Add Components</Button>
+                  <form onSubmit={handleAddOrUpdate}>
+                    <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+                      <h2 className="text-xl font-bold mb-4 text-customTextColor">
+                        Add Nut, Bolt, Washer
+                      </h2>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        <Input
+                          placeholder="Component Name"
+                          name="component_name"
+                          value={formData.component_name}
+                          onChange={handleInputChange}
+                          className="border border-customBorderColor"
+                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Bolt Size
+                        </label>
+                        <select
+                          className="border border-customBorderColor rounded-lg p-2 w-full"
+                          value={formData.boltsize}
+                          onChange={handleInputChange}
+                          name="boltsize"
+                          placeholder="bolt size"
+                        >
+                          {boltSize.map((size, i) => (
+                            <option key={i} value={size}>
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                        <Input
+                          placeholder="bolt quantity"
+                          type="number"
+                          name="boltquantity"
+                          value={formData.boltquantity}
+                          onChange={handleInputChange}
+                          className="border border-customBorderColor"
+                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Nut
+                        </label>
+                        <select
+                          className="border border-customBorderColor rounded-lg p-2 w-full"
+                          value={formData.nutSize}
+                          onChange={handleInputChange}
+                          name="nutSize"
+                        >
+                          {nutSize.map((size, i) => (
+                            <option key={i} value={size}>
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                        <Input
+                          placeholder="nut Quantity"
+                          type="number"
+                          name="nutQuantity"
+                          value={formData.nutQuantity}
+                          onChange={handleInputChange}
+                          className="border border-customBorderColor"
+                        />
+                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                          Washer
+                        </label>
+                        <select
+                          className="border border-customBorderColor rounded-lg p-2 w-full"
+                          value={formData.washerSize}
+                          onChange={handleInputChange}
+                          name="washerSize"
+                          placeholder="washer Size"
+                        >
+                          {washerSize.map((size, i) => (
+                            <option key={i} value={size}>
+                              {size}
+                            </option>
+                          ))}
+                        </select>
+                        <Input
+                          placeholder="washer Quantity"
+                          type="number"
+                          name="washerQuantity"
+                          value={formData.washerQuantity}
+                          onChange={handleInputChange}
+                          className="border border-customBorderColor"
+                        />
+                      </div>
 
-                  <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                    <h2 className="text-xl font-bold mb-4 text-customTextColor">
-                      Add Nut, Bolt, Washer
-                    </h2>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      <Input
-                        placeholder="Component Name"
-                        name="component_name"
-                        value={formData.component_name}
-                        onChange={handleInputChange}
-                        className="border border-customBorderColor"
-                      />
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Bolt Size
-                      </label>
-                      <select
-                        className="border border-customBorderColor rounded-lg p-2 w-full"
-                        value={formData.boltsize}
-                        onChange={handleInputChange}
-                        name="boltsize"
-                        placeholder="bolt size"
-                      >
-                        {boltSize.map((size, i) => (
-                          <option key={i} value={size}>
-                            {size}
-                          </option>
-                        ))}
-                      </select>
-                      <Input
-                        placeholder="bolt quantity"
-                        type="number"
-                        name="boltquantity"
-                        value={formData.boltquantity}
-                        onChange={handleInputChange}
-                        className="border border-customBorderColor"
-                      />
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Nut
-                      </label>
-                      <select
-                        className="border border-customBorderColor rounded-lg p-2 w-full"
-                        value={formData.nutSize}
-                        onChange={handleInputChange}
-                        name="nutSize"
-                      >
-                        {nutSize.map((size, i) => (
-                          <option key={i} value={size}>
-                            {size}
-                          </option>
-                        ))}
-                      </select>
-                      <Input
-                        placeholder="nut Quantity"
-                        type="number"
-                        name="nutQuantity"
-                        value={formData.nutQuantity}
-                        onChange={handleInputChange}
-                        className="border border-customBorderColor"
-                      />
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Washer
-                      </label>
-                      <select
-                        className="border border-customBorderColor rounded-lg p-2 w-full"
-                        value={formData.washerSize}
-                        onChange={handleInputChange}
-                        name="washerSize"
-                        placeholder="washer Size"
-                      >
-                        {washerSize.map((size, i) => (
-                          <option key={i} value={size}>
-                            {size}
-                          </option>
-                        ))}
-                      </select>
-                      <Input
-                        placeholder="washer Quantity"
-                        type="number"
-                        name="washerQuantity"
-                        value={formData.washerQuantity}
-                        onChange={handleInputChange}
-                        className="border border-customBorderColor"
-                      />
-                    </div>
-
-                    <div className="flex gap-2 ">
-                      <Button
-                        onClick={handleAddOrUpdate}
-                        className="bg-customBgColor"
-                      >
-                        Submit
-                      </Button>
-                      <Button variant="link" onClick={handleCloseModal}>
-                        Cancel
-                      </Button>
-                    </div>
-                  </Modal>
+                      <div className="flex gap-2 ">
+                        <button type="submit" className="bg-customBgColor">
+                          Submit
+                        </button>
+                        <Button variant="link" onClick={handleCloseModal}>
+                          Cancel
+                        </Button>
+                      </div>
+                    </Modal>
+                  </form>
                 </div>
 
                 <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg">
