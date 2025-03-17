@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const MainData = require("../models/MainSchema.js"); // Update the path as needed
 
@@ -37,19 +38,41 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a specific MainData entry by ID
-router.put("/:id", async (req, res) => {
+router.put("/api/maindata/:id", async (req, res) => {
+  const { _id } = req.params;
+  console.log(_id)
+  const {
+    component_name,
+    boltsize,
+    boltquantity,
+    nutSize,
+    nutQuantity,
+    washerSize,
+    washerQuantity,
+  } = req.body;
+
   try {
-    const updatedData = await MainData.findByIdAndUpdate(
-      req.params.id,
-      req.body,
+    const updatedData = {
+      component_name,
+      boltDetails: [{ size: boltsize, quantity: parseInt(boltquantity, 10) || 0 }],
+      nutDetails: [{ size: nutSize, quantity: parseInt(nutQuantity, 10) || 0 }],
+      washerDetails: [{ size: washerSize, quantity: parseInt(washerQuantity, 10) || 0 }],
+    };
+
+    const updatedDocument = await MainData.findByIdAndUpdate(
+      _id,
+      { $set: updatedData },
       { new: true, runValidators: true }
     );
-    if (!updatedData) {
+
+    if (!updatedDocument) {
       return res.status(404).json({ message: "Data not found" });
     }
-    res.status(200).json(updatedData);
+
+    res.json(updatedDocument);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.error("Error updating data:", error);
+    res.status(500).json({ message: "Error updating data" });
   }
 });
 

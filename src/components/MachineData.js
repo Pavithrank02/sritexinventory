@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import { SidebarDemo } from "./SideComponent.js";
 import Plot from "react-plotly.js";
 import { Chart as ChartJS, registerables } from "chart.js";
+import axios from "axios";
 ChartJS.register(...registerables);
 
 const boltSize = [
@@ -37,6 +38,7 @@ const washerSize = ["3/8", "5/16", "1/2", "1/4"];
 const MachineDashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [components, setComponents] = useState([]);
+  const [updated, setUpdated] = useState([]);
   const [nutShow, setNutShow] = useState([]);
   const [washerShow, setWasherShow] = useState([]);
   const [formData, setFormData] = useState({
@@ -53,235 +55,71 @@ const MachineDashboard = () => {
   });
   const [editingIndex, setEditingIndex] = useState(null);
 
-  useEffect(() => {
-    const nutData = [
-      {
-        nutDetails: [
-          { size: "5/16", quantity: 780 },
-          { size: "3/8", quantity: 530 },
-          { size: "1/4", quantity: 1350 },
-          { size: "1/2", quantity: 80 },
-        ],
-      },
-    ];
-    const washerData = [
-      {
-        washerDetails: [
-          { size: "5/16", quantity: 500 },
-          { size: "3/8", quantity: 500 },
-          { size: "1/4", quantity: 500 },
-          { size: "1/2", quantity: 100 },
-        ],
-      },
-    ];
-    const boltData = [
-      {
-        component_name: "Belt Conveyor",
-        boltDetails: [
-          { size: "3/4x5/16", quantity: 120 },
-          { size: "1x5/16", quantity: 100 },
-          { size: "3/4x 1/4", quantity: 60 },
-        ],
-      },
-      {
-        component_name: "Reserve Box",
-        boltDetails: [
-          { size: "1x3/8", quantity: 24 },
-          { size: "3/4x3/8", quantity: 30 },
-        ],
-      },
-      {
-        component_name: "Trolly",
-        boltDetails: [
-          { size: "1x3/8", quantity: 88 },
-          { size: "3/4x3/8", quantity: 24 },
-          { size: "3/4x5/16", quantity: 16 },
-          { size: "1x5/16", quantity: 28 },
-          { size: "11/2x1/2", quantity: 8 },
-          { size: "1/2 x 1/4", quantity: 50 },
-        ],
-      },
-      {
-        component_name: "Track + Post",
-        boltDetails: [
-          { size: "1x3/8", quantity: 70 },
-          { size: "3/4x1/2", quantity: 35 },
-        ],
-      },
-      {
-        component_name: "Blower - 25 Hp",
-        boltDetails: [{ size: "1x3/8", quantity: 20 }],
-      },
-      {
-        component_name: "Blower - 5 Hp",
-        boltDetails: [
-          { size: "3/4x3/8", quantity: 12 },
-          { size: "1x5/16", quantity: 16 },
-          { size: "11/2x1/2", quantity: 32 },
-        ],
-      },
-      {
-        component_name: "Kappas Structure + Platform",
-        boltDetails: [
-          { size: "1x3/8", quantity: 50 },
-          { size: "1 1/2x3/8", quantity: 25 },
-          { size: "11/2x1/2", quantity: 16 },
-        ],
-      },
-      {
-        component_name: "Lint Structure",
-        boltDetails: [{ size: "1x3/8", quantity: 70 }],
-      },
-      {
-        component_name: "Air Separator",
-        boltDetails: [
-          { size: "1x3/8", quantity: 32 },
-          { size: "3/4x3/8", quantity: 4 },
-          { size: "3/4x5/16", quantity: 36 },
-          { size: "1x5/16", quantity: 54 },
-          { size: "1/2x5/16", quantity: 54 },
-          { size: "11/2x1/2", quantity: 16 },
-          { size: "1/2 x 1/4", quantity: 20 },
-          { size: "3/4x 1/4", quantity: 30 },
-          { size: "1x1/4", quantity: 20 },
-        ],
-      },
-      {
-        component_name: "Lint Air separator",
-        boltDetails: [
-          { size: "1x3/8", quantity: 32 },
-          { size: "3/4x3/8", quantity: 4 },
-          { size: "3/4x5/16", quantity: 36 },
-          { size: "1x5/16", quantity: 54 },
-          { size: "1/2x5/16", quantity: 54 },
-          { size: "11/2x1/2", quantity: 8 },
-          { size: "1/2 x 1/4", quantity: 20 },
-          { size: "3/4x 1/4", quantity: 30 },
-          { size: "1x1/4", quantity: 20 },
-        ],
-      },
-      {
-        component_name: "lint Box",
-        boltDetails: [{ size: "1/2 x 1/4", quantity: 120 }],
-      },
-      {
-        component_name: "Change Over",
-        boltDetails: [
-          { size: "1x3/8", quantity: 30 },
-          { size: "1x5/16", quantity: 18 },
-          { size: "1x1/4", quantity: 8 },
-        ],
-      },
-      {
-        component_name: "Cyclone 2 nos",
-        boltDetails: [{ size: "1x1/4", quantity: 18 }],
-      },
-      {
-        component_name: "Lint Bypass",
-        boltDetails: [{ size: "3/4x5/16", quantity: 60 }],
-      },
-      {
-        component_name: "List Piston Box",
-        boltDetails: [
-          { size: "1/2 x 1/4", quantity: 200 },
-          { size: "3/4x 1/4", quantity: 240 },
-        ],
-      },
-      {
-        component_name: "Pipe line",
-        boltDetails: [
-          { size: "3/4x5/16", quantity: 200 },
-          { size: "1x1/4", quantity: 500 },
-        ],
-      },
-      {
-        component_name: "Seed Box",
-        boltDetails: [{ size: "1x5/16", quantity: 20 }],
-      },
-      {
-        component_name: "Total",
-        boltDetails: [
-          { size: "1x3/8", quantity: 450 },
-          { size: "3/4x3/8", quantity: 74 },
-          { size: "1 1/2x3/8", quantity: 25 },
-          { size: "2x3/8", quantity: 35 },
-          { size: "3/4x5/16", quantity: 480 },
-          { size: "1x5/16", quantity: 300 },
-          { size: "1/2x5/16", quantity: 110 },
-          { size: "3/4x1/2", quantity: 35 },
-          { size: "11/2x1/2", quantity: 60 },
-          { size: "1/2 x 1/4", quantity: 410 },
-          { size: "3/4x 1/4", quantity: 360 },
-          { size: "1x1/4", quantity: 600 },
-        ],
-      },
-    ];
 
-    setComponents(boltData);
-    setNutShow(nutData);
-    setWasherShow(washerData);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/maindata").then((resp)=>{
+          console.log("inside", resp.data)
+          resp.data.map(data =>{
+            setComponents(data?.boltData );
+        setNutShow(data?.nutData);
+        setWasherShow(data?.washerData);
+          })
+        });
+        
+       
+        // 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
-  const handleBoltQuantityChange = (index, quantity) => {
-    const updatedBoltDetails = [...formData.boltDetails];
-    updatedBoltDetails[index].quantity = parseInt(quantity, 10) || 0;
-    setFormData({ ...formData, boltDetails: updatedBoltDetails });
-  };
-  // Pie Chart Data for Washer Quantities
-  const bolt3DChartData = {
-    x: components.map((bolt) => bolt.component_name),
-    y: components.map((bolt) => bolt.quantity),
-    z: components.map((bolt) => bolt.quantity), // For visual depth
-    type: "bar3d", // Using Plotly's 3D bar chart
-  };
-
-  // Data for Heatmap (Nut and Washer Sizes vs Quantities
-  const heatmapData = [
-    {
-      x: ["Nut", "Washer"],
-      y: nutShow.map((nut) => nut.size),
-      z: [
-        nutShow.map((nut) => nut.quantity),
-        washerShow.map((washer) => washer.quantity),
-      ],
-      type: "heatmap",
-      colorscale: "Viridis",
-    },
-  ];
-
-  const handleAddOrUpdate = () => {
+ 
+  const handleAddOrUpdate = async () => {
     if (!formData.component_name) {
       alert("Component Name is required.");
       return;
     }
-
-    const updatedBoltDetails = formData.boltDetails.filter(
-      (bolt) => bolt.quantity > 0
-    );
-
-    if (editingIndex !== null) {
-      // Update existing component
-      const updatedComponents = [...components];
-      updatedComponents[editingIndex] = {
-        ...formData,
-        boltDetails: updatedBoltDetails,
-      };
-      setComponents(updatedComponents);
-      setEditingIndex(null);
-    } else {
-      // Add new component
-      setComponents([
-        ...components,
-        { ...formData, boltDetails: updatedBoltDetails },
-      ]);
+  
+    try {
+      let selectedId = components[editingIndex]?._id;
+    
+      if (!selectedId) {
+        const res = await axios.get("http://localhost:5000/api/maindata");
+        console.log("Fetched ID:", res.data[0]._id);
+        selectedId = res.data[0]._id; // Works because selectedId is declared with let
+      }
+    
+      const response = await axios.put(
+        `http://localhost:5000/api/maindata/${selectedId}`,
+        formData
+      );
+    
+      if (response.status === 200) {
+        const updatedComponents = [...components];
+        updatedComponents[editingIndex] = response.data;
+        setComponents(updatedComponents);
+        console.log("Update successful:", response.data);
+      }
+    } catch (error) {
+      console.error("Error updating component:", error);
+      const errorMessage = error.response?.data?.message || "An error occurred. Please try again.";
+      alert(errorMessage);
     }
-
-    // Reset form
+    
+     
+  
     setFormData({
       component_name: "",
       boltsize: "",
@@ -290,16 +128,14 @@ const MachineDashboard = () => {
       nutQuantity: "",
       washerSize: "",
       washerQuantity: "",
-      boltDetails: boltSize.map((size) => ({ size, quantity: 0 })),
-      nutDetails: nutSize.map((size) => ({ size, quantity: 0 })),
-      washerDetails: washerSize.map((size) => ({ size, quantity: 0 })),
     });
     setIsModalOpen(false);
+    setEditingIndex(null);
   };
+  
+   
   const handleOpenModal = () => setIsModalOpen(true);
-
   const handleCloseModal = () => setIsModalOpen(false);
-
   const handleEdit = (index) => {
     setFormData(components[index]);
     setEditingIndex(index);
@@ -373,7 +209,7 @@ const MachineDashboard = () => {
                         className="border border-customBorderColor rounded-lg p-2 w-full"
                         value={formData.nutSize}
                         onChange={handleInputChange}
-                        name="size"
+                        name="nutSize"
                       >
                         {nutSize.map((size, i) => (
                           <option key={i} value={size}>
@@ -420,7 +256,7 @@ const MachineDashboard = () => {
                         onClick={handleAddOrUpdate}
                         className="bg-customBgColor"
                       >
-                        {editingIndex !== null ? "Update" : "Add"}
+                        Submit
                       </Button>
                       <Button variant="link" onClick={handleCloseModal}>
                         Cancel
@@ -450,7 +286,7 @@ const MachineDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {components.map((component, index) => {
+                    {components?.map((component, index) => {
                       const filteredBoltDetails = component.boltDetails.filter(
                         (bolt) => bolt.quantity > 0
                       );
@@ -527,7 +363,7 @@ const MachineDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {nutShow.map((component, index) => {
+                    {nutShow?.map((component, index) => {
                       const filteredNutDetails = component.nutDetails.filter(
                         (nut) => nut.quantity > 0
                       );
@@ -597,7 +433,7 @@ const MachineDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {washerShow.map((component, index) => {
+                    {washerShow?.map((component, index) => {
                       const filteredWasherDetails =
                         component.washerDetails.filter(
                           (washer) => washer.quantity > 0
@@ -674,44 +510,13 @@ const MachineDashboard = () => {
                       name="Total Quantity"
                     />
                   </BarChart>
-                  
                 </ResponsiveContainer>
               </CardContent>
             </Card>
           </motion.div>
         </div>
-        <div style={{ padding: "20px" }}>
-      <h1>Advanced Dashboard</h1>
-      <div style={{ marginBottom: "50px" }}>
-        <h2>3D Bar Chart: Bolt Quantities</h2>
-        <Plot
-          data={[bolt3DChartData]}
-          layout={{
-            title: "Bolt Quantities by Component",
-            scene: {
-              xaxis: { title: "Components" },
-              yaxis: { title: "Quantities" },
-              zaxis: { title: "Depth (Quantities)" },
-            },
-          }}
-        />
-      </div>
-      <div style={{ marginBottom: "50px" }}>
-        <h2>Heatmap: Nut and Washer Quantities</h2>
-        <Plot
-          data={heatmapData}
-          layout={{
-            title: "Heatmap of Nut and Washer Sizes vs Quantities",
-            xaxis: { title: "Type" },
-            yaxis: { title: "Sizes" },
-          }}
-        />
-      </div>
-    </div>
-      
       </div>
     </div>
   );
 };
-
 export default MachineDashboard;
