@@ -191,7 +191,7 @@ const NutBoltsForm = () => {
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
         placeholder={placeholder}
-        className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       />
     </div>
@@ -206,7 +206,7 @@ const NutBoltsForm = () => {
         name={name}
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
-        className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       >
         <option value="">Select {label}</option>
@@ -233,9 +233,9 @@ const NutBoltsForm = () => {
           {formData.items.map((item, index) => (
             <div
               key={index}
-              className="col-span-full border p-6 rounded-lg shadow-md bg-gray-50 dark:bg-neutral-800"
+              className="col-span-full border p-6 rounded-lg shadow-md bg-customBgColor-bg dark:bg-neutral-800"
             >
-              <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">
+              <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-cuborder-customBgColor-bg">
                 Item {index + 1}
               </h3>
               <div className="grid grid-cols-2 gap-4">
@@ -296,14 +296,14 @@ const NutBoltsForm = () => {
             <div className="grid grid-cols-2 gap-4 mt-6">
               <button
                 type="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md"
+                className="w-full bg-customTextColor hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md"
               >
                 {isUpdateMode ? "Update Stock" : "Submit"}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-3 rounded-lg shadow-md"
+                className="w-full bg-cuborder-customBgColor-bg hover:bg-gray-400 text-black font-semibold py-3 rounded-lg shadow-md"
               >
                 Reset Form
               </button>

@@ -130,7 +130,7 @@ const DeliveryChallanForm = () => {
   
 
   return (
-    <div className="flex flex-row h-screen bg-gray-50 dark:bg-neutral-900">
+    <div className="flex flex-row h-screen bg-customTextColor-white dark:bg-neutral-900">
       <SidebarDemo />
       <div className="flex-1 p-6">
         <h1 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
@@ -138,7 +138,7 @@ const DeliveryChallanForm = () => {
         </h1>
 
         {/* Address and Recipient Details */}
-        <form className="space-y-6 bg-white dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 max-w-3xl">
+        <form className="space-y-6 bg-customBgColor-bg dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 max-w-3xl">
           <div>
             <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
               Address
@@ -147,7 +147,7 @@ const DeliveryChallanForm = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-customTextColor-light dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               rows={3}
             />
           </div>
@@ -160,7 +160,7 @@ const DeliveryChallanForm = () => {
               name="recipient"
               value={formData.recipient}
               onChange={handleChange}
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
             />
           </div>
 
@@ -172,7 +172,7 @@ const DeliveryChallanForm = () => {
               name="gstin"
               value={formData.gstin}
               onChange={handleChange}
-              className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
             />
           </div>
 
@@ -186,7 +186,7 @@ const DeliveryChallanForm = () => {
                 name="deliveryNote"
                 value={formData.deliveryNote}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
@@ -198,7 +198,7 @@ const DeliveryChallanForm = () => {
                 name="dcNumber"
                 value={formData.dcNumber}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
@@ -211,7 +211,7 @@ const DeliveryChallanForm = () => {
                 type="date"
                 value={formData.dcDate}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
@@ -223,7 +223,7 @@ const DeliveryChallanForm = () => {
                 name="poNumber"
                 value={formData.poNumber}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
@@ -236,7 +236,7 @@ const DeliveryChallanForm = () => {
                 type="date"
                 value={formData.poDate}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
@@ -248,7 +248,7 @@ const DeliveryChallanForm = () => {
                 name="modeOfDispatch"
                 value={formData.modeOfDispatch}
                 onChange={handleChange}
-                className="w-full border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
           </div>
@@ -265,21 +265,21 @@ const DeliveryChallanForm = () => {
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => handleChange(e, index)}
-                  className="border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
                 <input
                   name="quantity"
                   placeholder="Quantity"
                   value={item.quantity}
                   onChange={(e) => handleChange(e, index)}
-                  className="border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
               </div>
             ))}
             <button
               onClick={addItem}
               type="button"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2"
+              className="bg-customTextColor-light hover:bg-customBgColor text-white px-4 py-2 rounded-lg mt-2"
             >
               Add Item
             </button>

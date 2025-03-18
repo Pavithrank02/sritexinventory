@@ -136,7 +136,7 @@ const ChannelPattaForm = () => {
                 name="datePurchased"
                 value={formData.datePurchased}
                 onChange={handleFormChange}
-                className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
@@ -149,121 +149,119 @@ const ChannelPattaForm = () => {
                 name="dateDelivered"
                 value={formData.dateDelivered}
                 onChange={handleFormChange}
-                className="w-full border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
           </div>
 
           {/* Items Section */}
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">
+          <div className="bg-customBgColor-bg dark:bg-neutral-900 p-6 rounded-lg shadow-lg">
+            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-6">
               Items
             </h2>
             {formData.items.map((item, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 shadow-sm rounded-lg p-6 mb-4"
+                className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 shadow-md rounded-lg p-6 mb-6 transition-transform transform hover:scale-[1.02]"
               >
-                
-                  {/* Row 1 */}
-                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <select
-                      name="channelType"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.channelType}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    >
-                      <option value="">Channel Type</option>
-                      {channelType.map((type) => (
-                        <option key={type} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      name="channelSize"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.channelSize}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    >
-                      <option value="">Channel Size</option>
-                      {sizes.map((size) => (
-                        <option key={size} value={size}>
-                          {size}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      name="noOfChannels"
-                      placeholder="No. of Channels"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.noOfChannels}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    />
-                    <input
-                      type="number"
-                      name="channelWeight"
-                      placeholder="Channel Weight (kg)"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.channelWeight}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    />
-                  </div>
+                {/* Row 1 */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                  <select
+                    name="channelType"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.channelType}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  >
+                    <option value="">Channel Type</option>
+                    {channelType.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="channelSize"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.channelSize}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  >
+                    <option value="">Channel Size</option>
+                    {sizes.map((size) => (
+                      <option key={size} value={size}>
+                        {size}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    name="noOfChannels"
+                    placeholder="No. of Channels"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.noOfChannels}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  />
+                  <input
+                    type="number"
+                    name="channelWeight"
+                    placeholder="Channel Weight (kg)"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.channelWeight}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  />
+                </div>
 
-                  {/* Row 2 */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <select
-                      name="angleType"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.angleType}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    >
-                      <option value="">Angle Type</option>
-                      {angleType.map((type) => (
-                        <option key={type} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      name="angleSize"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.angleSize}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    >
-                      <option value="">Angle Size</option>
-                      {sizes.map((size) => (
-                        <option key={size} value={size}>
-                          {size}
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="number"
-                      name="angleWeight"
-                      placeholder="Angle Weight (kg)"
-                      className="border border-gray-300 dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2"
-                      value={item.angleWeight}
-                      onChange={(e) => handleInputChange(e, index)}
-                      required
-                    />
-                  </div>
-                
+                {/* Row 2 */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <select
+                    name="angleType"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.angleType}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  >
+                    <option value="">Angle Type</option>
+                    {angleType.map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    name="angleSize"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.angleSize}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  >
+                    <option value="">Angle Size</option>
+                    {sizes.map((size) => (
+                      <option key={size} value={size}>
+                        {size}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="number"
+                    name="angleWeight"
+                    placeholder="Angle Weight (kg)"
+                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    value={item.angleWeight}
+                    onChange={(e) => handleInputChange(e, index)}
+                    required
+                  />
+                </div>
 
                 {/* Remove Button */}
                 {index > 0 && (
                   <button
                     type="button"
                     onClick={() => removeRow(index)}
-                    className="text-red-500 hover:text-red-700 font-medium mt-4"
+                    className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-600 font-medium mt-4"
                   >
                     Remove
                   </button>
@@ -273,7 +271,7 @@ const ChannelPattaForm = () => {
             <button
               type="button"
               onClick={addRow}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
               + Add Row
             </button>
