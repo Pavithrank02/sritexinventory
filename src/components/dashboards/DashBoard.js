@@ -13,6 +13,7 @@ import {
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import { SidebarDemo } from "../SideComponent";
+import HorizontalMenu from "../HorizontalMenu";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {
@@ -69,6 +70,7 @@ const Dashboard = () => {
     <div className="flex flex-row">
       <SidebarDemo />
       <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen">
+        <HorizontalMenu />
         {/* Summary Cards */}
         <div className="grid grid-cols-4 gap-6 mb-8">
           {Object.entries(summary).map(([key, value], index) => (

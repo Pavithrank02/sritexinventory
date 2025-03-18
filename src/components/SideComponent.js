@@ -19,37 +19,37 @@ export function SidebarDemo() {
     {
       label: "Dashboard",
       href: "/",
-      icon: <IconBrandTabler className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconBrandTabler className="h-6 w-6 flex-shrink-0" />,
     },
     {
       label: "Sheets Form",
       href: "/sheets",
-      icon: <IconPerspective className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconPerspective className="h-6 w-6 flex-shrink-0" />,
     },
     {
       label: "Channel & Plats Form",
       href: "/channel",
-      icon: <IconRuler2 className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconRuler2 className="h-6 w-6 flex-shrink-0" />,
     },
     {
       label: "Delivery Challan",
       href: "/dc",
-      icon: <IconTruckDelivery className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconTruckDelivery className="h-6 w-6 flex-shrink-0" />,
     },
     {
       label: "Nuts and Bolts",
       href: "/nuts",
-      icon: <IconNut className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconNut className="h-6 w-6 flex-shrink-0" />,
     },
     {
       label: "Machine",
       href: "/machine",
-      icon: <IconBuildingFactory className="h-5 w-5 flex-shrink-0" />,
+      icon: <IconBuildingFactory className="h-6 w-6 flex-shrink-0" />,
     },
   ];
 
   return (
-    <div className="flex h-screen w-auto">
+    <div className="flex h-screen ">
       {/* Sidebar */}
       <div
         className={cn(
@@ -63,7 +63,7 @@ export function SidebarDemo() {
             <div
               className={cn(
                 "flex items-center justify-center px-4 py-4 border-b border-neutral-300 dark:border-neutral-700",
-                open ? "justify-between" : "justify-center"
+                open ? "justify-center" : "justify-center"
               )}
             >
               {open ? (

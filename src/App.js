@@ -13,6 +13,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={< Dashboard/>} />
+        <Route path="/sheetdashboard" element={< SheetsDashboard/>} />
         <Route path="sheets" element={<SheetForm />} />
         <Route path="machine" element={<BoltNutMachine />} />
         <Route path="channel" element={<ChannelPattaForm />} />
