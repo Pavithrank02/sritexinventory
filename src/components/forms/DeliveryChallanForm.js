@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-yworks";
 import "jspdf-autotable";
-import { SidebarDemo } from "./SideComponent";
-import logoBase64 from "../assets/images/logobase";
+import { SidebarDemo } from "../SideComponent";
+import logoBase64 from "../../assets/images/logobase";
 
 const DeliveryChallanForm = () => {
   const [formData, setFormData] = useState({

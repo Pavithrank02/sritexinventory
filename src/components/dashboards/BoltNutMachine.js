@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Button from "./Button";
-import Card, { CardContent } from "./Card";
-import Input from "./Input";
-import Modal from "./Modal";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import Button from "../Button.js";
+import Card, { CardContent } from "../Card.js";
+import Input from "../Input.js";
+import Modal from "../Modal.js";
 import { motion } from "framer-motion";
-import { SidebarDemo } from "./SideComponent.js";
+import { SidebarDemo } from "../SideComponent.js";
 import { Chart as ChartJS, registerables } from "chart.js";
 import axios from "axios";
+import BarGraph from "../BarGraph.js";
 ChartJS.register(...registerables);
 
 const boltSize = [
@@ -35,10 +27,9 @@ const boltSize = [
 const nutSize = ["Select Size", "3/8", "5/16", "1/2", "1/4"];
 const washerSize = ["Select Size", "3/8", "5/16", "1/2", "1/4"];
 
-const MachineDashboard = () => {
+const BoltNutMachine = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [components, setComponents] = useState([]);
-  const [updated, setUpdated] = useState([]);
+  const [boltShow, setboltShow] = useState([]);
   const [nutShow, setNutShow] = useState([]);
   const [washerShow, setWasherShow] = useState([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -61,9 +52,8 @@ const MachineDashboard = () => {
     const fetchData = async () => {
       try {
         await axios.get("http://localhost:5000/api/maindata").then((resp) => {
-          console.log("inside", resp.data);
           resp.data.map((data) => {
-            setComponents(data?.boltData);
+            setboltShow(data?.boltData);
             setNutShow(data?.nutData);
             setWasherShow(data?.washerData);
           });
@@ -77,8 +67,8 @@ const MachineDashboard = () => {
     fetchData();
   }, []);
   useEffect(() => {
-    console.log("Updated components:", components);
-  }, [components]);
+    console.log("Updated boltShow:", boltShow);
+  }, [boltShow]);
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -128,9 +118,6 @@ const MachineDashboard = () => {
         washerSize: formData.washerSize,
         washerQuantity: parseInt(formData.washerQuantity, 10) || 0,
       };
-      console.log(
-        `PUT URL: http://localhost:5000/api/maindata/${document._id}`
-      );
       // Send the updated data to the backend
       const response = await axios.put(
         `http://localhost:5000/api/maindata/${document._id}`,
@@ -140,7 +127,7 @@ const MachineDashboard = () => {
 
       if (response.status === 200) {
         alert("Document updated successfully!");
-        setComponents(response.data.boltData); // Update state if necessary
+        setboltShow(response.data.boltData); // Update state if necessary
         setFormData({
           component_name: "",
           boltsize: "",
@@ -165,7 +152,7 @@ const MachineDashboard = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const handleEdit = (index) => {
-    setFormData(components[index]);
+    setFormData(boltShow[index]);
     setEditingIndex(index);
     setIsModalOpen(true);
   };
@@ -180,48 +167,49 @@ const MachineDashboard = () => {
 
   const handleDeleteClick = (index, type) => {
     let componentToDelete = null;
-  
+
     if (type === "bolt") {
-      componentToDelete = { ...components[index], index, type };
-      console.log("bolt")
+      componentToDelete = { ...boltShow[index], index, type };
+      console.log("bolt");
     } else if (type === "nut") {
       componentToDelete = { ...nutShow[index], index, type };
-      console.log("nut")
+      console.log("nut");
     } else if (type === "washer") {
       componentToDelete = { ...washerShow[index], index, type };
-      console.log("washer")
+      console.log("washer");
     }
-  
+
     setSelectedComponent(componentToDelete);
     setIsDeleteModalOpen(true);
   };
-  
+
   const handleConfirmDelete = async () => {
     if (!selectedComponent) return;
 
-    console.log("inside")
-  
     const { index, type } = selectedComponent;
     const sizeToDelete = fieldsToDelete[0]?.split("-")[1]; // Extract size from `fieldsToDelete`
-  
+
     try {
       // Make API call to backend
-      const response = await fetch("http://localhost:5000/api/maindata/delete-item", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          type,
-          size: sizeToDelete,
-          component_name: selectedComponent.component_name,
-        }),
-      });
-  
+      const response = await fetch(
+        "http://localhost:5000/api/maindata/delete-item",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type,
+            size: sizeToDelete,
+            component_name: selectedComponent.component_name,
+          }),
+        }
+      );
+
       if (response.ok) {
         // Update local state on success
         if (type === "bolt") {
-          const updatedComponents = components.map((component, idx) =>
+          const updatedboltShow = boltShow.map((component, idx) =>
             idx === index
               ? {
                   ...component,
@@ -231,7 +219,7 @@ const MachineDashboard = () => {
                 }
               : component
           );
-          setComponents(updatedComponents);
+          setboltShow(updatedboltShow);
         } else if (type === "nut") {
           const updatedNutShow = nutShow.map((nutComponent, idx) =>
             idx === index
@@ -250,14 +238,15 @@ const MachineDashboard = () => {
               ? {
                   ...washerComponent,
                   washerDetails: washerComponent.washerDetails?.filter(
-                    (washer) => !fieldsToDelete.includes(`washer-${washer.size}`)
+                    (washer) =>
+                      !fieldsToDelete.includes(`washer-${washer.size}`)
                   ),
                 }
               : washerComponent
           );
           setWasherShow(updatedWasherShow);
         }
-  
+
         // Reset modal state
         setFieldsToDelete([]);
         setIsDeleteModalOpen(false);
@@ -268,9 +257,6 @@ const MachineDashboard = () => {
       console.error("Error deleting item:", error);
     }
   };
-  
-  
-  
 
   const handleCancelDelete = () => {
     setIsDeleteModalOpen(false);
@@ -294,7 +280,7 @@ const MachineDashboard = () => {
                 </h2>
 
                 <div className="p-4 space-y-4">
-                  <Button onClick={handleOpenModal}>Add Components</Button>
+                  <Button onClick={handleOpenModal}>Add boltShow</Button>
                   <form onSubmit={handleAddOrUpdate}>
                     <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
                       <h2 className="text-xl font-bold mb-4 text-customTextColor">
@@ -507,7 +493,7 @@ const MachineDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {components?.map((component, index) => {
+                    {boltShow?.map((component, index) => {
                       const filteredBoltDetails = component.boltDetails.filter(
                         (bolt) => bolt.quantity > 0
                       );
@@ -551,7 +537,9 @@ const MachineDashboard = () => {
                                 <Button
                                   variant="link"
                                   className="text-red-500"
-                                  onClick={() => handleDeleteClick(index, "bolt")}
+                                  onClick={() =>
+                                    handleDeleteClick(index, "bolt")
+                                  }
                                 >
                                   Delete
                                 </Button>
@@ -620,7 +608,9 @@ const MachineDashboard = () => {
                                 <Button
                                   variant="link"
                                   className="text-red-500"
-                                  onClick={() => handleDeleteClick(index, "nut")}
+                                  onClick={() =>
+                                    handleDeleteClick(index, "nut")
+                                  }
                                 >
                                   Delete
                                 </Button>
@@ -692,7 +682,9 @@ const MachineDashboard = () => {
                                   <Button
                                     variant="link"
                                     className="text-red-500"
-                                    onClick={() => handleDeleteClick(index, "washer")}
+                                    onClick={() =>
+                                      handleDeleteClick(index, "washer")
+                                    }
                                   >
                                     Delete
                                   </Button>
@@ -707,38 +699,28 @@ const MachineDashboard = () => {
                 </table>
               </CardContent>
             </Card>
-            <Card className="col-span-1 md:col-span-2">
-              <CardContent>
-                <h2 className="text-xl font-bold mb-4">
-                  Component Quantities Overview
-                </h2>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart
-                    data={components}
-                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                  >
-                    <XAxis dataKey="component_name" tick={{ fontSize: 12 }} />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar
-                      dataKey={(entry) =>
-                        entry.boltDetails.reduce(
-                          (sum, bolt) => sum + bolt.quantity,
-                          0
-                        )
-                      }
-                      fill="#8884d8"
-                      name="Total Quantity"
-                    />
-                  </BarChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
+            <BarGraph
+              data={boltShow}
+              name={"Bolt Component Quantities Overview"}
+              detailKey="boltDetails"
+              getLabel={(entry) => entry.component_name}
+            />
+            <BarGraph
+              data={nutShow}
+              name={"Nut Component Quantities Overview"}
+              detailKey="nutDetails"
+              getLabel={(_, index) => `Nut ${index + 1}`}
+            />
+            <BarGraph
+              data={washerShow}
+              name={"Washer Component Quantities Overview"}
+              detailKey="washerDetails"
+              getLabel={(_, index) => `Washer ${index + 1}`}
+            />
           </motion.div>
         </div>
       </div>
     </div>
   );
 };
-export default MachineDashboard;
+export default BoltNutMachine;

@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { motion } from "framer-motion";
 import CountUp from "react-countup";
-import { SidebarDemo } from "./SideComponent";
+import { SidebarDemo } from "../SideComponent";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {

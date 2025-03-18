@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SidebarDemo } from "./SideComponent";
+import { SidebarDemo } from "../SideComponent";
 import axios from "axios";
 
 const ChannelPattaForm = () => {
