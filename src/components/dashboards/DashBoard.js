@@ -67,9 +67,9 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row ">
       <SidebarDemo />
-      <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen">
+      <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
       <HorizontalMenu />
       
         {/* Summary Cards */}
