@@ -28,8 +28,7 @@ const SheetDashboard = () => {
       try {
         const res = await axios.get("http://localhost:5000/sheet-forms");
         setSheetData(res.data);
-        console.log(res.data);
-      } catch (error) {
+           } catch (error) {
         console.error("Error fetching sheet data:", error);
       }
     };
@@ -37,10 +36,10 @@ const SheetDashboard = () => {
   }, []);
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row bg-gray-50">
       <SidebarDemo />
-      <div className="p-6 bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen w-full">
-      <HorizontalMenu />
+      <div className="p-6 bg-customTextColor-white min-h-screen w-full">
+        <HorizontalMenu />
         {/* Summary Cards */}
         <div className="grid grid-cols-3 gap-6 mb-8">
           {[
@@ -50,7 +49,7 @@ const SheetDashboard = () => {
           ].map((item, index) => (
             <motion.div
               key={index}
-              className="p-4 bg-white shadow-lg rounded-xl text-center border-l-4 border-blue-500 transform hover:scale-105 transition duration-200"
+              className="p-4 bg-customBgColor-bg shadow-lg rounded-xl text-center border-l-4 border-customBorderColor transform hover:scale-105 transition duration-200"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
@@ -67,7 +66,7 @@ const SheetDashboard = () => {
 
         {/* Bar Chart for Material Distribution */}
         <motion.div
-          className="mb-8 bg-white p-6 rounded-lg shadow-xl"
+          className="mb-8 bg-customBgColor-bg p-6 rounded-lg shadow-xl"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -87,7 +86,7 @@ const SheetDashboard = () => {
 
         {/* Detailed Data Table */}
         <motion.div
-          className="bg-white p-6 rounded-lg shadow-xl"
+          className="bg-customBgColor-bg p-6 rounded-lg shadow-xl"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -100,21 +99,30 @@ const SheetDashboard = () => {
               <tr className="bg-blue-500 text-white">
                 <th className="p-3 text-left text-sm">Material</th>
                 <th className="p-3 text-left text-sm">No of Sheets</th>
-                <th className="p-3 text-left text-sm">Pending Sheets</th>
+                <th className="p-3 text-left text-sm">Weight</th>
+                {/* <th className="p-3 text-left text-sm">Pending Sheets</th> */}
               </tr>
             </thead>
             <tbody>
-              {sheetData && sheetData?.map((item, index) => (
-                console.log(item)
-                // <tr
-                //   key={index}
-                //   className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                // >
-                //   {item}
-                //   <td className="p-3 border-b text-sm">{item?.material}</td>
-                //   <td className="p-3 border-b text-sm">{item?.noOfSheets}</td>
-                //   <td className="p-3 border-b text-sm">{item?.balance}</td>
-                // </tr>
+              {sheetData.data?.map((item, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                >
+                  {item.items.map((subItem, subIndex) => (
+                    <React.Fragment key={subIndex}>
+                      <td className="p-3 border-b text-sm">
+                        {subItem?.sheetType}
+                      </td>
+                      <td className="p-3 border-b text-sm">
+                        {subItem?.noOfSheets}
+                      </td>
+                      <td className="p-3 border-b text-sm">
+                        {subItem?.weight}
+                      </td>
+                    </React.Fragment>
+                  ))}
+                </tr>
               ))}
             </tbody>
           </table>

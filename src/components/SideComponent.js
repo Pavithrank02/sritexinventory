@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody } from "../components/ui/sidebar.tsx";
 import {
   IconBrandTabler,
   IconNut,
@@ -10,118 +9,150 @@ import {
   IconBuildingFactory,
 } from "@tabler/icons-react";
 import { NavLink, Outlet } from "react-router-dom";
-import { cn } from "../lib/utils.ts";
+import { motion } from "framer-motion";
 import img from "../assets/images/sritex.jpg";
-import HorizontalMenu from "./HorizontalMenu.js";
 
 export function SidebarDemo() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false); // Sidebar open state
+  const [dropdownOpen, setDropdownOpen] = useState(null); // Dropdown open state
+
   const links = [
     {
       label: "Dashboard",
       href: "/",
-      icon: <IconBrandTabler className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconBrandTabler className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      subLinks: [
+        { label: "Sheet Dashboard", href: "/sheetdashboard" },
+        { label: "Machine Dashboard", href: "/machine" },
+        { label: "Nut and Bolt Dashboard", href: "/" },
+      ],
     },
     {
       label: "Sheets Form",
       href: "/sheets",
-      icon: <IconPerspective className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      subLinks: [
+        { label: "Sheet Form", href: "/sheets" },
+        { label: "Channel Patta Form", href: "/channel" },
+        { label: "Nut and Bolt Form", href: "/nuts" },
+      ],
     },
     {
       label: "Channel & Plats Form",
       href: "/channel",
-      icon: <IconRuler2 className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
     },
     {
       label: "Delivery Challan",
       href: "/dc",
-      icon: <IconTruckDelivery className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
     },
     {
       label: "Nuts and Bolts",
       href: "/nuts",
-      icon: <IconNut className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconNut className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
     },
     {
       label: "Machine",
       href: "/machine",
-      icon: <IconBuildingFactory className="h-6 w-6 flex-shrink-0" />,
+      icon: <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
     },
   ];
 
   return (
-    <div className="flex h-screen ">
+    <div className="flex h-screen">
       {/* Sidebar */}
-      <div
-        className={cn(
-          "flex justify-center items-center fixed h-full bg-customBgColor-bg dark:bg-customBgColor-bg shadow-lg transition-all duration-300",
-          open ? "w-64" : "w-24"
-        )}
+      <motion.div
+        animate={{ width: open ? 240 : 64 }} // Adjust width smoothly
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        className="fixed h-full bg-customBgColor-bg dark:bg-gray-800 shadow-md"
+        onMouseEnter={() => setOpen(true)} // Open on hover
+        onMouseLeave={() => setOpen(false)} // Close on hover out
       >
-        <Sidebar open={open} setOpen={setOpen}>
-          <SidebarBody className="flex flex-col bg-customBgColor-bg">
-            {/* Logo Section */}
-            <div
-              className={cn(
-                "flex items-center justify-center px-4 py-4 border-b border-neutral-300 dark:border-neutral-700",
-                open ? "justify-center" : "justify-center"
-              )}
-            >
-              {open ? (
-                <div className="flex items-center gap-2">
-                  <img src={img} alt="Sritex Logo" className="h-8 w-auto" />
-                  <span className="text-lg font-bold text-customTextColor dark:text-white">
-                    Sritex Inventory
-                  </span>
-                </div>
-              ) : (
-                <img
-                  src={img}
-                  alt="Sritex Logo"
-                  className="h-8 w-8 rounded-full"
-                />
-              )}
-            </div>
-            {/* Links Section */}
-            <div className="mt-4 flex flex-col gap-2 overflow-y-auto">
-              {links.map((link, idx) => (
-                <NavLink
-                  key={idx}
-                  to={link.href}
-                  className={({ isActive }) =>
-                    cn(
-                      "flex items-center gap-4 p-2 text-customTextColor dark:text-customTextColor-light hover:bg-customTextColor-light dark:hover:bg-customTextColor-white rounded-md",
-                      isActive &&
-                        "bg-customBgColor-bg dark:bg-customBgColor-bg",
+        <div className="flex flex-col h-full">
+          {/* Logo Section */}
+          <div className="flex items-center justify-center p-4">
+            <img
+              src={img}
+              alt="Logo"
+              className={`transition-all ${open ? "h-8 w-auto" : "h-8 w-8"}`}
+            />
+            {open && (
+              <p className="ml-2 text-black dark:text-gray-200  font-semibold transition-opacity duration-300">
+                Sritext Inventory
+              </p>
+            )}
+          </div>
+
+          {/* Links Section */}
+          <div className="flex-1 overflow-y-auto">
+            {links.map((link, idx) => (
+              <div key={idx}>
+                {/* Parent Link */}
+                {!link.subLinks ? (
+                  <NavLink
+                    to={link.href}
+                    className={({ isActive }) =>
+                      `flex items-center gap-4 p-3 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light dark:hover:bg-customBgColor rounded-md ${
+                        isActive ? "bg-customBgColor-bg dark:bg-gray-700" : ""
+                      } ${open ? "justify-start" : "justify-center"}`
+                    }
+                  >
+                    {link.icon}
+                    {open && <span>{link.label}</span>}
+                  </NavLink>
+                ) : (
+                  <div
+                    className={`flex items-center gap-4 p-3 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light dark:hover:bg-customBgColor rounded-md ${
                       open ? "justify-start" : "justify-center"
-                    )
-                  }
-                >
-                  {link.icon}
-                  {open && (
-                    <span className="text-sm font-extrabold">{link.label}</span>
-                  )}
-                </NavLink>
-              ))}
-            </div>
-          </SidebarBody>
-        </Sidebar>
-      </div>
+                    }`}
+                    onClick={() =>
+                      setDropdownOpen(dropdownOpen === idx ? null : idx)
+                    }
+                  >
+                    {link.icon}
+                    {open && <span>{link.label}</span>}
+                    {open && (
+                      <span className="ml-auto text-customTextColor">
+                        {dropdownOpen === idx ? "▲" : "▼"}
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* Dropdown Links */}
+                {link.subLinks && dropdownOpen === idx && open && (
+                  <motion.div
+                    initial={{ height: 0 }}
+                    animate={{ height: "auto" }}
+                    className="ml-14 mt-4 space-y-1 overflow-hidden justify-center"
+                  >
+                    {link.subLinks.map((subLink, subIdx) => (
+                      <NavLink
+                        key={subIdx}
+                        to={subLink.href}
+                        className="block text-base text-gray-600 dark:text-gray-400 hover:text-customTextColor-light dark:hover:text-customTextColor-light"
+                      >
+                        {subLink.label}
+                      </NavLink>
+                    ))}
+                  </motion.div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
 
       {/* Main Content */}
-          <div
-        className={cn(
-          "ml-24 flex-1 transition-all duration-300",
-          open && "ml-64"
-        )}
+      <motion.div
+        animate={{ marginLeft: open ? 240 : 64 }}
+        className="flex-1 transition-all duration-300 bg-white"
       >
-         
-        <div className="p-4 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 h-full">
-         
+        <div className="p-4">
           <Outlet />
-         
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

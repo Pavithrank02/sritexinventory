@@ -220,7 +220,7 @@ const NutBoltsForm = () => {
   );
 
   return (
-    <div className="flex flex-row justify-center bg-gray-100 min-h-screen">
+    <div className="flex flex-row bg-gray-100 min-h-screen">
       <SidebarDemo />
       <div className="p-8 w-full max-w-7xl">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">
