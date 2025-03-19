@@ -8,6 +8,7 @@ import { SidebarDemo } from "../SideComponent.js";
 import { Chart as ChartJS, registerables } from "chart.js";
 import axios from "axios";
 import BarGraph from "../BarGraph.js";
+import HorizontalMenu from "../HorizontalMenu.js";
 ChartJS.register(...registerables);
 
 const boltSize = [
@@ -267,6 +268,7 @@ const BoltNutMachine = () => {
     <div className="flex flex-row h-screen bg-customBgColor-bg dark:bg-neutral-900">
       <SidebarDemo />
       <div className="flex-1 p-2  ">
+        <HorizontalMenu />
         <div className="p-4 ">
           <motion.div
             initial={{ opacity: 0, y: -20 }}

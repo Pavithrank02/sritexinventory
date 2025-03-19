@@ -12,6 +12,7 @@ import {
 import { NavLink, Outlet } from "react-router-dom";
 import { cn } from "../lib/utils.ts";
 import img from "../assets/images/sritex.jpg";
+import HorizontalMenu from "./HorizontalMenu.js";
 
 export function SidebarDemo() {
   const [open, setOpen] = useState(false);
@@ -108,14 +109,17 @@ export function SidebarDemo() {
       </div>
 
       {/* Main Content */}
-      <div
+          <div
         className={cn(
           "ml-24 flex-1 transition-all duration-300",
           open && "ml-64"
         )}
       >
+         
         <div className="p-4 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 h-full">
+         
           <Outlet />
+         
         </div>
       </div>
     </div>

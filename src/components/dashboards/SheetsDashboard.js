@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import axios from "axios";
 import { SidebarDemo } from "../SideComponent";
+import HorizontalMenu from "../HorizontalMenu";
 
 const data = [
   { material: "1.2mm Sheet- 2500X1250(8x4)", noOfSheets: 2, balance: 0 },
@@ -38,7 +39,8 @@ const SheetDashboard = () => {
   return (
     <div className="flex flex-row">
       <SidebarDemo />
-      <div className="p-6 bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen">
+      <div className="p-6 bg-gradient-to-br from-gray-100 to-gray-300 min-h-screen w-full">
+      <HorizontalMenu />
         {/* Summary Cards */}
         <div className="grid grid-cols-3 gap-6 mb-8">
           {[
