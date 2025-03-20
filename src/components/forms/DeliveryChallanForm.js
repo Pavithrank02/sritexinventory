@@ -39,28 +39,44 @@ const DeliveryChallanForm = () => {
 
   const generatePDF = () => {
     const doc = new jsPDF();
-  
+
     // Add logo (Ensure logoBase64 contains the Base64 representation of the image)
     const logoWidth = 200; // Width of the logo in the PDF
-    const logoHeight = 25; // Height of the logo in the PDF
+    const logoHeight = 40; // Height of the logo in the PDF
     doc.addImage(logoBase64, "PNG", 10, 10, logoWidth, logoHeight);
-  
+    const companyStartY = 20 + logoHeight + 5; // Position after the logo
+    const pageWidth = doc.internal.pageSize.getWidth(); // Get the page width
+    const margin = 10; // Left and right margin
+    const maxWidth = pageWidth - margin * 2; // Calculate the maximum width for text
+
     // Add company information below the logo
     doc.setFontSize(10);
-    const companyStartY = 10 + logoHeight + 5; // Position after the logo
-    doc.text("M/S", 10, companyStartY);
+    doc.text("M/S", margin, companyStartY);
     doc.setFont("helvetica", "bold");
-    doc.text("Sri Tex Hitech Machines", 10, companyStartY + 5);
+    doc.text("Sri Tex Hitech Machines", margin, companyStartY + 5);
     doc.setFont("helvetica", "normal");
+
+    // Use maxWidth to wrap text
     doc.text(
       "#4/96(4), Lakshmi Nagar, Kollupalayam, Kaniyur Post, Coimbatore 641 659.",
-      10,
-      companyStartY + 10
+      margin,
+      companyStartY + 10,
+      { maxWidth: maxWidth }
     );
-    doc.text("Phone: 0422-2270540 | Email: info@sritexhitechmachines.com", 10, companyStartY + 15);
-    doc.text("Website: www.sritexhitechmachines.com", 10, companyStartY + 20);
-    doc.text("GSTIN: 33ABIFS9750L1ZL", 10, companyStartY + 25);
-  
+    doc.text(
+      "Phone: 0422-2270540 | Email: info@sritexhitechmachines.com",
+      margin,
+      companyStartY + 15,
+      { maxWidth: maxWidth }
+    );
+    doc.text(
+      "Website: www.sritexhitechmachines.com",
+      margin,
+      companyStartY + 20,
+      { maxWidth: maxWidth }
+    );
+    doc.text("GSTIN: 33ABIFS9750L1ZL", margin, companyStartY + 25);
+
     // Add recipient details
     const recipientStartY = companyStartY + 35;
     doc.setFont("helvetica", "bold");
@@ -68,39 +84,48 @@ const DeliveryChallanForm = () => {
     doc.setFont("helvetica", "normal");
     doc.text(`Recipient: ${formData.recipient}`, 10, recipientStartY + 5);
     doc.text(`Party's GSTIN/UIN: ${formData.gstin}`, 10, recipientStartY + 10);
-  
+
     // Add delivery note details
     doc.text(`D.C. No.: ${formData.dcNumber}`, 120, recipientStartY);
     doc.text(`D.C. Date: ${formData.dcDate}`, 120, recipientStartY + 5);
     doc.text(`P.O. No.: ${formData.poNumber}`, 120, recipientStartY + 10);
     doc.text(`P.O. Date: ${formData.poDate}`, 120, recipientStartY + 15);
-    doc.text(`Mode Of Dispatch: ${formData.modeOfDispatch}`, 120, recipientStartY + 20);
-  
+    doc.text(
+      `Mode Of Dispatch: ${formData.modeOfDispatch}`,
+      120,
+      recipientStartY + 20
+    );
+
     // Add table headers
     const startX = 10;
     const startY = recipientStartY + 35;
     const rowHeight = 10;
     const colWidths = [20, 100, 30]; // Adjust column widths
-  
+
     doc.setFont("helvetica", "bold");
     doc.text("Sl. No", startX + 5, startY - 5);
     doc.text("Description", startX + colWidths[0] + 5, startY - 5);
     doc.text("Quantity", startX + colWidths[0] + colWidths[1] + 5, startY - 5);
-  
+
     // Draw table header borders
     doc.rect(startX, startY - rowHeight, colWidths[0], rowHeight); // Sl. No
-    doc.rect(startX + colWidths[0], startY - rowHeight, colWidths[1], rowHeight); // Description
+    doc.rect(
+      startX + colWidths[0],
+      startY - rowHeight,
+      colWidths[1],
+      rowHeight
+    ); // Description
     doc.rect(
       startX + colWidths[0] + colWidths[1],
       startY - rowHeight,
       colWidths[2],
       rowHeight
     ); // Quantity
-  
+
     // Add table rows
     formData.items.forEach((item, index) => {
       const currentY = startY + index * rowHeight;
-  
+
       // Draw row borders
       doc.rect(startX, currentY, colWidths[0], rowHeight); // Sl. No
       doc.rect(startX + colWidths[0], currentY, colWidths[1], rowHeight); // Description
@@ -110,24 +135,25 @@ const DeliveryChallanForm = () => {
         colWidths[2],
         rowHeight
       ); // Quantity
-  
+
       // Add row text
       doc.text(String(index + 1), startX + 5, currentY + 5);
       doc.text(item.description, startX + colWidths[0] + 5, currentY + 5);
-      doc.text(item.quantity, startX + colWidths[0] + colWidths[1] + 5, currentY + 5);
+      doc.text(
+        item.quantity,
+        startX + colWidths[0] + colWidths[1] + 5,
+        currentY + 5
+      );
     });
-  
+
     // Add footer
     doc.text("Received the goods in good condition", 10, 250);
     doc.text("Customer's Signature", 10, 260);
     doc.text("Authorized Signatory", 150, 260);
-  
+
     // Save the PDF
     doc.save("DeliveryChallan.pdf");
   };
-  
-  
-  
 
   return (
     <div className="flex flex-row h-screen bg-customTextColor-white dark:bg-neutral-900">

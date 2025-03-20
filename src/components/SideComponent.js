@@ -20,7 +20,9 @@ export function SidebarDemo() {
     {
       label: "Dashboard",
       href: "/",
-      icon: <IconBrandTabler className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      icon: (
+        <IconBrandTabler className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+      ),
       subLinks: [
         { label: "Sheet Dashboard", href: "/sheetdashboard" },
         { label: "Machine Dashboard", href: "/machine" },
@@ -30,7 +32,9 @@ export function SidebarDemo() {
     {
       label: "Sheets Form",
       href: "/sheets",
-      icon: <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      icon: (
+        <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+      ),
       subLinks: [
         { label: "Sheet Form", href: "/sheets" },
         { label: "Channel Patta Form", href: "/channel" },
@@ -40,12 +44,16 @@ export function SidebarDemo() {
     {
       label: "Channel & Plats Form",
       href: "/channel",
-      icon: <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      icon: (
+        <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+      ),
     },
     {
       label: "Delivery Challan",
       href: "/dc",
-      icon: <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      icon: (
+        <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+      ),
     },
     {
       label: "Nuts and Bolts",
@@ -55,7 +63,15 @@ export function SidebarDemo() {
     {
       label: "Machine",
       href: "/machine",
-      icon: <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      icon: (
+        <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+      ),
+      subLinks: [
+        { label: "Nuts, Bolt and Washers", href: "" },
+        { label: "Sheet Types", href: "" },
+        { label: "Shafts and Gears", href: "" },
+        { label: "Dummy", href: "" },
+      ],
     },
   ];
 
@@ -63,7 +79,7 @@ export function SidebarDemo() {
     <div className="flex h-screen">
       {/* Sidebar */}
       <motion.div
-        animate={{ width: open ? 240 : 64 }} // Adjust width smoothly
+        animate={{ width: open ? 240 : 96 }} // Adjust width smoothly
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className="fixed h-full bg-customBgColor-bg dark:bg-gray-800 shadow-md"
         onMouseEnter={() => setOpen(true)} // Open on hover
@@ -75,15 +91,14 @@ export function SidebarDemo() {
             <img
               src={img}
               alt="Logo"
-              className={`transition-all ${open ? "h-8 w-auto" : "h-8 w-8"}`}
+              className={`transition-all ${open ? "h-8 w-auto" : "h-8 w-auto"}`}
             />
             {open && (
-              <p className="ml-2 text-black dark:text-gray-200  font-semibold transition-opacity duration-300">
+              <p className="ml-2 text-black dark:text-gray-200 text-lg font-semibold transition-opacity duration-300">
                 Sritext Inventory
               </p>
             )}
           </div>
-
           {/* Links Section */}
           <div className="flex-1 overflow-y-auto">
             {links.map((link, idx) => (
@@ -99,7 +114,9 @@ export function SidebarDemo() {
                     }
                   >
                     {link.icon}
-                    {open && <span>{link.label}</span>}
+                    {open && (
+                      <span className="font-semibold">{link.label}</span>
+                    )}
                   </NavLink>
                 ) : (
                   <div
@@ -111,7 +128,9 @@ export function SidebarDemo() {
                     }
                   >
                     {link.icon}
-                    {open && <span>{link.label}</span>}
+                    {open && (
+                      <span className="font-semibold">{link.label}</span>
+                    )}
                     {open && (
                       <span className="ml-auto text-customTextColor">
                         {dropdownOpen === idx ? "▲" : "▼"}
