@@ -10,17 +10,22 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import CountUp from "react-countup";
 import { SidebarDemo } from "../SideComponent";
 import HorizontalMenu from "../HorizontalMenu";
+import { AnimatedModalButton } from "../AnimatedModalButton";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {
   const summary = {};
   Object.entries(data).forEach(([key, items]) => {
     if (key !== "summary") {
-      const totalStock = items.reduce((sum, item) => sum + (item.stock || 0), 0);
+      const totalStock = items.reduce(
+        (sum, item) => sum + (item.stock || 0),
+        0
+      );
+
       const totalRequired = items.reduce(
         (sum, item) => sum + (item.required || 0),
         0
@@ -32,36 +37,100 @@ const calculateSummary = (data) => {
   return summary;
 };
 
+// const calculateWeight = (data) => {
+//   // console.log(data)
+//   const boltTaken = 50;
+//   const changedWeight = [];
+//   Object.entries(data).forEach(([key, items]) => {
+//     // console.log(items, key);
+
+//     if (key === "bolts") {
+
+//         const updatedWeight = items.map((item) => {
+//           // console.log("item",item)
+//           if(item.size ==="3/4x3/8"){
+//           // console.log("item",item?.totalWeight)
+//           return item?.totalWeight - item?.weightPerBolt * boltTaken;
+//         }
+//       });
+//       console.log("updatedWeight", updatedWeight);
+//     }
+//     // console.log(items)
+//   });
+// };
+const calculateWeight = (data) => {
+  const boltTaken = 50;
+
+  Object.entries(data).forEach(([key, items]) => {
+    if (key === "bolts") {
+      // Map through the items to update totalWeight
+      items.forEach((item) => {
+        if (item.size === "3/4x3/8") {
+          // Update totalWeight directly
+          item.totalWeight -= item.weightPerBolt * boltTaken;
+        }
+      });
+    }
+  });
+
+  console.log("Updated Data:", data);
+  return data; // Return the updated data
+};
+
 // Dynamic data input
 const data = {
   bolts: [
-    { size: "1x3/8", stock: 350, required: 400, remaining: 50 },
-    { size: "3/4x3/8", stock: 120, required: 88, remaining: 0 },
-    { size: "2x3/8", stock: 100, required: 100, remaining: 0 },
-    { size: "3/4x5/16", stock: 300, required: 286, remaining: 0 },
-    { size: "1x5/16", stock: 150, required: 106, remaining: 0 },
-    { size: "1/2 x 1/4", stock: 400, required: 500, remaining: 100 },
-    { size: "3/4x 1/4", stock: 80, required: 120, remaining: 0 },
-    { size: "1x1/4", stock: 100, required: 500, remaining: 400 },
+    { size: "1x3/8", stock: 350, totalWeight: 400, weightPerBolt: 1 },
+    { size: "3/4x3/8", stock: 355, totalWeight: 5800, weightPerBolt: 17 },
+    { size: "2x3/8", stock: 100, totalWeight: 400, weightPerBolt: 1 },
+    { size: "3/4x5/16", stock: 300, totalWeight: 400, weightPerBolt: 1 },
+    { size: "1x5/16", stock: 256, totalWeight: 400, weightPerBolt: 1 },
+    { size: "1/2x5/16", stock: 340, totalWeight: 3150, weightPerBolt: 10 },
+    { size: "1/2 x 1/4", stock: 98, totalWeight: 400, weightPerBolt: 1 },
+    { size: "3/4x 1/4", stock: 178, totalWeight: 1150, weightPerBolt: 8 },
+    { size: "1x1/4", stock: 280, totalWeight: 2200, weightPerBolt: 9 },
+    { size: "3/4x 1/2", stock: 132, totalWeight: 2640, weightPerBolt: 20 },
+    { size: "1x 1/2", stock: 80, totalWeight: 400, weightPerBolt: 1 },
+    { size: "1 1/2x 1/2", stock: 126, totalWeight: 6400, weightPerBolt: 50 },
   ],
   nuts: [
-    { size: "1x3/8", stock: 337, required: 350, remaining: 13 },
-    { size: "1x5/16", stock: 100, required: 106, remaining: 10 },
-    { size: "3/4x1/2", stock: 100, required: 60, remaining: 0 },
-    { size: "11/2x1/2", stock: 100, required: 50, remaining: 0 },
+    { size: "3/8", stock: 283, totalWeight: 400, weightPerNut: 1 },
+    { size: "5/16", stock: 168, totalWeight: 400, weightPerNut: 1 },
+    { size: "1/2", stock: 0, totalWeight: 400, weightPerNut: 1 },
+    { size: "1/4", stock: 569, totalWeight: 400, weightPerNut: 1 },
   ],
   washers: [
-    { size: "1x3/8", stock: 350, required: 400, remaining: 50 },
-    { size: "3/4x3/8", stock: 120, required: 88, remaining: 0 },
-    { size: "2x3/8", stock: 100, required: 100, remaining: 0 },
-    { size: "3/4x1/2", stock: 0, required: 60, remaining: 60 },
-    { size: "11/2x1/2", stock: 0, required: 50, remaining: 50 },
-    { size: "1x1/4", stock: 0, required: 500, remaining: 500 },
+    { size: "3/8", stock: 390, totalWeight: 400, weightPerWasher: 1 },
+    { size: "1/2", stock: 119, totalWeight: 400, weightPerWasher: 1 },
+    { size: "5/16", stock: 0, totalWeight: 400, weightPerWasher: 1 },
+    { size: "1/4", stock: 341, totalWeight: 400, weightPerWasher: 1 },
   ],
 };
+const createItemSummaries = (data) => {
+  const summaries = [];
+
+  Object.entries(data).forEach(([key, items]) => {
+    items.forEach((item) => {
+      summaries.push({
+        category: key,
+        size: item.size,
+        totalStock: item.stock || 0,
+        totalWeight: item.totalWeight || 0,
+        shortageOrSurplus: (item.stock || 0) - (item.required || 0),
+        isCritical: (item.stock || 0) < 50,
+      });
+    });
+  });
+
+  return summaries;
+};
+
+// Generate summaries for all items
+const itemSummaries = createItemSummaries(data);
 
 // Summary dynamically calculated
 const summary = calculateSummary(data);
+calculateWeight(data);
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -70,29 +139,110 @@ const Dashboard = () => {
     <div className="flex flex-row ">
       <SidebarDemo />
       <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
-      <HorizontalMenu />
-      
-        {/* Summary Cards */}
-        <div className="grid grid-cols-4 gap-6 mb-8">
-          {Object.entries(summary).map(([key, value], index) => (
-            <motion.div
-              key={index}
-              className="p-4 bg-customBgColor-bg shadow-xl rounded-xl text-center border-l-4 border-customBorderColor transform hover:scale-105 transition duration-200"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index }}
-            >
-              <h2 className="text-lg font-semibold capitalize text-gray-700">
-                {key.replace(/_/g, " ")}
-              </h2>
-              <p className="text-3xl text-customTextColor font-bold">
-                <CountUp end={value} duration={2} />
-              </p>
-            </motion.div>
+        <HorizontalMenu />
+
+        <div className="mb-8">
+          <div className="flex flex-row justify-between">
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+              Inventory Summary
+            </h2>
+            <div>
+              <AnimatedModalButton />
+            </div>
+          </div>
+
+          {/* Search Bar */}
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Search by category or size..."
+              className="w-full p-3 rounded-md shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+          </div>
+
+          {/* Dropdown Structure for Each Category */}
+          {Object.entries(data).map(([category, items], index) => (
+            <div key={index} className="mb-4">
+              <details className="rounded-lg shadow-md bg-white border border-gray-300 group">
+                <summary className="px-4 py-3 flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 group-hover:bg-gray-100">
+                  <span className="capitalize">{category}</span>
+                  <svg
+                    className="w-5 h-5 transform group-open:rotate-180 transition-transform"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </summary>
+
+                <div className="px-4 py-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {items.map((item, idx) => {
+                      const isCritical = item.stock < 50;
+                      const shortageOrSurplus =
+                        (item.stock || 0) - (item.required || 0);
+
+                      return (
+                        <motion.div
+                          key={idx}
+                          className={`p-4 shadow-lg rounded-lg border-l-4 transition-transform transform hover:scale-105 ${
+                            isCritical
+                              ? "bg-red-50 border-red-500"
+                              : "bg-green-50 border-green-500"
+                          }`}
+                          initial={{ opacity: 0, y: 50 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.1 * idx }}
+                        >
+                          <h3 className="text-md font-bold text-gray-700 capitalize">
+                            {item.size}
+                          </h3>
+                          <p className="text-sm text-gray-500">
+                            {isCritical
+                              ? "⚠ Critical Stock"
+                              : "Sufficient Stock"}
+                          </p>
+                          <p className="text-lg font-bold text-gray-800">
+                            Stock:{" "}
+                            <CountUp
+                              start={0}
+                              end={item.stock}
+                              duration={2}
+                              separator=","
+                            />
+                          </p>
+                          <p className="text-sm text-gray-600">
+                            Weight: {item.totalWeight} kg
+                          </p>
+                          <p
+                            className={`text-sm font-semibold ${
+                              shortageOrSurplus < 0
+                                ? "text-red-500"
+                                : "text-green-500"
+                            }`}
+                          >
+                            {shortageOrSurplus < 0
+                              ? `Shortage: ${Math.abs(shortageOrSurplus)}`
+                              : `Surplus: ${shortageOrSurplus}`}
+                          </p>
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </details>
+            </div>
           ))}
         </div>
 
-        {/* Dynamic Charts and Data Tables */}
+        {/* Existing Dynamic Visualizations */}
         {Object.entries(data).map(([key, items], index) => (
           <motion.div
             key={index}
@@ -102,21 +252,28 @@ const Dashboard = () => {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-xl font-bold mb-4 text-gray-800">
-              {key.charAt(0).toUpperCase() + key.slice(1)} Details
+              {key.charAt(0).toUpperCase() + key.slice(1)} Visualization
             </h2>
+
             {/* Bar Chart */}
-            {key === "bolts" && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-700">
+                Stock Analysis
+              </h3>
               <BarChart width={600} height={300} data={items}>
                 <XAxis dataKey="size" stroke="#4B5563" />
                 <YAxis stroke="#4B5563" />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="stock" fill="#1D4ED8" name="Stock" />
-                <Bar dataKey="required" fill="#10B981" name="Required" />
+                <Bar dataKey="stock" fill="#177643" name="Stock" />
               </BarChart>
-            )}
+            </div>
+
             {/* Pie Chart */}
-            {key === "nuts" && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold text-gray-700">
+                Stock Distribution
+              </h3>
               <PieChart width={400} height={400}>
                 <Pie
                   data={items}
@@ -128,44 +285,45 @@ const Dashboard = () => {
                   fill="#10B981"
                   label
                 >
-                  {items.map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
+                  {items.map((_, i) => (
+                    <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip />
               </PieChart>
-            )}
+            </div>
+
             {/* Data Table */}
-            <table className="w-full bg-white rounded-lg shadow">
-              <thead>
-                <tr className="bg-customTextColor-light text-white">
-                  <th className="p-3 text-left text-sm">Size</th>
-                  <th className="p-3 text-left text-sm">Stock</th>
-                  <th className="p-3 text-left text-sm">Required</th>
-                  {items.some((item) => item.remaining !== undefined) && (
-                    <th className="p-3 text-left text-sm">Remaining</th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? "bg-gray-50" : "bg-customBgColor-bg"}
-                  >
-                    <td className="p-3 border-b text-sm">{item.size}</td>
-                    <td className="p-3 border-b text-sm">{item.stock}</td>
-                    <td className="p-3 border-b text-sm">{item.required}</td>
-                    {item.remaining !== undefined && (
-                      <td className="p-3 border-b text-sm">{item.remaining}</td>
-                    )}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-700">
+                Data Table
+              </h3>
+              <table className="w-full bg-white rounded-lg shadow">
+                <thead>
+                  <tr className="bg-customTextColor-light text-white">
+                    <th className="p-3 text-left text-sm">Size</th>
+                    <th className="p-3 text-left text-sm">Stock</th>
+                    <th className="p-3 text-left text-sm">Total Weight</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {items.map((item, i) => (
+                    <tr
+                      key={i}
+                      className={
+                        i % 2 === 0 ? "bg-gray-50" : "bg-customBgColor-bg"
+                      }
+                    >
+                      <td className="p-3 border-b text-sm">{item.size}</td>
+                      <td className="p-3 border-b text-sm">{item.stock}</td>
+                      <td className="p-3 border-b text-sm">
+                        {item.totalWeight}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </motion.div>
         ))}
       </div>
