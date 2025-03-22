@@ -58,24 +58,7 @@ const calculateSummary = (data) => {
 //     // console.log(items)
 //   });
 // };
-const calculateWeight = (data) => {
-  const boltTaken = 50;
 
-  Object.entries(data).forEach(([key, items]) => {
-    if (key === "bolts") {
-      // Map through the items to update totalWeight
-      items.forEach((item) => {
-        if (item.size === "3/4x3/8") {
-          // Update totalWeight directly
-          item.totalWeight -= item.weightPerBolt * boltTaken;
-        }
-      });
-    }
-  });
-
-  console.log("Updated Data:", data);
-  return data; // Return the updated data
-};
 
 // Dynamic data input
 const data = {
@@ -130,11 +113,50 @@ const itemSummaries = createItemSummaries(data);
 
 // Summary dynamically calculated
 const summary = calculateSummary(data);
-calculateWeight(data);
+
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const Dashboard = () => {
+  const calculateWeight = (data) => {
+    const boltTaken = 50;
+    const nutTaken = 50;
+    const washerTaken=50
+  
+    Object.entries(data).forEach(([key, items]) => {
+      if (key === "bolts") {
+        // Map through the items to update totalWeight
+        items.forEach((item) => {
+          if (item.size === "3/4x3/8") {
+            // Update totalWeight directly
+            item.totalWeight -= item.weightPerBolt * boltTaken;
+          }
+        });
+      }
+      if (key === "nuts") {
+        // Map through the items to update totalWeight
+        items.forEach((item) => {
+          if (item.size === "3/8") {
+            // Update totalWeight directly
+            item.totalWeight -= item.weightPerNut * nutTaken;
+          }
+        });
+      }
+      if (key === "washers") {
+        // Map through the items to update totalWeight
+        items.forEach((item) => {
+          if (item.size === "3/8") {
+            // Update totalWeight directly
+            item.totalWeight -= item.weightPerWasher * washerTaken;
+          }
+        });
+      }
+    });
+  
+    console.log("Updated Data:", data);
+    return data; // Return the updated data
+  };
+  calculateWeight(data);
   return (
     <div className="flex flex-row ">
       <SidebarDemo />

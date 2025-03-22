@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalBody,
@@ -17,16 +17,46 @@ import {
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 
+const boltSize = [
+  "Select Size",
+  "1x3/8",
+  "3/4x3/8",
+  "2x3/8",
+  "1x5/16",
+  "3/4x5/16",
+  "1 1/2x5/16",
+  "3/4x1/2",
+  "11/2x1/2",
+  "1/2x1/4",
+  "3/4x1/4",
+  "1x1/4",
+];
+const nutSize = ["Select Size", "3/8", "5/16", "1/2", "1/4"];
+const washerSize = ["Select Size", "3/8", "5/16", "1/2", "1/4"];
+
 export function AnimatedModalButton() {
-  const images = [
-    "https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1573790387438-4da905039392?q=80&w=3425&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1555400038-63f5ba517a47?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1554931670-4ebfabf6e7a9?q=80&w=3387&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    "https://images.unsplash.com/photo-1546484475-7f7bd55792da?q=80&w=2581&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  ];
+  const [formData, setFormData] = useState({
+    component_name: "",
+    boltsize: "",
+    boltquantity: "",
+    nutSize: "",
+    nutQuantity: "",
+    washerSize: "",
+    washerQuantity: "",
+    boltDetails: boltSize.map((size) => ({ size, quantity: 0 })),
+    nutDetails: nutSize.map((size) => ({ size, quantity: 0 })),
+    washerDetails: washerSize.map((size) => ({ size, quantity: 0 })),
+  });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   return (
-    <div className="">
+    <div className=" ">
       <Modal>
         <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
@@ -57,10 +87,10 @@ export function AnimatedModalButton() {
                   return (
                     <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />
                   ); // Lucide Bell Icon
-                  case "IconBuildingFactory":
-                    return (
-                      <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                    ); // Lucide Bell Icon
+                case "IconBuildingFactory":
+                  return (
+                    <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
+                  ); // Lucide Bell Icon
                 default:
                   return <span>🚀</span>; // Default Emoji Icon
               }
@@ -70,86 +100,132 @@ export function AnimatedModalButton() {
         <ModalBody>
           <ModalContent>
             <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
-              Book your trip to{" "}
-              <span className="px-1 py-0.5 rounded-md bg-gray-100 dark:bg-neutral-800 dark:border-neutral-700 border border-gray-200">
-                Bali
-              </span>{" "}
-              now! ✈️
+              Supplies Been Used
             </h4>
-            <div className="flex justify-center items-center">
-              {images.map((image, idx) => (
-                <motion.div
-                  key={"images" + idx}
-                  style={{
-                    rotate: Math.random() * 20 - 10,
-                  }}
-                  whileHover={{
-                    scale: 1.1,
-                    rotate: 0,
-                    zIndex: 100,
-                  }}
-                  whileTap={{
-                    scale: 1.1,
-                    rotate: 0,
-                    zIndex: 100,
-                  }}
-                  className="rounded-xl -mr-4 mt-4 p-1 bg-white dark:bg-neutral-800 dark:border-neutral-700 border border-neutral-100 shrink-0 overflow-hidden"
+            <form
+              className="h-[60vh] overflow-y-scroll pr-4"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              <style>
+                {`
+        form::-webkit-scrollbar {
+          display: none;
+        }
+      `}
+              </style>
+
+              {/* Bolts */}
+              <div className="flex flex-col items-start mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Bolt Size
+                </label>
+                <select
+                  className="border border-customBorderColor rounded-lg p-2 w-full"
+                  value={formData.boltSize}
+                  onChange={handleInputChange}
+                  name="boltSize"
+                  placeholder="Bolt Size"
                 >
-                  <img
-                    src={image}
-                    alt="bali images"
-                    width="500"
-                    height="500"
-                    className="rounded-lg h-20 w-20 md:h-40 md:w-40 object-cover shrink-0"
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <div className="py-10 flex flex-wrap gap-x-4 gap-y-6 items-start justify-start max-w-sm mx-auto">
-              <div className="flex  items-center justify-center">
-                <PlaneIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  5 connecting flights
-                </span>
+                  {boltSize.map((size, i) => (
+                    <option key={i} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="bolts"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                >
+                  Number of Bolts
+                </label>
+                <input
+                  type="number"
+                  id="bolts"
+                  name="bolts"
+                  min="0"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  placeholder="Enter number of bolts"
+                />
               </div>
-              <div className="flex items-center justify-center">
-                <ElevatorIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  12 hotels
-                </span>
+
+              {/* Nuts */}
+              <div className="flex flex-col items-start mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Nut Size
+                </label>
+                <select
+                  className="border border-customBorderColor rounded-lg p-2 w-full"
+                  value={formData.nutSize}
+                  onChange={handleInputChange}
+                  name="nutSize"
+                  placeholder="Nut Size"
+                >
+                  {nutSize.map((size, i) => (
+                    <option key={i} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="nuts"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                >
+                  Number of Nuts
+                </label>
+                <input
+                  type="number"
+                  id="nuts"
+                  name="nuts"
+                  min="0"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  placeholder="Enter number of nuts"
+                />
               </div>
-              <div className="flex items-center justify-center">
-                <VacationIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  69 visiting spots
-                </span>
+
+              {/* Washers */}
+              <div className="flex flex-col items-start mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Washer Size
+                </label>
+                <select
+                  className="border border-customBorderColor rounded-lg p-2 w-full"
+                  value={formData.washerSize}
+                  onChange={handleInputChange}
+                  name="washerSize"
+                  placeholder="Washer Size"
+                >
+                  {washerSize.map((size, i) => (
+                    <option key={i} value={size}>
+                      {size}
+                    </option>
+                  ))}
+                </select>
+                <label
+                  htmlFor="washers"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                >
+                  Number of Washers
+                </label>
+                <input
+                  type="number"
+                  id="washers"
+                  name="washers"
+                  min="0"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  placeholder="Enter number of washers"
+                />
               </div>
-              <div className="flex  items-center justify-center">
-                <FoodIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  Good food everyday
-                </span>
-              </div>
-              <div className="flex items-center justify-center">
-                <MicIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  Open Mic
-                </span>
-              </div>
-              <div className="flex items-center justify-center">
-                <ParachuteIcon className="mr-1 text-neutral-700 dark:text-neutral-300 h-4 w-4" />
-                <span className="text-neutral-700 dark:text-neutral-300 text-sm">
-                  Paragliding
-                </span>
-              </div>
-            </div>
+            </form>
           </ModalContent>
-          <ModalFooter className="gap-4">
-            <button className="px-2 py-1 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
+
+          <ModalFooter className="gap-8 mb-4 -mt-3">
+            {/* Cancel Button */}
+            <button className="px-4 py-2 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
               Cancel
             </button>
-            <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-2 py-1 rounded-md border border-black w-28">
-              Book Now
+            {/* Submit Button */}
+            <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-4 py-2 rounded-md border border-black w-28">
+              Submit
             </button>
           </ModalFooter>
         </ModalBody>
