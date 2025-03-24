@@ -15,6 +15,7 @@ import CountUp from "react-countup";
 import { SidebarDemo } from "../SideComponent";
 import HorizontalMenu from "../HorizontalMenu";
 import { AnimatedModalButton } from "../AnimatedModalButton";
+import SearchBar from "../SearchBar";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {
@@ -153,7 +154,6 @@ const Dashboard = () => {
       }
     });
   
-    console.log("Updated Data:", data);
     return data; // Return the updated data
   };
   calculateWeight(data);
@@ -174,18 +174,12 @@ const Dashboard = () => {
           </div>
 
           {/* Search Bar */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Search by category or size..."
-              className="w-full p-3 rounded-md shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-          </div>
+          <SearchBar />
 
           {/* Dropdown Structure for Each Category */}
           {Object.entries(data).map(([category, items], index) => (
             <div key={index} className="mb-4">
-              <details className="rounded-lg shadow-md bg-white border border-gray-300 group">
+              <details className="rounded-lg shadow-md bg-customBgColor-bg border border-gray-300 group">
                 <summary className="px-4 py-3 flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 group-hover:bg-gray-100">
                   <span className="capitalize">{category}</span>
                   <svg
@@ -205,7 +199,7 @@ const Dashboard = () => {
                 </summary>
 
                 <div className="px-4 py-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
                     {items.map((item, idx) => {
                       const isCritical = item.stock < 50;
                       const shortageOrSurplus =

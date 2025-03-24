@@ -15,7 +15,6 @@ import {
   IconTruckDelivery,
   IconBuildingFactory,
 } from "@tabler/icons-react";
-import { motion } from "motion/react";
 
 const boltSize = [
   "Select Size",
@@ -58,7 +57,7 @@ export function AnimatedModalButton() {
   return (
     <div className=" ">
       <Modal>
-        <ModalTrigger className="bg-black dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
+        <ModalTrigger className="bg-customBgColor dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
             Edit Components
           </span>
@@ -99,7 +98,7 @@ export function AnimatedModalButton() {
         </ModalTrigger>
         <ModalBody>
           <ModalContent>
-            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8">
+            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8 bg-customBgColor-bg">
               Supplies Been Used
             </h4>
             <form
@@ -143,7 +142,7 @@ export function AnimatedModalButton() {
                   id="bolts"
                   name="bolts"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of bolts"
                 />
               </div>
@@ -177,7 +176,7 @@ export function AnimatedModalButton() {
                   id="nuts"
                   name="nuts"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of nuts"
                 />
               </div>
@@ -211,7 +210,7 @@ export function AnimatedModalButton() {
                   id="washers"
                   name="washers"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-customBgColor focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of washers"
                 />
               </div>
