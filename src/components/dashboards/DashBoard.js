@@ -174,7 +174,7 @@ const Dashboard = () => {
           </div>
 
           {/* Search Bar */}
-          <SearchBar />
+          <SearchBar data={data}/>
 
           {/* Dropdown Structure for Each Category */}
           {Object.entries(data).map(([category, items], index) => (

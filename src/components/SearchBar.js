@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-const SearchBar = () => {
+const SearchBar = ({data}) => {
   const [searchData, setSearchData] = useState(""); // Current input value
   const [debouncedSearch, setDebouncedSearch] = useState(""); // Debounced value
+
+const dataToDisplay = Object.entries(data).forEach(([key, items])=>{
+
+    return items
+
+})
+
+console.log(dataToDisplay)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -38,7 +46,7 @@ const SearchBar = () => {
         />
         <button
           type="submit"
-          className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition"
+          className="mt-2 px-4 py-2 bg-customBgColor text-white rounded-md shadow-md hover:bg-customTextColor-light transition"
         >
           Search
         </button>
