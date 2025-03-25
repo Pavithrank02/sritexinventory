@@ -1,53 +1,51 @@
-import React, { useEffect, useState } from "react";
-import StockCard from "./StockCard ";
+import React, { useEffect, useState, useRef } from "react";
+import StockCard from "./StockCard.js";
 
 const SearchBar = ({ data }) => {
   const [searchData, setSearchData] = useState(""); // Current input value
-  const [debouncedSearch, setDebouncedSearch] = useState(""); // Debounced value
   const [matches, setMatches] = useState([]);
+  const [throttledSearch, setThrottledSearch] = useState(""); // Throttled value
+  const lastCall = useRef(0); // Ref to track the last execution time
 
-  const dataToDisplay = Object.entries(data).map(([key, items]) => {
-    return { key, items: items.map((val) => val) };
-  });
+  const dataToDisplay = Object.entries(data).map(([key, items]) => ({
+    key,
+    items,
+  }));
 
+  // Throttled search logic
+  const throttledSearchHandler = (value) => {
+    const now = Date.now();
+    if (now - lastCall.current >= 1000) { // Throttle interval: 1000ms
+      setThrottledSearch(value.trim().toLowerCase());
+      lastCall.current = now;
+    }
+  };
+
+  // Update throttledSearch whenever user types
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedSearch(searchData);
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    throttledSearchHandler(searchData);
   }, [searchData]);
 
+  // Perform search based on throttledSearch
   useEffect(() => {
-    if (debouncedSearch) {
-      console.log("Search triggered for:", debouncedSearch);
+    if (throttledSearch) {
+      const filteredMatches = dataToDisplay.filter((res) =>
+        res.key.toLowerCase().includes(throttledSearch)
+      );
+
+      setMatches(filteredMatches.length > 0 ? filteredMatches : []);
+    } else {
+      setMatches([]); // Clear matches when input is empty
     }
-  }, [debouncedSearch]);
+  }, [throttledSearch]);
 
   const handleSearch = (e) => {
-    setSearchData(e.target.value); // Update searchData as user types
+    setSearchData(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Check if the debouncedSearch value matches any keys in dataToDisplay
-    const filteredMatches = dataToDisplay.filter(
-      (res) => res.key.toLowerCase() === debouncedSearch.toLowerCase()
-    );
-
-    if (filteredMatches.length > 0) {
-      setMatches(filteredMatches); // Store matches in state
-    } else {
-      setMatches([]); // Clear matches if no match is found
-      console.log("No match found");
-    }
-  };
   return (
     <div className="mb-6">
-      <form onSubmit={handleSubmit}>
-        {" "}
-        {/* Prevent form submission */}
+      <form onSubmit={(e) => e.preventDefault()}>
         <input
           type="text"
           placeholder="Search by category or size..."
@@ -55,12 +53,6 @@ const SearchBar = ({ data }) => {
           onChange={handleSearch}
           className="w-full p-3 rounded-md shadow-md border bg-customBgColor-bg border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customBgColor"
         />
-        <button
-          type="submit"
-          className="mt-2 px-4 py-2 bg-customBgColor text-white rounded-md shadow-md hover:bg-customTextColor-light transition"
-        >
-          Search
-        </button>
       </form>
       <div>
         {matches.length > 0 ? (
@@ -69,19 +61,19 @@ const SearchBar = ({ data }) => {
               <h3 className="text-lg font-bold">{match.key}</h3>
               <ul>
                 {match.items.map((item, i) => (
-                 <StockCard
-                 key={i}
-                 size={item.size}
-                 stock={item.stock}
-                 totalWeight={item.totalWeight}
-                 required={item.required}
-               />
+                  <StockCard
+                    key={i}
+                    size={item.size}
+                    stock={item.stock}
+                    totalWeight={item.totalWeight}
+                    required={item.required}
+                  />
                 ))}
               </ul>
             </div>
           ))
         ) : (
-         ""
+          <p className="text-gray-500">No matches found</p>
         )}
       </div>
     </div>

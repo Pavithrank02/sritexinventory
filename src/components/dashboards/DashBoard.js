@@ -16,7 +16,7 @@ import { SidebarDemo } from "../SideComponent";
 import HorizontalMenu from "../HorizontalMenu";
 import { AnimatedModalButton } from "../AnimatedModalButton";
 import SearchBar from "../SearchBar";
-import StockCard from "../StockCard ";
+import StockCard from "../StockCard";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {
