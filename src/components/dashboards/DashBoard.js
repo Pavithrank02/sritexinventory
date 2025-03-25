@@ -16,6 +16,7 @@ import { SidebarDemo } from "../SideComponent";
 import HorizontalMenu from "../HorizontalMenu";
 import { AnimatedModalButton } from "../AnimatedModalButton";
 import SearchBar from "../SearchBar";
+import StockCard from "../StockCard ";
 
 // Dynamic calculation function
 const calculateSummary = (data) => {
@@ -59,7 +60,6 @@ const calculateSummary = (data) => {
 //     // console.log(items)
 //   });
 // };
-
 
 // Dynamic data input
 const data = {
@@ -115,15 +115,14 @@ const itemSummaries = createItemSummaries(data);
 // Summary dynamically calculated
 const summary = calculateSummary(data);
 
-
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 const Dashboard = () => {
   const calculateWeight = (data) => {
     const boltTaken = 50;
     const nutTaken = 50;
-    const washerTaken=50
-  
+    const washerTaken = 50;
+
     Object.entries(data).forEach(([key, items]) => {
       if (key === "bolts") {
         // Map through the items to update totalWeight
@@ -153,7 +152,7 @@ const Dashboard = () => {
         });
       }
     });
-  
+
     return data; // Return the updated data
   };
   calculateWeight(data);
@@ -174,7 +173,7 @@ const Dashboard = () => {
           </div>
 
           {/* Search Bar */}
-          <SearchBar data={data}/>
+          <SearchBar data={data} />
 
           {/* Dropdown Structure for Each Category */}
           {Object.entries(data).map(([category, items], index) => (
@@ -199,58 +198,16 @@ const Dashboard = () => {
                 </summary>
 
                 <div className="px-4 py-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
-                    {items.map((item, idx) => {
-                      const isCritical = item.stock < 50;
-                      const shortageOrSurplus =
-                        (item.stock || 0) - (item.required || 0);
-
-                      return (
-                        <motion.div
-                          key={idx}
-                          className={`p-4 shadow-lg rounded-lg border-l-4 transition-transform transform hover:scale-105 ${
-                            isCritical
-                              ? "bg-red-50 border-red-500"
-                              : "bg-green-50 border-green-500"
-                          }`}
-                          initial={{ opacity: 0, y: 50 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.1 * idx }}
-                        >
-                          <h3 className="text-md font-bold text-gray-700 capitalize">
-                            {item.size}
-                          </h3>
-                          <p className="text-sm text-gray-500">
-                            {isCritical
-                              ? "⚠ Critical Stock"
-                              : "Sufficient Stock"}
-                          </p>
-                          <p className="text-lg font-bold text-gray-800">
-                            Stock:{" "}
-                            <CountUp
-                              start={0}
-                              end={item.stock}
-                              duration={2}
-                              separator=","
-                            />
-                          </p>
-                          <p className="text-sm text-gray-600">
-                            Weight: {item.totalWeight} kg
-                          </p>
-                          <p
-                            className={`text-sm font-semibold ${
-                              shortageOrSurplus < 0
-                                ? "text-red-500"
-                                : "text-green-500"
-                            }`}
-                          >
-                            {shortageOrSurplus < 0
-                              ? `Shortage: ${Math.abs(shortageOrSurplus)}`
-                              : `Surplus: ${shortageOrSurplus}`}
-                          </p>
-                        </motion.div>
-                      );
-                    })}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {items.map((item, idx) => (
+                      <StockCard
+                        key={idx}
+                        size={item.size}
+                        stock={item.stock}
+                        totalWeight={item.totalWeight}
+                        required={item.required}
+                      />
+                    ))}
                   </div>
                 </div>
               </details>
