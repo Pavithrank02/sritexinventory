@@ -56,7 +56,6 @@ const DemoBoltNutMachine = () => {
       try {
        
         nutBoltData.map((data) => {
-          console.log("inside", data)
             setboltShow(data?.boltData);
             setNutShow(data?.nutData);
             setWasherShow(data?.washerData);
@@ -65,7 +64,7 @@ const DemoBoltNutMachine = () => {
 
         //
       } catch (error) {
-        console.error("Error fetching data:", error);
+        alert("Error fetching data:", error);
       }
     };
     fetchData();
