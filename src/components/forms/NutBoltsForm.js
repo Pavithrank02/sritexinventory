@@ -103,6 +103,7 @@ const NutBoltsForm = () => {
     //   console.error("Error submitting form:", error);
     //   alert("Failed to submit form. Please try again later.");
     // }
+    alert("Form Submmitted")
   };
 
   const resetForm = () => {

@@ -115,6 +115,7 @@ const ChannelPattaForm = () => {
     //   console.error("Error submitting form:", error);
     //   alert("Failed to submit data.");
     // }
+    alert("Form Submmitted")
   };
 
   return (
