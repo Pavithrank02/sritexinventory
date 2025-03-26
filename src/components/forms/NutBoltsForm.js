@@ -74,35 +74,35 @@ const NutBoltsForm = () => {
       );
       return;
     }
-    try {
-      const response = await fetch(
-        `http://localhost:5000/nuts-and-bolts/add-or-update`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+    // try {
+    //   const response = await fetch(
+    //     `http://localhost:5000/nuts-and-bolts/add-or-update`,
+    //     {
+    //       method: "PUT",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(formData),
+    //     }
+    //   );
 
-      if (response.ok) {
-        const result = await response.json();
-        alert(
-          formData._id
-            ? "Data updated successfully!"
-            : "Data added successfully!"
-        );
-        console.log("Response:", result);
-        resetForm();
-      } else {
-        const error = await response.json();
-        alert(`Error: ${error.message}`);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Failed to submit form. Please try again later.");
-    }
+    //   if (response.ok) {
+    //     const result = await response.json();
+    //     alert(
+    //       formData._id
+    //         ? "Data updated successfully!"
+    //         : "Data added successfully!"
+    //     );
+    //     console.log("Response:", result);
+    //     resetForm();
+    //   } else {
+    //     const error = await response.json();
+    //     alert(`Error: ${error.message}`);
+    //   }
+    // } catch (error) {
+    //   console.error("Error submitting form:", error);
+    //   alert("Failed to submit form. Please try again later.");
+    // }
   };
 
   const resetForm = () => {

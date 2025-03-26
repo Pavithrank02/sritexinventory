@@ -90,31 +90,31 @@ const ChannelPattaForm = () => {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/channel-patta/add",
-        formData
-      );
-      alert(response.data.message);
-      setFormData({
-        datePurchased: "",
-        dateDelivered: "",
-        items: [
-          {
-            channelType: "",
-            channelSize: "",
-            noOfChannels: "",
-            channelWeight: "",
-            angleType: "",
-            angleSize: "",
-            angleWeight: "",
-          },
-        ],
-      });
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Failed to submit data.");
-    }
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:5000/channel-patta/add",
+    //     formData
+    //   );
+    //   alert(response.data.message);
+    //   setFormData({
+    //     datePurchased: "",
+    //     dateDelivered: "",
+    //     items: [
+    //       {
+    //         channelType: "",
+    //         channelSize: "",
+    //         noOfChannels: "",
+    //         channelWeight: "",
+    //         angleType: "",
+    //         angleSize: "",
+    //         angleWeight: "",
+    //       },
+    //     ],
+    //   });
+    // } catch (error) {
+    //   console.error("Error submitting form:", error);
+    //   alert("Failed to submit data.");
+    // }
   };
 
   return (
