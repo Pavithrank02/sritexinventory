@@ -30,7 +30,7 @@ export function SidebarDemo() {
       ],
     },
     {
-      label: "Sheets Form",
+      label: "Forms",
       href: "/sheets",
       icon: (
         <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />
@@ -42,7 +42,7 @@ export function SidebarDemo() {
       ],
     },
     {
-      label: "Channel & Plats Form",
+      label: "Channel & Patta Form",
       href: "/channel",
       icon: (
         <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />

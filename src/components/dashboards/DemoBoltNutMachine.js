@@ -98,61 +98,61 @@ const DemoBoltNutMachine = () => {
     for (const field in requiredFields) {
       if (!formData[field] || formData[field].trim() === "") {
         alert(`${requiredFields[field]} is required.`);
-        return;
+        return;     
       }
     }
 
-    try {
-      // Fetch the document
-      const res = await axios.get("http://localhost:5000/api/maindata");
-      console.log("Fetched document:", res.data);
-      const document = res.data[0];
+    // try {
+    //   // Fetch the document
+    //   const res = await axios.get("http://localhost:5000/api/maindata");
+    //   console.log("Fetched document:", res.data);
+    //   const document = res.data[0];
 
-      console.log(document._id);
+    //   console.log(document._id);
 
-      if (!document) {
-        throw new Error("Document not found");
-      }
+    //   if (!document) {
+    //     throw new Error("Document not found");
+    //   }
 
-      // Prepare formData for backend
-      const updatedData = {
-        component_name: formData.component_name,
-        boltsize: formData.boltsize,
-        boltquantity: parseInt(formData.boltquantity, 10) || 0,
-        nutSize: formData.nutSize,
-        nutQuantity: parseInt(formData.nutQuantity, 10) || 0,
-        washerSize: formData.washerSize,
-        washerQuantity: parseInt(formData.washerQuantity, 10) || 0,
-      };
-      // Send the updated data to the backend
-      const response = await axios.put(
-        `http://localhost:5000/api/maindata/${document._id}`,
-        updatedData
-      );
-      console.log("res", response);
+    //   // Prepare formData for backend
+    //   const updatedData = {
+    //     component_name: formData.component_name,
+    //     boltsize: formData.boltsize,
+    //     boltquantity: parseInt(formData.boltquantity, 10) || 0,
+    //     nutSize: formData.nutSize,
+    //     nutQuantity: parseInt(formData.nutQuantity, 10) || 0,
+    //     washerSize: formData.washerSize,
+    //     washerQuantity: parseInt(formData.washerQuantity, 10) || 0,
+    //   };
+    //   // Send the updated data to the backend
+    //   const response = await axios.put(
+    //     `http://localhost:5000/api/maindata/${document._id}`,
+    //     updatedData
+    //   );
+    //   console.log("res", response);
 
-      if (response.status === 200) {
-        alert("Document updated successfully!");
-        setboltShow(response.data.boltData); // Update state if necessary
-        setFormData({
-          component_name: "",
-          boltsize: "",
-          boltquantity: "",
-          nutSize: "",
-          nutQuantity: "",
-          washerSize: "",
-          washerQuantity: "",
-        });
-        handleCloseModal();
-      } else {
-        throw new Error("Failed to update document");
-      }
-    } catch (error) {
-      console.error("Error updating document:", error);
-      alert(
-        error.message || "Failed to update the document. Please try again."
-      );
-    }
+    //   if (response.status === 200) {
+    //     alert("Document updated successfully!");
+    //     setboltShow(response.data.boltData); // Update state if necessary
+    //     setFormData({
+    //       component_name: "",
+    //       boltsize: "",
+    //       boltquantity: "",
+    //       nutSize: "",
+    //       nutQuantity: "",
+    //       washerSize: "",
+    //       washerQuantity: "",
+    //     });
+    //     handleCloseModal();
+    //   } else {
+    //     throw new Error("Failed to update document");
+    //   }
+    // } catch (error) {
+    //   console.error("Error updating document:", error);
+    //   alert(
+    //     error.message || "Failed to update the document. Please try again."
+    //   );
+    // }
   };
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -190,78 +190,79 @@ const DemoBoltNutMachine = () => {
   };
 
   const handleConfirmDelete = async () => {
-    if (!selectedComponent) return;
+    // if (!selectedComponent) return;
 
-    const { index, type } = selectedComponent;
-    const sizeToDelete = fieldsToDelete[0]?.split("-")[1]; // Extract size from `fieldsToDelete`
+    // const { index, type } = selectedComponent;
+    // const sizeToDelete = fieldsToDelete[0]?.split("-")[1]; // Extract size from `fieldsToDelete`
 
-    try {
-      // Make API call to backend
-      const response = await fetch(
-        "http://localhost:5000/api/maindata/delete-item",
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            type,
-            size: sizeToDelete,
-            component_name: selectedComponent.component_name,
-          }),
-        }
-      );
+    // try {
+    //   // Make API call to backend
+    //   const response = await fetch(
+    //     "http://localhost:5000/api/maindata/delete-item",
+    //     {
+    //       method: "DELETE",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify({
+    //         type,
+    //         size: sizeToDelete,
+    //         component_name: selectedComponent.component_name,
+    //       }),
+    //     }
+    //   );
 
-      if (response.ok) {
-        // Update local state on success
-        if (type === "bolt") {
-          const updatedboltShow = boltShow.map((component, idx) =>
-            idx === index
-              ? {
-                  ...component,
-                  boltDetails: component.boltDetails?.filter(
-                    (bolt) => !fieldsToDelete.includes(`bolt-${bolt.size}`)
-                  ),
-                }
-              : component
-          );
-          setboltShow(updatedboltShow);
-        } else if (type === "nut") {
-          const updatedNutShow = nutShow.map((nutComponent, idx) =>
-            idx === index
-              ? {
-                  ...nutComponent,
-                  nutDetails: nutComponent.nutDetails?.filter(
-                    (nut) => !fieldsToDelete.includes(`nut-${nut.size}`)
-                  ),
-                }
-              : nutComponent
-          );
-          setNutShow(updatedNutShow);
-        } else if (type === "washer") {
-          const updatedWasherShow = washerShow.map((washerComponent, idx) =>
-            idx === index
-              ? {
-                  ...washerComponent,
-                  washerDetails: washerComponent.washerDetails?.filter(
-                    (washer) =>
-                      !fieldsToDelete.includes(`washer-${washer.size}`)
-                  ),
-                }
-              : washerComponent
-          );
-          setWasherShow(updatedWasherShow);
-        }
+    //   if (response.ok) {
+    //     // Update local state on success
+    //     if (type === "bolt") {
+    //       const updatedboltShow = boltShow.map((component, idx) =>
+    //         idx === index
+    //           ? {
+    //               ...component,
+    //               boltDetails: component.boltDetails?.filter(
+    //                 (bolt) => !fieldsToDelete.includes(`bolt-${bolt.size}`)
+    //               ),
+    //             }
+    //           : component
+    //       );
+    //       setboltShow(updatedboltShow);
+    //     } else if (type === "nut") {
+    //       const updatedNutShow = nutShow.map((nutComponent, idx) =>
+    //         idx === index
+    //           ? {
+    //               ...nutComponent,
+    //               nutDetails: nutComponent.nutDetails?.filter(
+    //                 (nut) => !fieldsToDelete.includes(`nut-${nut.size}`)
+    //               ),
+    //             }
+    //           : nutComponent
+    //       );
+    //       setNutShow(updatedNutShow);
+    //     } else if (type === "washer") {
+    //       const updatedWasherShow = washerShow.map((washerComponent, idx) =>
+    //         idx === index
+    //           ? {
+    //               ...washerComponent,
+    //               washerDetails: washerComponent.washerDetails?.filter(
+    //                 (washer) =>
+    //                   !fieldsToDelete.includes(`washer-${washer.size}`)
+    //               ),
+    //             }
+    //           : washerComponent
+    //       );
+    //       setWasherShow(updatedWasherShow);
+    //     }
 
-        // Reset modal state
-        setFieldsToDelete([]);
-        setIsDeleteModalOpen(false);
-      } else {
-        console.error("Failed to delete item:", await response.json());
-      }
-    } catch (error) {
-      console.error("Error deleting item:", error);
-    }
+    //     // Reset modal state
+    //     setFieldsToDelete([]);
+    //     setIsDeleteModalOpen(false);
+    //   } else {
+    //     console.error("Failed to delete item:", await response.json());
+    //   }
+    // } catch (error) {
+    //   console.error("Error deleting item:", error);
+    // }
+    alert("items deleted")
   };
 
   const handleCancelDelete = () => {
