@@ -7,12 +7,15 @@ import SheetForm from "./components/forms/SheetForm";
 import Dashboard from "./components/dashboards/DashBoard";
 import SheetsDashboard from "./components/dashboards/SheetsDashboard";
 import BoltNutMachine from "./components/dashboards/BoltNutMachine";
+import DemoBoltNutMachine from "./components/dashboards/DemoBoltNutMachine";
+
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={< Dashboard/>} />
+        <Route path="/demonut" element={< DemoBoltNutMachine/>} />
         <Route path="/sheetdashboard" element={< SheetsDashboard/>} />
         <Route path="sheets" element={<SheetForm />} />
         <Route path="machine" element={<BoltNutMachine />} />
