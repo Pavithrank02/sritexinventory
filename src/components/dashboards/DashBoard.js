@@ -115,7 +115,7 @@ const itemSummaries = createItemSummaries(data);
 // Summary dynamically calculated
 const summary = calculateSummary(data);
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042","#DD8042","#FFC59F", "#ED0987", "#AD7890", "#098700","#123456", "#654345","#ADDADE"];
 
 const Dashboard = () => {
   const calculateWeight = (data) => {
