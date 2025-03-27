@@ -36,12 +36,13 @@ const SheetDashboard = () => {
   // }, []);
 
   return (
-    <div className="flex flex-row bg-gray-50 mb-4 ">
+    <div className="flex flex-col lg:flex-row bg-gray-50 mb-4">
       <SidebarDemo />
       <div className="p-6 bg-customTextColor-white min-h-screen w-full mt-12 sm:mt-1">
         <HorizontalMenu />
+
         {/* Summary Cards */}
-        <div className="grid grid-cols-3 gap-6 mb-8 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {[
             { label: "Total Sheets", value: totalSheets },
             { label: "Pending Sheets", value: pendingSheets },
@@ -74,14 +75,20 @@ const SheetDashboard = () => {
           <h2 className="text-xl font-bold mb-4 text-gray-800">
             Material Sheets Overview
           </h2>
-          <BarChart width={600} height={300} data={data}>
-            <XAxis dataKey="material" stroke="#4B5563" />
-            <YAxis stroke="#4B5563" />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="noOfSheets" fill="#1D4ED8" name="No of Sheets" />
-            <Bar dataKey="balance" fill="#10B981" name="Pending Sheets" />
-          </BarChart>
+          <div className="overflow-x-auto">
+            <BarChart
+              width={Math.min(window.innerWidth * 0.9, 600)}
+              height={300}
+              data={data}
+            >
+              <XAxis dataKey="material" stroke="#4B5563" />
+              <YAxis stroke="#4B5563" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="noOfSheets" fill="#1D4ED8" name="No of Sheets" />
+              <Bar dataKey="balance" fill="#10B981" name="Pending Sheets" />
+            </BarChart>
+          </div>
         </motion.div>
 
         {/* Detailed Data Table */}
@@ -94,38 +101,40 @@ const SheetDashboard = () => {
           <h2 className="text-xl font-bold mb-4 text-gray-800">
             Material Details
           </h2>
-          <table className="w-full bg-white rounded-lg shadow">
-            <thead>
-              <tr className="bg-blue-500 text-white">
-                <th className="p-3 text-left text-sm">Material</th>
-                <th className="p-3 text-left text-sm">No of Sheets</th>
-                <th className="p-3 text-left text-sm">Weight</th>
-                {/* <th className="p-3 text-left text-sm">Pending Sheets</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {sheetData.data?.map((item, index) => (
-                <tr
-                  key={index}
-                  className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
-                >
-                  {item.items.map((subItem, subIndex) => (
-                    <React.Fragment key={subIndex}>
-                      <td className="p-3 border-b text-sm">
-                        {subItem?.sheetType}
-                      </td>
-                      <td className="p-3 border-b text-sm">
-                        {subItem?.noOfSheets}
-                      </td>
-                      <td className="p-3 border-b text-sm">
-                        {subItem?.weight}
-                      </td>
-                    </React.Fragment>
-                  ))}
+          <div className="overflow-x-auto">
+            <table className="w-full bg-white rounded-lg shadow">
+              <thead>
+                <tr className="bg-blue-500 text-white">
+                  <th className="p-3 text-left text-sm">Material</th>
+                  <th className="p-3 text-left text-sm">No of Sheets</th>
+                  <th className="p-3 text-left text-sm">Weight</th>
+                  {/* <th className="p-3 text-left text-sm">Pending Sheets</th> */}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {sheetData.data?.map((item, index) => (
+                  <tr
+                    key={index}
+                    className={index % 2 === 0 ? "bg-gray-50" : "bg-white"}
+                  >
+                    {item.items.map((subItem, subIndex) => (
+                      <React.Fragment key={subIndex}>
+                        <td className="p-3 border-b text-sm">
+                          {subItem?.sheetType}
+                        </td>
+                        <td className="p-3 border-b text-sm">
+                          {subItem?.noOfSheets}
+                        </td>
+                        <td className="p-3 border-b text-sm">
+                          {subItem?.weight}
+                        </td>
+                      </React.Fragment>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </motion.div>
       </div>
     </div>

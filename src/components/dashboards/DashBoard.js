@@ -172,7 +172,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       <SidebarDemo />
-      <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
+      <div className="p-4 sm:p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
         <HorizontalMenu />
 
         <div className="mb-8">
@@ -232,7 +232,7 @@ const Dashboard = () => {
         {Object.entries(data).map(([key, items], index) => (
           <motion.div
             key={index}
-            className="mb-8 bg-white p-6 rounded-lg shadow-xl border-t-4 border-customBorderColor"
+            className="mb-8 bg-white p-4 sm:p-6 rounded-lg shadow-xl border-t-4 border-customBorderColor"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -242,7 +242,7 @@ const Dashboard = () => {
             </h2>
 
             {/* Bar Chart */}
-            <div className="mb-6 w-full max-w-full overflow-auto">
+            <div className="mb-6 w-full max-w-full overflow-x-auto">
               <h3 className="text-lg font-semibold text-gray-700">
                 Stock Analysis
               </h3>

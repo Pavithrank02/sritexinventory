@@ -15,7 +15,8 @@ const SearchBar = ({ data }) => {
   // Throttled search logic
   const throttledSearchHandler = (value) => {
     const now = Date.now();
-    if (now - lastCall.current >= 1000) { // Throttle interval: 1000ms
+    if (now - lastCall.current >= 1000) {
+      // Throttle interval: 1000ms
       setThrottledSearch(value.trim().toLowerCase());
       lastCall.current = now;
     }
@@ -45,21 +46,29 @@ const SearchBar = ({ data }) => {
 
   return (
     <div className="mb-6">
-      <form onSubmit={(e) => e.preventDefault()}>
+      {/* Search Input */}
+      <form onSubmit={(e) => e.preventDefault()} className="mb-4">
         <input
           type="text"
           placeholder="Search by category or size..."
           value={searchData}
           onChange={handleSearch}
-          className="w-full p-3 rounded-md shadow-md border bg-customBgColor-bg border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customBgColor"
+          className="w-full p-3 rounded-md shadow-md border bg-customBgColor-bg border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customBgColor text-sm md:text-base"
         />
       </form>
+
+      {/* Matches Display */}
       <div>
         {matches.length > 0 ? (
           matches.map((match, index) => (
-            <div key={index}>
-              <h3 className="text-lg font-bold">{match.key}</h3>
-              <ul>
+            <div
+              key={index}
+              className="mb-6 bg-white dark:bg-neutral-800 p-4 rounded-md shadow-md"
+            >
+              <h3 className="text-lg md:text-xl font-bold text-neutral-700 dark:text-neutral-100 mb-4">
+                {match.key}
+              </h3>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {match.items.map((item, i) => (
                   <StockCard
                     key={i}
@@ -73,7 +82,9 @@ const SearchBar = ({ data }) => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500">No matches found</p>
+          <p className="text-gray-500 dark:text-gray-400 text-center">
+            No matches found
+          </p>
         )}
       </div>
     </div>

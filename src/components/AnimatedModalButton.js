@@ -55,67 +55,66 @@ export function AnimatedModalButton() {
   };
 
   return (
-    <div className=" ">
+    <div className="relative">
       <Modal>
-        <ModalTrigger className="bg-customBgColor dark:bg-white dark:text-black text-white flex justify-center group/modal-btn">
+        <ModalTrigger className="bg-customBgColor dark:bg-white dark:text-black text-white flex justify-center group/modal-btn relative">
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
             Edit Components
           </span>
           <div className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20">
-            {/** Dynamic Icon Logic */}
             {(() => {
-              const iconType = "user"; // Replace with dynamic type (e.g., "user", "settings", "bell")
+              const iconType = "user"; // Replace with dynamic type
               switch (iconType) {
                 case "IconBrandTabler":
                   return (
                     <IconBrandTabler className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide User Icon
+                  );
                 case "IconNut":
                   return (
                     <IconNut className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide Settings Icon
+                  );
                 case "IconPerspective":
                   return (
                     <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide Bell Icon
+                  );
                 case "IconRuler2":
                   return (
                     <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide Bell Icon
+                  );
                 case "IconTruckDelivery":
                   return (
                     <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide Bell Icon
+                  );
                 case "IconBuildingFactory":
                   return (
                     <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  ); // Lucide Bell Icon
+                  );
                 default:
-                  return <span>🚀</span>; // Default Emoji Icon
+                  return <span>🚀</span>;
               }
             })()}
           </div>
         </ModalTrigger>
         <ModalBody>
-          <ModalContent>
-            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-8 bg-customBgColor-bg">
+          <ModalContent className="max-w-lg mx-auto p-6 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
+            <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-6">
               Supplies Been Used
             </h4>
             <form
-              className="h-[60vh] overflow-y-scroll pr-4"
+              className="h-[50vh] overflow-y-auto space-y-6"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
               <style>
                 {`
-        form::-webkit-scrollbar {
-          display: none;
-        }
-      `}
+                form::-webkit-scrollbar {
+                  display: none;
+                }
+              `}
               </style>
 
               {/* Bolts */}
-              <div className="flex flex-col items-start mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="flex flex-col items-start space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300">
                   Bolt Size
                 </label>
                 <select
@@ -133,7 +132,7 @@ export function AnimatedModalButton() {
                 </select>
                 <label
                   htmlFor="bolts"
-                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   Number of Bolts
                 </label>
@@ -142,14 +141,14 @@ export function AnimatedModalButton() {
                   id="bolts"
                   name="bolts"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of bolts"
                 />
               </div>
 
               {/* Nuts */}
-              <div className="flex flex-col items-start mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="flex flex-col items-start space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300">
                   Nut Size
                 </label>
                 <select
@@ -167,7 +166,7 @@ export function AnimatedModalButton() {
                 </select>
                 <label
                   htmlFor="nuts"
-                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   Number of Nuts
                 </label>
@@ -176,14 +175,14 @@ export function AnimatedModalButton() {
                   id="nuts"
                   name="nuts"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of nuts"
                 />
               </div>
 
               {/* Washers */}
-              <div className="flex flex-col items-start mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="flex flex-col items-start space-y-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300">
                   Washer Size
                 </label>
                 <select
@@ -201,7 +200,7 @@ export function AnimatedModalButton() {
                 </select>
                 <label
                   htmlFor="washers"
-                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300 mt-4"
+                  className="text-sm font-medium text-neutral-700 dark:text-neutral-300"
                 >
                   Number of Washers
                 </label>
@@ -210,19 +209,17 @@ export function AnimatedModalButton() {
                   id="washers"
                   name="washers"
                   min="0"
-                  className="w-full p-2 mt-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-customBgColor focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of washers"
                 />
               </div>
             </form>
           </ModalContent>
 
-          <ModalFooter className="gap-8 mb-4 -mt-3">
-            {/* Cancel Button */}
-            <button className="px-4 py-2 bg-gray-200 text-black dark:bg-black dark:border-black dark:text-white border border-gray-300 rounded-md text-sm w-28">
+          <ModalFooter className="flex justify-between px-6 mt-4">
+            <button className="px-4 py-2 bg-gray-200 text-black dark:bg-neutral-700 dark:text-white border border-gray-300 rounded-md text-sm w-28">
               Cancel
             </button>
-            {/* Submit Button */}
             <button className="bg-black text-white dark:bg-white dark:text-black text-sm px-4 py-2 rounded-md border border-black w-28">
               Submit
             </button>
@@ -232,6 +229,3 @@ export function AnimatedModalButton() {
     </div>
   );
 }
-
-
-
