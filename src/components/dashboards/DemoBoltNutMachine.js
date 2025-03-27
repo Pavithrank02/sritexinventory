@@ -268,180 +268,196 @@ const DemoBoltNutMachine = () => {
 
   return (
     <div className="flex flex-row h-screen bg-customBgColor-bg dark:bg-neutral-900">
-      <SidebarDemo />
-      <div className="flex-1 p-2 mt-12 sm:mt-1">
-        <HorizontalMenu />
-        <div className="p-4 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            <Card className="col-span-full">
-              <CardContent>
-                <h2 className="text-xl font-bold mb-4 text-customTextColor">
-                  Machine-based Component Details
-                </h2>
+  {/* Sidebar */}
+  <SidebarDemo />
 
-                <div className="p-4 space-y-4">
-                  <Button
-                    className="w-full sm:w-auto"
-                    onClick={handleOpenModal}
-                  >
-                    Add boltShow
-                  </Button>
-                  <form onSubmit={handleAddOrUpdate}>
-                    <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                      <h2 className="text-xl font-bold mb-4 text-customTextColor">
-                        Add Nut, Bolt, Washer
-                      </h2>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        <Input
-                          placeholder="Component Name"
-                          name="component_name"
-                          value={formData.component_name}
-                          onChange={handleInputChange}
-                          className="w-full sm:w-1/2 border border-customBorderColor"
-                        />
-                        <label className="block w-full sm:w-1/2 text-sm font-medium text-gray-700">
-                          Bolt Size
-                        </label>
-                        <select
-                          className="w-full sm:w-1/2 border border-customBorderColor rounded-lg p-2"
-                          value={formData.boltsize}
-                          onChange={handleInputChange}
-                          name="boltsize"
-                          placeholder="bolt size"
-                        >
-                          {boltSize.map((size, i) => (
-                            <option key={i} value={size}>
-                              {size}
-                            </option>
-                          ))}
-                        </select>
-                        {/* Repeat similar for other inputs */}
-                      </div>
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        <button
-                          type="submit"
-                          className="bg-customBgColor p-2 rounded-lg text-customBgColor-bg w-full sm:w-auto"
-                        >
-                          Submit
-                        </button>
-                        <Button
-                          variant="link"
-                          onClick={handleCloseModal}
-                          className="w-full sm:w-auto"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
-                    </Modal>
-                  </form>
-                </div>
-                <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg overflow-x-auto">
-                  <thead className="bg-customBgColor-bg">
-                    <tr className="bg-customBgColor-bg">
-                      <th className="border border-customBorderColor p-2 text-sm sm:text-base">
-                        Component Name
-                      </th>
-                      <th className="border border-customBorderColor p-2 text-sm sm:text-base">
-                        Bolt Size
-                      </th>
-                      <th className="border border-customBorderColor p-2 text-sm sm:text-base">
-                        Quantity
-                      </th>
-                      <th className="border border-customBorderColor p-2 text-sm sm:text-base">
-                        Edit
-                      </th>
-                      <th className="border border-customBorderColor p-2 text-sm sm:text-base">
-                        Delete
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {boltShow?.map((component, index) => {
-                      const filteredBoltDetails = component.boltDetails.filter(
-                        (bolt) => bolt.quantity > 0
-                      );
-                      return filteredBoltDetails.map((bolt, boltIndex) => (
-                        <tr
-                          key={`${index}-${boltIndex}`}
-                          className="hover:bg-gray-100"
-                        >
-                          {boltIndex === 0 && (
+  {/* Main Content */}
+  <div className="flex-1 p-2 mt-12 sm:mt-1">
+    {/* Horizontal Menu */}
+    <HorizontalMenu />
+
+    {/* Content Section */}
+    <div className="p-4 mb-8">
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {/* Machine-based Component Details Card */}
+        <Card className="col-span-full">
+          <CardContent>
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-customTextColor">
+              Machine-based Component Details
+            </h2>
+
+            <div className="p-4 space-y-4">
+              {/* Add Button */}
+              <Button
+                className="w-full sm:w-auto"
+                onClick={handleOpenModal}
+              >
+                Add boltShow
+              </Button>
+
+              {/* Modal for Adding Components */}
+              <form onSubmit={handleAddOrUpdate}>
+                <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-4 text-customTextColor">
+                    Add Nut, Bolt, Washer
+                  </h2>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Input
+                      placeholder="Component Name"
+                      name="component_name"
+                      value={formData.component_name}
+                      onChange={handleInputChange}
+                      className="w-full sm:w-1/2 border border-customBorderColor"
+                    />
+                    <label className="block w-full sm:w-1/2 text-sm font-medium text-gray-700">
+                      Bolt Size
+                    </label>
+                    <select
+                      className="w-full sm:w-1/2 border border-customBorderColor rounded-lg p-2"
+                      value={formData.boltsize}
+                      onChange={handleInputChange}
+                      name="boltsize"
+                      placeholder="bolt size"
+                    >
+                      {boltSize.map((size, i) => (
+                        <option key={i} value={size}>
+                          {size}
+                        </option>
+                      ))}
+                    </select>
+                    {/* Repeat similar for other inputs */}
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <button
+                      type="submit"
+                      className="bg-customBgColor p-2 rounded-lg text-customBgColor-bg w-full sm:w-auto"
+                    >
+                      Submit
+                    </button>
+                    <Button
+                      variant="link"
+                      onClick={handleCloseModal}
+                      className="w-full sm:w-auto"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </Modal>
+              </form>
+            </div>
+
+            {/* Table for Bolt Details */}
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-customBorderColor bg-customBgColor-bg">
+                <thead className="bg-customBgColor-bg">
+                  <tr>
+                    <th className="border border-customBorderColor p-2 text-sm sm:text-base">
+                      Component Name
+                    </th>
+                    <th className="border border-customBorderColor p-2 text-sm sm:text-base">
+                      Bolt Size
+                    </th>
+                    <th className="border border-customBorderColor p-2 text-sm sm:text-base">
+                      Quantity
+                    </th>
+                    <th className="border border-customBorderColor p-2 text-sm sm:text-base">
+                      Edit
+                    </th>
+                    <th className="border border-customBorderColor p-2 text-sm sm:text-base">
+                      Delete
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {boltShow?.map((component, index) => {
+                    const filteredBoltDetails = component.boltDetails.filter(
+                      (bolt) => bolt.quantity > 0
+                    );
+                    return filteredBoltDetails.map((bolt, boltIndex) => (
+                      <tr
+                        key={`${index}-${boltIndex}`}
+                        className="hover:bg-gray-100"
+                      >
+                        {boltIndex === 0 && (
+                          <td
+                            rowSpan={filteredBoltDetails.length}
+                            className="border border-customBorderColor p-2 text-center align-middle text-sm sm:text-base"
+                          >
+                            {component.component_name}
+                          </td>
+                        )}
+                        <td className="border border-customBorderColor p-2 text-sm sm:text-base">
+                          {bolt.size}
+                        </td>
+                        <td className="border border-customBorderColor p-2 text-center text-sm sm:text-base">
+                          {bolt.quantity}
+                        </td>
+                        {boltIndex === 0 && (
+                          <>
                             <td
                               rowSpan={filteredBoltDetails.length}
-                              className="border border-customBorderColor p-2 text-center align-middle text-sm sm:text-base"
+                              className="border border-customBorderColor p-2 text-center align-middle"
                             >
-                              {component.component_name}
+                              <Button
+                                variant="link"
+                                onClick={() => handleEdit(index)}
+                              >
+                                Edit
+                              </Button>
                             </td>
-                          )}
-                          <td className="border border-customBorderColor p-2 text-sm sm:text-base">
-                            {bolt.size}
-                          </td>
-                          <td className="border border-customBorderColor p-2 text-center text-sm sm:text-base">
-                            {bolt.quantity}
-                          </td>
-                          {boltIndex === 0 && (
-                            <>
-                              <td
-                                rowSpan={filteredBoltDetails.length}
-                                className="border border-customBorderColor p-2 text-center align-middle"
+                            <td
+                              rowSpan={filteredBoltDetails.length}
+                              className="border border-customBorderColor p-2 text-center align-middle"
+                            >
+                              <Button
+                                variant="link"
+                                className="text-red-500"
+                                onClick={() =>
+                                  handleDeleteClick(index, "bolt")
+                                }
                               >
-                                <Button
-                                  variant="link"
-                                  onClick={() => handleEdit(index)}
-                                >
-                                  Edit
-                                </Button>
-                              </td>
-                              <td
-                                rowSpan={filteredBoltDetails.length}
-                                className="border border-customBorderColor p-2 text-center align-middle"
-                              >
-                                <Button
-                                  variant="link"
-                                  className="text-red-500"
-                                  onClick={() =>
-                                    handleDeleteClick(index, "bolt")
-                                  }
-                                >
-                                  Delete
-                                </Button>
-                              </td>
-                            </>
-                          )}
-                        </tr>
-                      ));
-                    })}
-                  </tbody>
-                </table>
-              </CardContent>
-            </Card>
-            {/* Similar responsiveness for Nut and Washer tables */}
-            <BarGraph
-              data={boltShow}
-              name={"Bolt Component Quantities Overview"}
-              detailKey="boltDetails"
-              getLabel={(entry) => entry.component_name}
-            />
-            <BarGraph
-              data={nutShow}
-              name={"Nut Component Quantities Overview"}
-              detailKey="nutDetails"
-              getLabel={(_, index) => `Nut ${index + 1}`}
-            />
-            <BarGraph
-              data={washerShow}
-              name={"Washer Component Quantities Overview"}
-              detailKey="washerDetails"
-              getLabel={(_, index) => `Washer ${index + 1}`}
-            />
-          </motion.div>
-        </div>
-      </div>
+                                Delete
+                              </Button>
+                            </td>
+                          </>
+                        )}
+                      </tr>
+                    ));
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Bar Graphs for Components */}
+        <BarGraph
+          data={boltShow}
+          name={"Bolt Component Quantities Overview"}
+          detailKey="boltDetails"
+          getLabel={(entry) => entry.component_name}
+        />
+        <BarGraph
+          data={nutShow}
+          name={"Nut Component Quantities Overview"}
+          detailKey="nutDetails"
+          getLabel={(_, index) => `Nut ${index + 1}`}
+        />
+        <BarGraph
+          data={washerShow}
+          name={"Washer Component Quantities Overview"}
+          detailKey="washerDetails"
+          getLabel={(_, index) => `Washer ${index + 1}`}
+        />
+      </motion.div>
     </div>
+  </div>
+</div>
+
   );
 };
 export default DemoBoltNutMachine;
