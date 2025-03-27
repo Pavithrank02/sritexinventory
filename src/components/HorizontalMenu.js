@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const categories = [
   { name: "Sheet Dashboard", path: "/sheetdashboard" },
-  { name: "Machine Dashboard", path: "/machine" },
+  { name: "Machine Dashboard", path: "/demonut" },
   { name: "Nut&Bolt Dashboard", path: "/" },
   { name: "Live", path: "/live" },
   { name: "Gaming", path: "/gaming" },
