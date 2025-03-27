@@ -4,7 +4,7 @@ const SprocketForm = () => {
   const materialType = ["Select Type", "MS", "SS"]
   const handleSelect = (e) =>{
     const {name, value} = e.target
-
+//
   }
   return (
     <div>
