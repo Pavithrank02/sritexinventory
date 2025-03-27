@@ -115,7 +115,20 @@ const itemSummaries = createItemSummaries(data);
 // Summary dynamically calculated
 const summary = calculateSummary(data);
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042","#DD8042","#FFC59F", "#ED0987", "#AD7890", "#098700","#123456", "#654345","#ADDADE"];
+const COLORS = [
+  "#0088FE",
+  "#00C49F",
+  "#FFBB28",
+  "#FF8042",
+  "#DD8042",
+  "#FFC59F",
+  "#ED0987",
+  "#AD7890",
+  "#098700",
+  "#123456",
+  "#654345",
+  "#ADDADE",
+];
 
 const Dashboard = () => {
   const calculateWeight = (data) => {
@@ -157,17 +170,17 @@ const Dashboard = () => {
   };
   calculateWeight(data);
   return (
-    <div className="flex flex-row ">
+    <div className="flex flex-col lg:flex-row">
       <SidebarDemo />
       <div className="p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
         <HorizontalMenu />
 
         <div className="mb-8">
-          <div className="flex flex-row justify-between">
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+          <div className="flex flex-col sm:flex-row justify-between">
+            <h2 className="text-2xl font-bold mb-4 sm:mb-0 text-gray-800">
               Inventory Summary
             </h2>
-            <div>
+            <div className="mb-5">
               <AnimatedModalButton />
             </div>
           </div>
@@ -198,7 +211,7 @@ const Dashboard = () => {
                 </summary>
 
                 <div className="px-4 py-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {items.map((item, idx) => (
                       <StockCard
                         key={idx}
@@ -229,11 +242,15 @@ const Dashboard = () => {
             </h2>
 
             {/* Bar Chart */}
-            <div className="mb-6">
+            <div className="mb-6 w-full max-w-full overflow-auto">
               <h3 className="text-lg font-semibold text-gray-700">
                 Stock Analysis
               </h3>
-              <BarChart width={600} height={300} data={items}>
+              <BarChart
+                width={Math.min(600, window.innerWidth - 50)}
+                height={300}
+                data={items}
+              >
                 <XAxis dataKey="size" stroke="#4B5563" />
                 <YAxis stroke="#4B5563" />
                 <Tooltip />
@@ -243,18 +260,18 @@ const Dashboard = () => {
             </div>
 
             {/* Pie Chart */}
-            <div className="mb-6">
+            <div className="mb-6 flex justify-center">
               <h3 className="text-lg font-semibold text-gray-700">
                 Stock Distribution
               </h3>
-              <PieChart width={400} height={400}>
+              <PieChart width={300} height={300}>
                 <Pie
                   data={items}
                   dataKey="stock"
                   nameKey="size"
                   cx="50%"
                   cy="50%"
-                  outerRadius={120}
+                  outerRadius={100}
                   fill="#10B981"
                   label
                 >
@@ -267,7 +284,7 @@ const Dashboard = () => {
             </div>
 
             {/* Data Table */}
-            <div>
+            <div className="overflow-x-auto">
               <h3 className="text-lg font-semibold text-gray-700">
                 Data Table
               </h3>
