@@ -122,7 +122,7 @@ const ChannelPattaForm = () => {
     <div className="flex flex-row h-screen w-full">
       <SidebarDemo />
       <div className="flex-1 bg-gray-50 dark:bg-neutral-900 p-6">
-        <h1 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+        <h1 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200 text-center">
           Channel and Patta Form
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">

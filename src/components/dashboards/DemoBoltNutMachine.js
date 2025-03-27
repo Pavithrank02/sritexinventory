@@ -272,9 +272,9 @@ const DemoBoltNutMachine = () => {
   return (
     <div className="flex flex-row h-screen bg-customBgColor-bg dark:bg-neutral-900">
       <SidebarDemo />
-      <div className="flex-1 p-2  ">
+      <div className="flex-1 p-2 mt-12 sm:mt-1 ">
         <HorizontalMenu />
-        <div className="p-4 ">
+        <div className="p-4 mb-8">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

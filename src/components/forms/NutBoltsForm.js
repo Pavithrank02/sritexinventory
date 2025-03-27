@@ -224,7 +224,7 @@ const NutBoltsForm = () => {
     <div className="flex flex-row bg-gray-100 min-h-screen">
       <SidebarDemo />
       <div className="p-8 w-full max-w-7xl">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Nuts and Bolts Form
         </h1>
         <form

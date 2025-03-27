@@ -158,8 +158,8 @@ const DeliveryChallanForm = () => {
   return (
     <div className="flex flex-row h-screen bg-customTextColor-white dark:bg-neutral-900">
       <SidebarDemo />
-      <div className="flex-1 p-6">
-        <h1 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">
+      <div className="flex-1 p-6 justify-center items-center">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200 text-center">
           Delivery Challan Form
         </h1>
 

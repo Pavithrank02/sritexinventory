@@ -36,12 +36,12 @@ const SheetDashboard = () => {
   // }, []);
 
   return (
-    <div className="flex flex-row bg-gray-50">
+    <div className="flex flex-row bg-gray-50 mb-4 ">
       <SidebarDemo />
-      <div className="p-6 bg-customTextColor-white min-h-screen w-full">
+      <div className="p-6 bg-customTextColor-white min-h-screen w-full mt-12 sm:mt-1">
         <HorizontalMenu />
         {/* Summary Cards */}
-        <div className="grid grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-3 gap-6 mb-8 ">
           {[
             { label: "Total Sheets", value: totalSheets },
             { label: "Pending Sheets", value: pendingSheets },

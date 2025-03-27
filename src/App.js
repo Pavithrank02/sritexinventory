@@ -18,7 +18,7 @@ function App() {
         <Route path="/demonut" element={< DemoBoltNutMachine/>} />
         <Route path="/sheetdashboard" element={< SheetsDashboard/>} />
         <Route path="sheets" element={<SheetForm />} />
-        <Route path="machine" element={<BoltNutMachine />} />
+        {/* <Route path="machine" element={<BoltNutMachine />} /> */}
         <Route path="channel" element={<ChannelPattaForm />} />
         <Route path="dc" element={<DeliveryChallanForm />} />
         <Route path="nuts" element={<NutBoltsForm />} />

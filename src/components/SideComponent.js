@@ -30,7 +30,7 @@ export function SidebarDemo() {
       ),
       subLinks: [
         { label: "Sheet Dashboard", href: "/sheetdashboard" },
-        { label: "Machine Dashboard", href: "/machine" },
+        { label: "Machine Dashboard", href: "/demonut" },
         { label: "Nut and Bolt Dashboard", href: "/" },
       ],
     },
@@ -67,12 +67,12 @@ export function SidebarDemo() {
     },
     {
       label: "Machine",
-      href: "/machine",
+      href: "/demonut",
       icon: (
         <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
       ),
       subLinks: [
-        { label: "Nuts, Bolt and Washers", href: "" },
+        { label: "Nuts, Bolt and Washers", href: "/demonut" },
         { label: "Sheet Types", href: "" },
         { label: "Shafts and Gears", href: "" },
         { label: "Dummy", href: "" },
@@ -329,7 +329,7 @@ export function SidebarDemo() {
           )}
 
           {/* Mobile Menu Button */}
-          <div className="absolute left-4 top-4 lg:hidden md:hidden">
+          <div className="absolute left-1 top-4 lg:hidden md:hidden">
             <button
               onClick={() => setIsSidebarOpen(true)}
               className="flex items-center gap-2 p-3 rounded-full bg-gradient-to-r from-customBgColor-light to-customTextColor-light text-white shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
