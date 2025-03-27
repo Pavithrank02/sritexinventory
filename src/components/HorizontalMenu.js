@@ -13,8 +13,8 @@ const categories = [
 
 const HorizontalMenu = () => {
   return (
-    <div className="overflow-x-auto scrollbar-hide whitespace-nowrap bg-gradient-to-r from-customBgColor to-customTextColor-light shadow-md p-4 rounded-lg mb-4">
-      <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+    <div className="overflow-x-auto sm:overflow-visible scrollbar-hide whitespace-nowrap bg-gradient-to-r from-customBgColor to-customTextColor-light shadow-md p-4 rounded-lg mb-4">
+      <div className="flex space-x-4">
         {categories.map((category) => (
           <Link
             key={category.name}
