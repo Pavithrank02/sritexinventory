@@ -36,7 +36,7 @@ const SheetDashboard = () => {
   // }, []);
 
   return (
-    <div className="flex flex-col lg:flex-row bg-gray-50 mb-4">
+    <div className="flex flex-col lg:flex-row bg-gray-50 ">
       <SidebarDemo />
       <div className="p-6 bg-customTextColor-white min-h-screen w-full mt-12 sm:mt-1">
         <HorizontalMenu />
