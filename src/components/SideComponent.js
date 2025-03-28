@@ -93,14 +93,14 @@ export function SidebarDemo() {
   }, []);
 
   return (
-    <div className="relative flex ">
+    <div className="relative flex bg-customBgColor-bg ">
       {/* Sidebar for larger screens */}
       {/* Sidebar for larger screens */}
       {!isMobile && (
         <motion.div
           animate={{ width: isSidebarOpen ? 240 : 96 }} // Adjust width smoothly
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed h-full bg-customBgColor-bg dark:bg-gray-800 shadow-md"
+          className="fixed h-full bg-customBgColor-bg shadow-md"
           onMouseEnter={() => setIsSidebarOpen(true)} // Open on hover
           onMouseLeave={() => setIsSidebarOpen(false)} // Close on hover out
         >
@@ -132,8 +132,8 @@ export function SidebarDemo() {
                       className={({ isActive }) =>
                         `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md ${
                           isActive
-                            ? "bg-gradient-to-r from-customBgColor-bg to-customTextColor-light text-white dark:from-gray-700 dark:to-gray-600"
-                            : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light dark:hover:bg-gray-700"
+                            ? " bg-gradient-to-r from-customBgColor-bg to-customTextColor-light dark:text-customTextColor "
+                            : "bg-customBgColor-bg dark:text-black hover:bg-customTextColor-light dark:hover:bg-customBgColor"
                         }`
                       }
                     >
@@ -142,7 +142,7 @@ export function SidebarDemo() {
                           className={`p-2 rounded-lg ${
                             isSidebarOpen
                               ? "bg-white text-customTextColor-light"
-                              : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+                              : "bg-gray-200  dark:text-black"
                           }`}
                         >
                           {link.icon}
@@ -158,19 +158,19 @@ export function SidebarDemo() {
                     <div>
                       {/* Main Link with SubLinks */}
                       <div
-                        className="flex items-center justify-between p-3 rounded-lg cursor-pointer shadow-sm bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light dark:hover:bg-gray-700 transition-all duration-300"
+                        className="flex items-center justify-between p-3 rounded-lg cursor-pointer shadow-sm bg-customBgColor-bg   hover:bg-customTextColor-light dark:hover:bg-customBgColor transition-all duration-300"
                         onClick={() =>
                           setDropdownOpen(dropdownOpen === idx ? null : idx)
                         }
                       >
                         <div className="flex items-center gap-3">
                           {link.icon && (
-                            <span className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                            <span className="p-2 rounded-lg bg-customBgColor-bg">
                               {link.icon}
                             </span>
                           )}
                           {isSidebarOpen && (
-                            <span className="text-lg font-medium">
+                            <span className="text-lg font-medium text-black">
                               {link.label}
                             </span>
                           )}
@@ -190,12 +190,12 @@ export function SidebarDemo() {
                       {link.subLinks &&
                         dropdownOpen === idx &&
                         isSidebarOpen && (
-                          <div className="ml-6 mt-2 space-y-1 pl-4 border-l border-gray-300 dark:border-gray-700">
+                          <div className="ml-6 mt-2 space-y-1 pl-4 border-l border-customBorderColor dark:border-gray-700">
                             {link.subLinks.map((subLink, subIdx) => (
                               <NavLink
                                 key={subIdx}
                                 to={subLink.href}
-                                className="flex items-center gap-3 p-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-customTextColor-light dark:hover:bg-gray-700 transition-all duration-300"
+                                className="flex items-center gap-3 p-2 rounded-md text-sm text-gray-600 hover:text-customTextColor-white  hover:bg-customTextColor-light dark:hover:bg-customBgColor transition-all duration-300"
                               >
                                 <span className="text-customTextColor-light">
                                   •

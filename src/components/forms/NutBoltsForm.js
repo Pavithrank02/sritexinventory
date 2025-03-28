@@ -192,7 +192,7 @@ const NutBoltsForm = () => {
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
         placeholder={placeholder}
-        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       />
     </div>
@@ -207,7 +207,7 @@ const NutBoltsForm = () => {
         name={name}
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
-        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       >
         <option value="">Select {label}</option>
@@ -234,7 +234,7 @@ const NutBoltsForm = () => {
           {formData.items.map((item, index) => (
             <div
               key={index}
-              className="col-span-full border p-6 rounded-lg shadow-md bg-customBgColor-bg dark:bg-neutral-800"
+              className="col-span-full border p-6 rounded-lg shadow-md bg-customBgColor-bg "
             >
               <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-cuborder-customBgColor-bg">
                 Item {index + 1}
@@ -297,7 +297,7 @@ const NutBoltsForm = () => {
             <div className="grid grid-cols-2 gap-4 mt-6">
               <button
                 type="submit"
-                className="w-full bg-customTextColor hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md"
+                className="w-full bg-customTextColor hover:bg-customTextColor-light text-white font-semibold py-3 rounded-lg shadow-md"
               >
                 {isUpdateMode ? "Update Stock" : "Submit"}
               </button>

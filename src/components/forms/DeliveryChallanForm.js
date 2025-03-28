@@ -156,80 +156,80 @@ const DeliveryChallanForm = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen bg-customTextColor-white dark:bg-neutral-900">
+    <div className="flex flex-row h-screen bg-customTextColor-white">
       <SidebarDemo />
       <div className="flex-1 p-6 justify-center items-center">
-        <h1 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200 text-center">
+        <h1 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
           Delivery Challan Form
         </h1>
 
         {/* Address and Recipient Details */}
-        <form className="space-y-6 bg-customBgColor-bg dark:bg-neutral-800 p-6 rounded-2xl shadow-md border dark:border-neutral-700 max-w-3xl">
+        <form className="space-y-6 bg-customBgColor-bg  p-6 rounded-2xl shadow-md border  max-w-3xl">
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            <label className="block text-customTextColor  font-medium mb-2">
               Address
             </label>
             <textarea
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full border border-customTextColor-light dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+              className="w-full border border-customTextColor-light  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               rows={3}
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            <label className="block text-customTextColor  font-medium mb-2">
               Recipient
             </label>
             <input
               name="recipient"
               value={formData.recipient}
               onChange={handleChange}
-              className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+              className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+            <label className="block text-customTextColor  font-medium mb-2">
               GSTIN
             </label>
             <input
               name="gstin"
               value={formData.gstin}
               onChange={handleChange}
-              className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+              className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
             />
           </div>
 
           {/* Document Details */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor font-medium mb-2">
                 Delivery Note
               </label>
               <input
                 name="deliveryNote"
                 value={formData.deliveryNote}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 D.C. No
               </label>
               <input
                 name="dcNumber"
                 value={formData.dcNumber}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 D.C. Date
               </label>
               <input
@@ -237,24 +237,24 @@ const DeliveryChallanForm = () => {
                 type="date"
                 value={formData.dcDate}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 P.O. No
               </label>
               <input
                 name="poNumber"
                 value={formData.poNumber}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 P.O. Date
               </label>
               <input
@@ -262,26 +262,26 @@ const DeliveryChallanForm = () => {
                 type="date"
                 value={formData.poDate}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 Mode Of Dispatch
               </label>
               <input
                 name="modeOfDispatch"
                 value={formData.modeOfDispatch}
                 onChange={handleChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
           </div>
 
           {/* Items */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            <h2 className="text-lg font-semibold mb-4 text-customTextColor ">
               Items
             </h2>
             {formData.items.map((item, index) => (
@@ -291,14 +291,14 @@ const DeliveryChallanForm = () => {
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  className="border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
                 <input
                   name="quantity"
                   placeholder="Quantity"
                   value={item.quantity}
                   onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  className="border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
               </div>
             ))}
