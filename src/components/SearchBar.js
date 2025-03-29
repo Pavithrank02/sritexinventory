@@ -5,7 +5,7 @@ const SearchBar = ({ data }) => {
   const [searchData, setSearchData] = useState(""); // Current input value
   const [matches, setMatches] = useState([]);
   const [throttledSearch, setThrottledSearch] = useState(""); // Throttled value
-  const lastCall = useRef(0); // Ref to track the last execution time
+  const throttleTimeout = useRef(null); // Ref to manage throttling timeout
 
   const dataToDisplay = Object.entries(data).map(([key, items]) => ({
     key,
@@ -14,16 +14,22 @@ const SearchBar = ({ data }) => {
 
   // Throttled search logic
   const throttledSearchHandler = (value) => {
-    const now = Date.now();
-    if (now - lastCall.current >= 1000) {
-      // Throttle interval: 1000ms
-      setThrottledSearch(value.trim().toLowerCase());
-      lastCall.current = now;
+    if (throttleTimeout.current) {
+      clearTimeout(throttleTimeout.current);
     }
+
+    throttleTimeout.current = setTimeout(() => {
+      setThrottledSearch(value.trim().toLowerCase());
+    }, 300); // Throttle delay: 300ms
   };
 
-  // Update throttledSearch whenever user types
   useEffect(() => {
+    if (searchData.trim() === "") {
+      setMatches([]); // Clear matches when input is empty
+      setThrottledSearch(""); // Reset throttled value
+      return;
+    }
+
     throttledSearchHandler(searchData);
   }, [searchData]);
 
@@ -35,17 +41,13 @@ const SearchBar = ({ data }) => {
 
       setMatches(filteredMatches.length > 0 ? filteredMatches : []);
     } else {
-      setMatches([]); // Explicitly clear matches when search is empty
+      setMatches([]); // Ensure matches are cleared when throttledSearch is empty
     }
-  }, [throttledSearch, dataToDisplay]); // Ensure `dataToDisplay` is included in dependencies
+  }, [throttledSearch, dataToDisplay]);
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearchData(value);
-
-    if (value.trim() === "") {
-      setMatches([]); // Clear matches immediately when input is cleared
-    }
   };
 
   return (
@@ -62,14 +64,14 @@ const SearchBar = ({ data }) => {
       </form>
 
       {/* Matches Display */}
-      <div>
-        {matches.length > 0 ? (
-          matches.map((match, index) => (
+      {searchData.trim() !== "" && matches.length > 0 && (
+        <div>
+          {matches.map((match, index) => (
             <div
               key={index}
-              className="mb-6 bg-white  p-4 rounded-md shadow-md"
+              className="mb-6 bg-white p-4 rounded-md shadow-md"
             >
-              <h3 className="text-lg md:text-xl font-bold text-neutral-700  mb-4">
+              <h3 className="text-lg md:text-xl font-bold text-neutral-700 mb-4">
                 {match.key}
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -84,11 +86,14 @@ const SearchBar = ({ data }) => {
                 ))}
               </ul>
             </div>
-          ))
-        ) : (
-          <p className="text-gray-500">No matches found</p>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
+
+      {/* No Matches Display */}
+      {searchData.trim() !== "" && matches.length === 0 && (
+        <p className="text-gray-500">No matches found</p>
+      )}
     </div>
   );
 };

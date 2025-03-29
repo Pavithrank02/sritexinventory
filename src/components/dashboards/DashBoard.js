@@ -181,7 +181,9 @@ const Dashboard = () => {
               Inventory Summary
             </h2>
             <div className="mb-5">
-              <AnimatedModalButton />
+              
+                <AnimatedModalButton />
+            
             </div>
           </div>
 
