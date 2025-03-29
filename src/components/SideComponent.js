@@ -113,7 +113,7 @@ export function SidebarDemo() {
                 }`}
               />
               {isSidebarOpen && (
-                <p className="ml-2 text-black dark:text-customTextColor text-lg font-semibold transition-opacity duration-300">
+                <p className="ml-2 text-black  text-lg font-semibold transition-opacity duration-300">
                   Sritext Inventory
                 </p>
               )}
@@ -131,8 +131,8 @@ export function SidebarDemo() {
                       className={({ isActive }) =>
                         `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md ${
                           isActive
-                            ? " bg-gradient-to-r from-customBgColor-bg to-customTextColor-light dark:text-customTextColor "
-                            : "bg-customBgColor-bg dark:text-black hover:bg-customTextColor-light dark:hover:bg-customBgColor"
+                            ? " bg-gradient-to-r from-customBgColor-bg to-customTextColor-light  "
+                            : "bg-customBgColor-bg  hover:bg-customTextColor-light "
                         }`
                       }
                     >
@@ -141,7 +141,7 @@ export function SidebarDemo() {
                           className={`p-2 rounded-lg ${
                             isSidebarOpen
                               ? "bg-white text-customTextColor-light"
-                              : "bg-gray-200  dark:text-black"
+                              : "bg-gray-200 "
                           }`}
                         >
                           {link.icon}
@@ -225,11 +225,11 @@ export function SidebarDemo() {
           >
             <div className="flex flex-col h-full">
               {/* Logo Section */}
-              <div className="flex items-center justify-between p-4 bg-gray-100 dark:bg-customBgColor">
+              <div className="flex items-center justify-between p-4 bg-gray-100 ">
                 <img src={img} alt="Logo" className="h-8 w-auto" />
                 <button
                   onClick={() => setIsSidebarOpen(false)}
-                  className="text-customTextColor dark:text-gray-200 hover:text-red-600"
+                  className="text-customTextColor  hover:text-red-600"
                 >
                   <IconLayoutSidebarRightExpandFilled />
                 </button>
@@ -246,8 +246,8 @@ export function SidebarDemo() {
                         className={({ isActive }) =>
                           `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md ${
                             isActive
-                              ? "bg-gradient-to-r from-customBgColor-bg to-customTextColor-light text-white dark:from-gray-700 "
-                              : "bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light "
+                              ? "bg-gradient-to-r from-customBgColor-bg to-customTextColor-light text-white "
+                              : "bg-customBgColor-bg  text-gray-800  hover:bg-customTextColor-light "
                           }`
                         }
                       >
@@ -256,7 +256,7 @@ export function SidebarDemo() {
                             className={`p-2 rounded-lg ${
                               open
                                 ? "bg-white text-customTextColor-light"
-                                : "bg-gray-200  text-gray-700 dark:text-gray-300"
+                                : "bg-gray-200  text-gray-700"
                             }`}
                           >
                             {link.icon}
@@ -270,14 +270,14 @@ export function SidebarDemo() {
                       <div>
                         {/* Main Link with SubLinks */}
                         <div
-                          className="flex items-center justify-between p-3 rounded-lg cursor-pointer shadow-sm bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-customTextColor-light dark:hover:bg-gray-700 transition-all duration-300"
+                          className="flex items-center justify-between p-3 rounded-lg cursor-pointer shadow-sm bg-gray-100  text-gray-800  hover:bg-customTextColor-light  transition-all duration-300"
                           onClick={() =>
                             setDropdownOpen(dropdownOpen === idx ? null : idx)
                           }
                         >
                           <div className="flex items-center gap-3">
                             {link.icon && (
-                              <span className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                              <span className="p-2 rounded-lg bg-gray-200  text-gray-700 ">
                                 {link.icon}
                               </span>
                             )}
@@ -296,12 +296,12 @@ export function SidebarDemo() {
 
                         {/* SubLinks */}
                         {link.subLinks && dropdownOpen === idx && (
-                          <div className="ml-6 mt-2 space-y-1 pl-4 border-l border-gray-300 dark:border-gray-700">
+                          <div className="ml-6 mt-2 space-y-1 pl-4 border-l border-gray-300 ">
                             {link.subLinks.map((subLink, subIdx) => (
                               <NavLink
                                 key={subIdx}
                                 to={subLink.href}
-                                className="flex items-center gap-3 p-2 rounded-md text-sm text-gray-600 dark:text-gray-400 hover:bg-customTextColor-light dark:hover:bg-gray-700 transition-all duration-300"
+                                className="flex items-center gap-3 p-2 rounded-md text-sm text-black  hover:bg-customTextColor-light  transition-all duration-300"
                               >
                                 <span className="text-customTextColor-light">
                                   •
