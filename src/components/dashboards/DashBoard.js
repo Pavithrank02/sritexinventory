@@ -132,42 +132,25 @@ const COLORS = [
 
 const Dashboard = () => {
   const calculateWeight = (data) => {
-    const boltTaken = 50;
-    const nutTaken = 50;
-    const washerTaken = 50;
-
-    Object.entries(data).forEach(([key, items]) => {
-      if (key === "bolts") {
-        // Map through the items to update totalWeight
-        items.forEach((item) => {
-          if (item.size === "3/4x3/8") {
-            // Update totalWeight directly
-            item.totalWeight -= item.weightPerBolt * boltTaken;
-          }
-        });
-      }
-      if (key === "nuts") {
-        // Map through the items to update totalWeight
-        items.forEach((item) => {
-          if (item.size === "3/8") {
-            // Update totalWeight directly
-            item.totalWeight -= item.weightPerNut * nutTaken;
-          }
-        });
-      }
-      if (key === "washers") {
-        // Map through the items to update totalWeight
-        items.forEach((item) => {
-          if (item.size === "3/8") {
-            // Update totalWeight directly
-            item.totalWeight -= item.weightPerWasher * washerTaken;
-          }
-        });
-      }
+    const updatedData = { ...data };
+  
+    const adjustments = {
+      bolts: { size: "3/4x3/8", taken: 50, weightKey: "weightPerBolt" },
+      nuts: { size: "3/8", taken: 50, weightKey: "weightPerNut" },
+      washers: { size: "3/8", taken: 50, weightKey: "weightPerWasher" },
+    };
+  
+    Object.entries(adjustments).forEach(([key, { size, taken, weightKey }]) => {
+      updatedData[key] = updatedData[key].map((item) =>
+        item.size === size
+          ? { ...item, totalWeight: item.totalWeight - item[weightKey] * taken }
+          : item
+      );
     });
-
-    return data; // Return the updated data
+  
+    return updatedData;
   };
+  
   calculateWeight(data);
   return (
     <div className="flex flex-col lg:flex-row">
@@ -181,9 +164,7 @@ const Dashboard = () => {
               Inventory Summary
             </h2>
             <div className="mb-5">
-              
-                <AnimatedModalButton />
-            
+              <AnimatedModalButton />
             </div>
           </div>
 
