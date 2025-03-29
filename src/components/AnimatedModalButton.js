@@ -71,12 +71,12 @@ export function AnimatedModalButton() {
                 >
                   {/* Icon List */}
                   {[
-                    <IconBrandTabler className="h-6 w-6 text-customTextColor" />,
-                    <IconNut className="h-6 w-6 text-customTextColor" />,
-                    <IconPerspective className="h-6 w-6 text-customTextColor" />,
-                    <IconRuler2 className="h-6 w-6 text-customTextColor" />,
-                    <IconTruckDelivery className="h-6 w-6 text-customTextColor" />,
-                    <IconBuildingFactory className="h-6 w-6 text-customTextColor" />,
+                    <IconBrandTabler className="h-6 w-6 text-customBgColor-bg" />,
+                    <IconNut className="h-6 w-6 text-customBgColor-bg" />,
+                    <IconPerspective className="h-6 w-6 text-customBgColor-bg" />,
+                    <IconRuler2 className="h-6 w-6 text-customBgColor-bg" />,
+                    <IconTruckDelivery className="h-6 w-6 text-customBgColor-bg" />,
+                    <IconBuildingFactory className="h-6 w-6 text-customBgColor-bg" />,
                   ].map((icon, index) => (
                     <div key={index} className="flex-shrink-0">
                       {icon}
