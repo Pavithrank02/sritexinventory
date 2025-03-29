@@ -57,42 +57,51 @@ export function AnimatedModalButton() {
   return (
     <div className="relative">
       <Modal>
-        <ModalTrigger className="bg-customBgColor dark:bg-white dark:text-black text-white flex justify-center group/modal-btn relative">
+        <ModalTrigger className="bg-customBgColor text-white flex justify-center group/modal-btn relative">
           <span className="group-hover/modal-btn:translate-x-40 text-center transition duration-500">
             Edit Components
           </span>
           <div className="-translate-x-40 group-hover/modal-btn:translate-x-0 flex items-center justify-center absolute inset-0 transition duration-500 text-white z-20">
-            {(() => {
-              const iconType = "user"; // Replace with dynamic type
-              switch (iconType) {
-                case "IconBrandTabler":
-                  return (
-                    <IconBrandTabler className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                case "IconNut":
-                  return (
-                    <IconNut className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                case "IconPerspective":
-                  return (
-                    <IconPerspective className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                case "IconRuler2":
-                  return (
-                    <IconRuler2 className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                case "IconTruckDelivery":
-                  return (
-                    <IconTruckDelivery className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                case "IconBuildingFactory":
-                  return (
-                    <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
-                  );
-                default:
-                  return <span>🚀</span>;
-              }
-            })()}
+            <div className="relative group">
+              {/* Container to hold the scrolling icons */}
+              <div className="flex gap-4 overflow-hidden w-full h-8 relative">
+                <div
+                  className="flex gap-4 absolute left-0 group-hover:animate-scroll-loop"
+                  style={{ width: "calc(6 * 2.5rem)", whiteSpace: "nowrap" }}
+                >
+                  {/* Icon List */}
+                  {[
+                    <IconBrandTabler className="h-6 w-6 text-customTextColor" />,
+                    <IconNut className="h-6 w-6 text-customTextColor" />,
+                    <IconPerspective className="h-6 w-6 text-customTextColor" />,
+                    <IconRuler2 className="h-6 w-6 text-customTextColor" />,
+                    <IconTruckDelivery className="h-6 w-6 text-customTextColor" />,
+                    <IconBuildingFactory className="h-6 w-6 text-customTextColor" />,
+                  ].map((icon, index) => (
+                    <div key={index} className="flex-shrink-0">
+                      {icon}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Styling */}
+              <style>
+                {`
+      @keyframes scroll-loop {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .group-hover\\:animate-scroll-loop {
+        animation: scroll-loop 3s linear infinite;
+      }
+    `}
+              </style>
+            </div>
           </div>
         </ModalTrigger>
         <ModalBody>
