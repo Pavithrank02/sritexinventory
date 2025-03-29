@@ -28,6 +28,7 @@ const SearchBar = ({ data }) => {
   }, [searchData]);
 
   // Perform search based on throttledSearch
+  // Perform search based on throttledSearch
   useEffect(() => {
     if (throttledSearch) {
       const filteredMatches = dataToDisplay.filter((res) =>
@@ -36,9 +37,9 @@ const SearchBar = ({ data }) => {
 
       setMatches(filteredMatches.length > 0 ? filteredMatches : []);
     } else {
-      setMatches([]); // Clear matches when input is empty
+      setMatches([]); // Explicitly clear matches when search is empty
     }
-  }, [throttledSearch]);
+  }, [throttledSearch, dataToDisplay]); // Ensure `dataToDisplay` is included in dependencies
 
   const handleSearch = (e) => {
     setSearchData(e.target.value);
@@ -63,9 +64,9 @@ const SearchBar = ({ data }) => {
           matches.map((match, index) => (
             <div
               key={index}
-              className="mb-6 bg-white dark:bg-neutral-800 p-4 rounded-md shadow-md"
+              className="mb-6 bg-white  p-4 rounded-md shadow-md"
             >
-              <h3 className="text-lg md:text-xl font-bold text-neutral-700 dark:text-neutral-100 mb-4">
+              <h3 className="text-lg md:text-xl font-bold text-neutral-700  mb-4">
                 {match.key}
               </h3>
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -82,7 +83,7 @@ const SearchBar = ({ data }) => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500 dark:text-gray-400 text-center">
+          <p className="text-gray-500">
             No matches found
           </p>
         )}

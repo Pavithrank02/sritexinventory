@@ -105,7 +105,7 @@ export function AnimatedModalButton() {
           </div>
         </ModalTrigger>
         <ModalBody>
-          <ModalContent className="max-w-lg mx-auto p-6 bg-white dark:bg-neutral-800 rounded-lg shadow-lg">
+          <ModalContent className="max-w-lg mx-auto p-6 bg-customBgColor-bg  rounded-lg shadow-lg">
             <h4 className="text-lg md:text-2xl text-neutral-600 dark:text-neutral-100 font-bold text-center mb-6">
               Supplies Been Used
             </h4>
@@ -150,7 +150,7 @@ export function AnimatedModalButton() {
                   id="bolts"
                   name="bolts"
                   min="0"
-                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none  dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of bolts"
                 />
               </div>
@@ -184,7 +184,7 @@ export function AnimatedModalButton() {
                   id="nuts"
                   name="nuts"
                   min="0"
-                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none  dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of nuts"
                 />
               </div>
@@ -218,7 +218,7 @@ export function AnimatedModalButton() {
                   id="washers"
                   name="washers"
                   min="0"
-                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                  className="w-full p-2 border rounded-md shadow-sm border-customBorderColor focus:ring-2 focus:ring-blue-400 focus:outline-none  dark:border-neutral-600 dark:text-neutral-200"
                   placeholder="Enter number of washers"
                 />
               </div>
