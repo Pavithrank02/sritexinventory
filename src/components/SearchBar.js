@@ -23,15 +23,15 @@ const SearchBar = ({ data }) => {
     }, 300); // Throttle delay: 300ms
   };
 
-  useEffect(() => {
-    if (searchData.trim() === "") {
-      setMatches([]); // Clear matches when input is empty
-      setThrottledSearch(""); // Reset throttled value
-      return;
-    }
+  // useEffect(() => {
+  //   if (searchData.trim() === "") {
+  //     setMatches([]); // Clear matches when input is empty
+  //     setThrottledSearch(""); // Reset throttled value
+  //     return;
+  //   }
 
-    throttledSearchHandler(searchData);
-  }, [searchData]);
+  //   throttledSearchHandler(searchData);
+  // }, [searchData]);
 
   useEffect(() => {
     if (throttledSearch) {
