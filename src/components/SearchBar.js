@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import StockCard from "./StockCard.js";
 
 const SearchBar = ({ data }) => {
@@ -7,10 +7,10 @@ const SearchBar = ({ data }) => {
   const [throttledSearch, setThrottledSearch] = useState(""); // Throttled value
   const throttleTimeout = useRef(null); // Ref to manage throttling timeout
 
-  const dataToDisplay = Object.entries(data).map(([key, items]) => ({
-    key,
-    items,
-  }));
+  // ✅ Memoize dataToDisplay to avoid unnecessary re-renders
+  const dataToDisplay = useMemo(() => {
+    return Object.entries(data).map(([key, items]) => ({ key, items }));
+  }, [data]);
 
   // Throttled search logic
   const throttledSearchHandler = (value) => {
@@ -23,15 +23,15 @@ const SearchBar = ({ data }) => {
     }, 300); // Throttle delay: 300ms
   };
 
-  // useEffect(() => {
-  //   if (searchData.trim() === "") {
-  //     setMatches([]); // Clear matches when input is empty
-  //     setThrottledSearch(""); // Reset throttled value
-  //     return;
-  //   }
+  useEffect(() => {
+    if (searchData.trim() === "") {
+      setMatches([]); // Clear matches when input is empty
+      setThrottledSearch(""); // Reset throttled value
+      return;
+    }
 
-  //   throttledSearchHandler(searchData);
-  // }, [searchData]);
+    throttledSearchHandler(searchData);
+  }, [searchData]);
 
   useEffect(() => {
     if (throttledSearch) {
@@ -43,7 +43,7 @@ const SearchBar = ({ data }) => {
     } else {
       setMatches([]); // Ensure matches are cleared when throttledSearch is empty
     }
-  }, [throttledSearch, dataToDisplay]);
+  }, [throttledSearch, dataToDisplay]); // Now stable because of useMemo
 
   const handleSearch = (e) => {
     const value = e.target.value;
@@ -67,10 +67,7 @@ const SearchBar = ({ data }) => {
       {searchData.trim() !== "" && matches.length > 0 && (
         <div>
           {matches.map((match, index) => (
-            <div
-              key={index}
-              className="mb-6 bg-white p-4 rounded-md shadow-md"
-            >
+            <div key={index} className="mb-6 bg-white p-4 rounded-md shadow-md">
               <h3 className="text-lg md:text-xl font-bold text-neutral-700 mb-4">
                 {match.key}
               </h3>
