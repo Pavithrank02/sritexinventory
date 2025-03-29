@@ -27,8 +27,6 @@ const SearchBar = ({ data }) => {
     throttledSearchHandler(searchData);
   }, [searchData]);
 
-  // Perform search based on throttledSearch
-  // Perform search based on throttledSearch
   useEffect(() => {
     if (throttledSearch) {
       const filteredMatches = dataToDisplay.filter((res) =>
@@ -42,7 +40,12 @@ const SearchBar = ({ data }) => {
   }, [throttledSearch, dataToDisplay]); // Ensure `dataToDisplay` is included in dependencies
 
   const handleSearch = (e) => {
-    setSearchData(e.target.value);
+    const value = e.target.value;
+    setSearchData(value);
+
+    if (value.trim() === "") {
+      setMatches([]); // Clear matches immediately when input is cleared
+    }
   };
 
   return (
@@ -83,9 +86,7 @@ const SearchBar = ({ data }) => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500">
-            No matches found
-          </p>
+          <p className="text-gray-500">No matches found</p>
         )}
       </div>
     </div>
