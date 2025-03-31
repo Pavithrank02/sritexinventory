@@ -81,20 +81,6 @@ export function AnimatedModalButton() {
             {/* Scrollable Form */}
             <form className="space-y-6 h-72 overflow-y-auto pr-2 scrollbar-hide">
               {/* Styling for scrollbar */}
-              <style>
-                {`
-            form::-webkit-scrollbar {
-              width: 6px;
-            }
-            form::-webkit-scrollbar-thumb {
-              background-color: #068343; /* Use your custom color */
-              border-radius: 4px;
-            }
-            form::-webkit-scrollbar-track {
-              background-color: #FBFCF1; /* Background color */
-            }
-          `}
-              </style>
 
               {/* Bolts */}
               <div className="flex flex-col space-y-2">

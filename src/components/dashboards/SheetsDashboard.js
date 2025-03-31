@@ -58,7 +58,7 @@ const SheetDashboard = () => {
               <h2 className="text-lg font-semibold text-gray-700">
                 {item.label}
               </h2>
-              <p className="text-3xl font-bold text-blue-500">
+              <p className="text-3xl font-bold text-customTextColor">
                 <CountUp end={item.value} duration={2} />
               </p>
             </motion.div>
