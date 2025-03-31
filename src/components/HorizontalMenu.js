@@ -5,10 +5,6 @@ const categories = [
   { name: "Sheet Dashboard", path: "/sheetdashboard" },
   { name: "Machine Dashboard", path: "/demonut" },
   { name: "Nut&Bolt Dashboard", path: "/" },
-  { name: "Live", path: "/live" },
-  { name: "Gaming", path: "/gaming" },
-  { name: "Sports", path: "/sports" },
-  { name: "News", path: "/news" },
 ];
 
 const HorizontalMenu = () => {

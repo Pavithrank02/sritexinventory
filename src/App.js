@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboards/DashBoard";
 import SheetsDashboard from "./components/dashboards/SheetsDashboard";
 import BoltNutMachine from "./components/dashboards/BoltNutMachine";
 import DemoBoltNutMachine from "./components/dashboards/DemoBoltNutMachine";
+import QuotationGenerator from "./components/QuotationGenerator";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/channel" element={<ChannelPattaForm />} />
         <Route path="/dc" element={<DeliveryChallanForm />} />
         <Route path="/nuts" element={<NutBoltsForm />} />
+        <Route path="/quote" element={<QuotationGenerator />} />
       </Routes>
     </div>
   );

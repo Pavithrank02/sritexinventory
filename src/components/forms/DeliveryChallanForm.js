@@ -154,6 +154,10 @@ const DeliveryChallanForm = () => {
     // Save the PDF
     doc.save("DeliveryChallan.pdf");
   };
+  const removeItem = (index) => {
+    const updatedItems = formData.items.filter((_, i) => i !== index);
+    setFormData({ ...formData, items: updatedItems });
+  };
 
   return (
     <div className="flex flex-row h-screen bg-customTextColor-white">
@@ -280,26 +284,37 @@ const DeliveryChallanForm = () => {
           </div>
 
           {/* Items */}
+          {/* Items */}
           <div>
-            <h2 className="text-lg font-semibold mb-4 text-customTextColor ">
+            <h2 className="text-lg font-semibold mb-4 text-customTextColor">
               Items
             </h2>
             {formData.items.map((item, index) => (
-              <div key={index} className="grid grid-cols-2 gap-4 mb-2">
+              <div
+                key={index}
+                className="grid grid-cols-3 gap-4 mb-2 items-center"
+              >
                 <input
                   name="description"
                   placeholder="Description"
                   value={item.description}
                   onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
                 <input
                   name="quantity"
                   placeholder="Quantity"
                   value={item.quantity}
                   onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
+                <button
+                  type="button"
+                  onClick={() => removeItem(index)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
+                >
+                  Remove
+                </button>
               </div>
             ))}
             <button
