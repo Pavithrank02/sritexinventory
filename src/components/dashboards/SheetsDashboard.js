@@ -15,7 +15,7 @@ const data = [
   { material: "6mm Sheet 2500x1250(8x4)", noOfSheets: 3, balance: 3 },
 ];
 
-// Calculate totals dynamically
+// Calculate totals dynamically s
 const totalSheets = data.reduce((acc, item) => acc + item.noOfSheets, 0);
 const pendingSheets = data.reduce((acc, item) => acc + item.balance, 0);
 const receivedSheets = totalSheets - pendingSheets;
