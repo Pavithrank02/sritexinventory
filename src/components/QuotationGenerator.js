@@ -304,7 +304,7 @@ const QuotationGenerator = () => {
           <button
             type="button"
             onClick={addItem}
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-2"
+            className="bg-customBgColor text-white px-4 py-2 rounded mt-2"
           >
             Add Item
           </button>
@@ -331,7 +331,7 @@ const QuotationGenerator = () => {
           <button
             type="button"
             onClick={generatePDF}
-            className="bg-green-500 text-white px-6 py-2 rounded mt-6"
+            className="bg-customTextColor-light text-white px-6 py-2 rounded mt-6"
           >
             Export to PDF
           </button>
