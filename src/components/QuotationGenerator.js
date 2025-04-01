@@ -137,20 +137,20 @@ const QuotationGenerator = () => {
 
     // Table Headers
     const tableStartY = detailsStartY + 50;
-    const columnWidths = [20, 100, 30, 30, 30];
+    const columnWidths = [12, 90, 20, 20, 20, 25];
     const rowHeight = 10;
     let currentX = margin;
     doc.setFont("helvetica", "bold");
-    doc.text("Sl. No", currentX + 5, tableStartY - 5);
+    doc.text("Sl. No", currentX + 1, tableStartY - 5);
     doc.text("Description", currentX + columnWidths[0] + 5, tableStartY - 5);
     doc.text(
       "Quantity",
-      currentX + columnWidths[0] + columnWidths[1] + 5,
+      currentX + columnWidths[0] + columnWidths[1] + 2,
       tableStartY - 5
     );
     doc.text(
       "Unit Price",
-      currentX + columnWidths[0] + columnWidths[1] + columnWidths[2] + 5,
+      currentX + columnWidths[0] + columnWidths[1] + columnWidths[2] + 1,
       tableStartY - 5
     );
     doc.text(
@@ -161,6 +161,17 @@ const QuotationGenerator = () => {
         columnWidths[2] +
         columnWidths[3] +
         5,
+      tableStartY - 5
+    );
+    doc.text(
+      "E & C Charge",
+      currentX +
+        columnWidths[0] +
+        columnWidths[1] +
+        columnWidths[2] +
+        columnWidths[3] +
+        columnWidths[4] +
+        1,
       tableStartY - 5
     );
 
@@ -177,24 +188,56 @@ const QuotationGenerator = () => {
       let currentX = margin;
       const itemTotal =
         (parseFloat(item.quantity) || 0) * (parseFloat(item.unitPrice) || 0);
-      doc.rect(currentX, currentY, columnWidths[0], rowHeight);
+      const ecChargeTotal = parseFloat(item.ecCharge) || 0;
+
+      // Wrap description text within the column width
+      const wrappedText = doc.splitTextToSize(
+        item.description,
+        columnWidths[1] - 5
+      );
+      const lineCount = wrappedText.length; // Count lines for height adjustment
+      const adjustedRowHeight = rowHeight * lineCount; // Increase row height for wrapped text
+
+      // Draw the table row with adjusted height
+      doc.rect(currentX, currentY, columnWidths[0], adjustedRowHeight);
       doc.text(String(index + 1), currentX + 5, currentY + 7);
       currentX += columnWidths[0];
-      doc.rect(currentX, currentY, columnWidths[1], rowHeight);
-      doc.text(item.description, currentX + 5, currentY + 7);
+
+      doc.rect(currentX, currentY, columnWidths[1], adjustedRowHeight);
+      doc.text(wrappedText, currentX + 5, currentY + 7);
       currentX += columnWidths[1];
-      doc.rect(currentX, currentY, columnWidths[2], rowHeight);
+
+      doc.rect(currentX, currentY, columnWidths[2], adjustedRowHeight);
       doc.text(item.quantity, currentX + 5, currentY + 7);
       currentX += columnWidths[2];
-      doc.rect(currentX, currentY, columnWidths[3], rowHeight);
+
+      doc.rect(currentX, currentY, columnWidths[3], adjustedRowHeight);
       doc.text(item.unitPrice, currentX + 5, currentY + 7);
       currentX += columnWidths[3];
-      doc.rect(currentX, currentY, columnWidths[4], rowHeight);
+
+      doc.rect(currentX, currentY, columnWidths[4], adjustedRowHeight);
       doc.text(itemTotal.toFixed(2), currentX + 5, currentY + 7);
+      currentX += columnWidths[4];
+
+      doc.rect(currentX, currentY, columnWidths[5], adjustedRowHeight);
+      doc.text(ecChargeTotal.toFixed(2), currentX + 5, currentY + 7);
     });
 
     // Summary Section
-    const summaryStartY = tableStartY + formData.items.length * rowHeight + 10;
+    // Calculate total table height dynamically
+    const totalTableHeight = formData.items.reduce((totalHeight, item) => {
+      const wrappedText = doc.splitTextToSize(
+        item.description,
+        columnWidths[1] - 5
+      );
+      const lineCount = wrappedText.length;
+      return totalHeight + rowHeight * lineCount; // Adjust row height for text wrapping
+    }, 0);
+
+    // Set summary section below the table dynamically
+    const summaryStartY = tableStartY + totalTableHeight + 10;
+
+    // Summary Section
     const subtotal = calculateSubtotal();
     const tax = calculateTax(subtotal);
     const total = calculateTotal();
@@ -214,7 +257,7 @@ const QuotationGenerator = () => {
     doc.text(`Total: ${total.toFixed(2)}`, 150, summaryStartY + 15);
     doc.text(`unitTotal: ${unitTotal.toFixed(2)}`, 150, summaryStartY + 25);
 
-    // Footer
+    // Footer Section (Moves down with summary)
     const footerY = summaryStartY + 30;
     doc.setFont("helvetica", "normal");
     doc.text("Received the goods in good condition", margin, footerY);

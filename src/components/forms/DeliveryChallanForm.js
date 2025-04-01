@@ -100,7 +100,7 @@ const DeliveryChallanForm = () => {
     const startX = 10;
     const startY = recipientStartY + 35;
     const rowHeight = 10;
-    const colWidths = [20, 100, 30]; // Adjust column widths
+    const colWidths = [10, 100, 30]; // Adjust column widths
 
     doc.setFont("helvetica", "bold");
     doc.text("Sl. No", startX + 5, startY - 5);
@@ -166,55 +166,29 @@ const DeliveryChallanForm = () => {
         <h1 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
           Delivery Challan Form
         </h1>
+        <div className="flex justify-center">
+          {/* Address and Recipient Details */}
+          <form className="space-y-6 bg-customBgColor-bg  p-6 rounded-2xl shadow-md border w-9/12">
+            <div className="">
+              <label className="block text-customTextColor  font-medium mb-2">
+                Address
+              </label>
+              <textarea
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full border border-customTextColor-light  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                rows={3}
+              />
+            </div>
 
-        {/* Address and Recipient Details */}
-        <form className="space-y-6 bg-customBgColor-bg  p-6 rounded-2xl shadow-md border  max-w-3xl">
-          <div>
-            <label className="block text-customTextColor  font-medium mb-2">
-              Address
-            </label>
-            <textarea
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full border border-customTextColor-light  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-              rows={3}
-            />
-          </div>
-
-          <div>
-            <label className="block text-customTextColor  font-medium mb-2">
-              Recipient
-            </label>
-            <input
-              name="recipient"
-              value={formData.recipient}
-              onChange={handleChange}
-              className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-            />
-          </div>
-
-          <div>
-            <label className="block text-customTextColor  font-medium mb-2">
-              GSTIN
-            </label>
-            <input
-              name="gstin"
-              value={formData.gstin}
-              onChange={handleChange}
-              className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-            />
-          </div>
-
-          {/* Document Details */}
-          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-customTextColor font-medium mb-2">
-                Delivery Note
+              <label className="block text-customTextColor  font-medium mb-2">
+                Recipient
               </label>
               <input
-                name="deliveryNote"
-                value={formData.deliveryNote}
+                name="recipient"
+                value={formData.recipient}
                 onChange={handleChange}
                 className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
@@ -222,119 +196,146 @@ const DeliveryChallanForm = () => {
 
             <div>
               <label className="block text-customTextColor  font-medium mb-2">
-                D.C. No
+                GSTIN
               </label>
               <input
-                name="dcNumber"
-                value={formData.dcNumber}
+                name="gstin"
+                value={formData.gstin}
                 onChange={handleChange}
                 className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
               />
             </div>
 
-            <div>
-              <label className="block text-customTextColor  font-medium mb-2">
-                D.C. Date
-              </label>
-              <input
-                name="dcDate"
-                type="date"
-                value={formData.dcDate}
-                onChange={handleChange}
-                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-              />
-            </div>
-
-            <div>
-              <label className="block text-customTextColor  font-medium mb-2">
-                P.O. No
-              </label>
-              <input
-                name="poNumber"
-                value={formData.poNumber}
-                onChange={handleChange}
-                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-              />
-            </div>
-
-            <div>
-              <label className="block text-customTextColor  font-medium mb-2">
-                P.O. Date
-              </label>
-              <input
-                name="poDate"
-                type="date"
-                value={formData.poDate}
-                onChange={handleChange}
-                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-              />
-            </div>
-
-            <div>
-              <label className="block text-customTextColor  font-medium mb-2">
-                Mode Of Dispatch
-              </label>
-              <input
-                name="modeOfDispatch"
-                value={formData.modeOfDispatch}
-                onChange={handleChange}
-                className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-              />
-            </div>
-          </div>
-
-          {/* Items */}
-          {/* Items */}
-          <div>
-            <h2 className="text-lg font-semibold mb-4 text-customTextColor">
-              Items
-            </h2>
-            {formData.items.map((item, index) => (
-              <div
-                key={index}
-                className="grid grid-cols-3 gap-4 mb-2 items-center"
-              >
+            {/* Document Details */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-customTextColor font-medium mb-2">
+                  Delivery Note
+                </label>
                 <input
-                  name="description"
-                  placeholder="Description"
-                  value={item.description}
-                  onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  name="deliveryNote"
+                  value={formData.deliveryNote}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
                 />
-                <input
-                  name="quantity"
-                  placeholder="Quantity"
-                  value={item.quantity}
-                  onChange={(e) => handleChange(e, index)}
-                  className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeItem(index)}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
-                >
-                  Remove
-                </button>
               </div>
-            ))}
-            <button
-              onClick={addItem}
-              type="button"
-              className="bg-customTextColor-light hover:bg-customBgColor text-white px-4 py-2 rounded-lg mt-2"
-            >
-              Add Item
-            </button>
-          </div>
 
-          {/* Export Button */}
-          <button
-            onClick={generatePDF}
-            type="button"
-            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg mt-6"
-          >
-            Export to PDF
-          </button>
-        </form>
+              <div>
+                <label className="block text-customTextColor  font-medium mb-2">
+                  D.C. No
+                </label>
+                <input
+                  name="dcNumber"
+                  value={formData.dcNumber}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+
+              <div>
+                <label className="block text-customTextColor  font-medium mb-2">
+                  D.C. Date
+                </label>
+                <input
+                  name="dcDate"
+                  type="date"
+                  value={formData.dcDate}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+
+              <div>
+                <label className="block text-customTextColor  font-medium mb-2">
+                  P.O. No
+                </label>
+                <input
+                  name="poNumber"
+                  value={formData.poNumber}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+
+              <div>
+                <label className="block text-customTextColor  font-medium mb-2">
+                  P.O. Date
+                </label>
+                <input
+                  name="poDate"
+                  type="date"
+                  value={formData.poDate}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+
+              <div>
+                <label className="block text-customTextColor  font-medium mb-2">
+                  Mode Of Dispatch
+                </label>
+                <input
+                  name="modeOfDispatch"
+                  value={formData.modeOfDispatch}
+                  onChange={handleChange}
+                  className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+            </div>
+
+            {/* Items */}
+            {/* Items */}
+            <div>
+              <h2 className="text-lg font-semibold mb-4 text-customTextColor">
+                Items
+              </h2>
+              {formData.items.map((item, index) => (
+                <div
+                  key={index}
+                  className="grid grid-cols-3 gap-4 mb-2 items-center"
+                >
+                  <input
+                    name="description"
+                    placeholder="Description"
+                    value={item.description}
+                    onChange={(e) => handleChange(e, index)}
+                    className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  />
+                  <input
+                    name="quantity"
+                    placeholder="Quantity"
+                    value={item.quantity}
+                    onChange={(e) => handleChange(e, index)}
+                    className="border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeItem(index)}
+                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={addItem}
+                type="button"
+                className="bg-customTextColor-light hover:bg-customBgColor text-white px-4 py-2 rounded-lg mt-2"
+              >
+                Add Item
+              </button>
+            </div>
+
+            {/* Export Button */}
+            <button
+              onClick={generatePDF}
+              type="button"
+              className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg mt-6"
+            >
+              Export to PDF
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
