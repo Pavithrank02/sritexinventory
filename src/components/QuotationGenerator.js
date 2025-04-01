@@ -12,7 +12,15 @@ const QuotationGenerator = () => {
     quotationNumber: "",
     validity: "",
     paymentTerms: "",
-    items: [{ description: "", quantity: "", unitPrice: "" }],
+    items: [
+      {
+        description: "",
+        quantity: "",
+        unitPrice: "",
+        amount: "",
+        ecCharge: "",
+      },
+    ],
     taxRate: 0,
     discount: 0,
   });
@@ -190,6 +198,7 @@ const QuotationGenerator = () => {
     const subtotal = calculateSubtotal();
     const tax = calculateTax(subtotal);
     const total = calculateTotal();
+    const unitTotal = calculateTotal();
     doc.setFont("helvetica", "bold");
     doc.text(`Subtotal: ${subtotal.toFixed(2)}`, 150, summaryStartY);
     doc.text(
@@ -203,6 +212,7 @@ const QuotationGenerator = () => {
       summaryStartY + 10
     );
     doc.text(`Total: ${total.toFixed(2)}`, 150, summaryStartY + 15);
+    doc.text(`unitTotal: ${unitTotal.toFixed(2)}`, 150, summaryStartY + 25);
 
     // Footer
     const footerY = summaryStartY + 30;
@@ -216,26 +226,26 @@ const QuotationGenerator = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex ">
       <SidebarDemo />
-      <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md w-full">
+      <div className="max-w-4xl mx-auto p-6 bg-customBgColor-bg rounded-lg shadow-md w-full">
         <h1 className="text-2xl font-bold mb-6 text-center">
           Quotation Generator
         </h1>
-        <form className="space-y-4">
+        <form className="space-y-4 ">
           <input
             name="businessName"
             placeholder="Business Name"
             value={formData.businessName}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
           <input
             name="customerName"
             placeholder="Customer Name"
             value={formData.customerName}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded  border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
           <div className="grid grid-cols-2 gap-4">
             <input
@@ -243,14 +253,14 @@ const QuotationGenerator = () => {
               type="date"
               value={formData.quotationDate}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
             />
             <input
               name="quotationNumber"
               placeholder="Quotation Number"
               value={formData.quotationNumber}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-full border p-2 rounded  border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
             />
           </div>
           <input
@@ -258,44 +268,61 @@ const QuotationGenerator = () => {
             placeholder="Validity (e.g., 30 days)"
             value={formData.validity}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
           <input
             name="paymentTerms"
             placeholder="Payment Terms"
             value={formData.paymentTerms}
             onChange={handleChange}
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
 
           <h2 className="text-lg font-semibold mt-4">Items</h2>
           {formData.items.map((item, index) => (
-            <div key={index} className="grid grid-cols-4 gap-4 items-center">
+            <div
+              key={index}
+              className="grid grid-cols-3 gap-6 items-center justify-between "
+            >
               <input
                 name="description"
                 placeholder="Description"
                 value={item.description}
                 onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded"
+                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor "
               />
               <input
                 name="quantity"
                 placeholder="Quantity"
                 value={item.quantity}
                 onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded"
+                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
               />
               <input
                 name="unitPrice"
                 placeholder="Unit Price"
                 value={item.unitPrice}
                 onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded"
+                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
+              />
+              <input
+                name="amount"
+                placeholder="Amount(Rs.)"
+                value={item.amount}
+                onChange={(e) => handleChange(e, index)}
+                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
+              />
+              <input
+                name="ecCharge"
+                placeholder="e&c Charge"
+                value={item.ecCharge}
+                onChange={(e) => handleChange(e, index)}
+                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
               />
               <button
                 type="button"
                 onClick={() => removeItem(index)}
-                className="bg-red-500 text-white px-3 py-1 rounded"
+                className="bg-red-500 text-white px-3 py-2 w-20 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
               >
                 Remove
               </button>
@@ -304,34 +331,44 @@ const QuotationGenerator = () => {
           <button
             type="button"
             onClick={addItem}
-            className="bg-customBgColor text-white px-4 py-2 rounded mt-2"
+            className="bg-customBgColor text-white px-4 py-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor mt-2"
           >
             Add Item
           </button>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex justify-between items-center">
+            <label className="font-semibold">Tax Rate:</label>
             <input
               name="taxRate"
               type="number"
               placeholder="Tax Rate (%)"
               value={formData.taxRate}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className=" border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor w-auto"
             />
+            <label className="font-semibold">Discount:</label>
             <input
               name="discount"
               type="number"
               placeholder="Discount"
               value={formData.discount}
               onChange={handleChange}
-              className="w-full border p-2 rounded"
+              className="w-auto border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
+            />
+            <label className="font-semibold">TCS:</label>
+            <input
+              name="tcs"
+              placeholder="TCS as applicable"
+              value={formData.tcs}
+              onChange={handleChange}
+              className="w-auto border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
             />
           </div>
 
           <button
             type="button"
             onClick={generatePDF}
-            className="bg-customTextColor-light text-white px-6 py-2 rounded mt-6"
+            className="bg-customTextColor-light font-bold text-customBgColor-bg px-6 py-2 rounded mt-6 hover:bg-customBgColor"
           >
             Export to PDF
           </button>
