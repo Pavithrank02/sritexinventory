@@ -279,55 +279,63 @@ const QuotationGenerator = () => {
           />
 
           <h2 className="text-lg font-semibold mt-4">Items</h2>
-          {formData.items.map((item, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-3 gap-6 items-center justify-between "
-            >
-              <input
-                name="description"
-                placeholder="Description"
-                value={item.description}
-                onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor "
-              />
-              <input
-                name="quantity"
-                placeholder="Quantity"
-                value={item.quantity}
-                onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
-              />
-              <input
-                name="unitPrice"
-                placeholder="Unit Price"
-                value={item.unitPrice}
-                onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
-              />
-              <input
-                name="amount"
-                placeholder="Amount(Rs.)"
-                value={item.amount}
-                onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
-              />
-              <input
-                name="ecCharge"
-                placeholder="e&c Charge"
-                value={item.ecCharge}
-                onChange={(e) => handleChange(e, index)}
-                className="border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
-              />
-              <button
-                type="button"
-                onClick={() => removeItem(index)}
-                className="bg-red-500 text-white px-3 py-2 w-20 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
+          <div className="flex flex-col space-y-6">
+            {formData.items.map((item, index) => (
+              <div
+                key={index}
+                className={`grid grid-cols-3 gap-6 items-center justify-between p-4 border-2 rounded-lg shadow-md 
+                  border-customBorderColor bg-white even:bg-gray-100`}
               >
-                Remove
-              </button>
-            </div>
-          ))}
+                <input
+                  name="description"
+                  placeholder="Description"
+                  value={item.description}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border p-2 rounded-md border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor bg-customBgColor-bg"
+                />
+                <input
+                  name="quantity"
+                  type="number"
+                  placeholder="Quantity"
+                  value={item.quantity}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border p-2 rounded-md border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor bg-customBgColor-bg"
+                />
+                <input
+                  name="unitPrice"
+                  type="number"
+                  placeholder="Unit Price"
+                  value={item.unitPrice}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border p-2 rounded-md border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor bg-customBgColor-bg"
+                />
+                <input
+                  name="amount"
+                  type="number"
+                  placeholder="Amount(Rs.)"
+                  value={item.amount}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border p-2 rounded-md border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor bg-customBgColor-bg"
+                />
+                <input
+                  name="ecCharge"
+                  type="number"
+                  placeholder="e&c Charge"
+                  value={item.ecCharge}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border p-2 rounded-md border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor bg-customBgColor-bg"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeItem(index)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-red-600 transition-all duration-200"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={addItem}
