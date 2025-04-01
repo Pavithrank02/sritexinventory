@@ -16,8 +16,6 @@ const SprocketForm = () => {
         {materialType.map((type, index) =>{
           <option key={index}>{type}</option>
         })}
-        
-       
       </select>
     </div>
   );

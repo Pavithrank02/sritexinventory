@@ -7,18 +7,24 @@ import SheetForm from "./components/forms/SheetForm";
 import Dashboard from "./components/dashboards/DashBoard";
 import SheetsDashboard from "./components/dashboards/SheetsDashboard";
 import BoltNutMachine from "./components/dashboards/BoltNutMachine";
+import DemoBoltNutMachine from "./components/dashboards/DemoBoltNutMachine";
+import QuotationGenerator from "./components/QuotationGenerator";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={< Dashboard/>} />
-        <Route path="/sheetdashboard" element={< SheetsDashboard/>} />
-        <Route path="sheets" element={<SheetForm />} />
-        <Route path="machine" element={<BoltNutMachine />} />
-        <Route path="channel" element={<ChannelPattaForm />} />
-        <Route path="dc" element={<DeliveryChallanForm />} />
-        <Route path="nuts" element={<NutBoltsForm />} />
+        {/* Home route - dashboard */}
+        <Route path="/" element={<Dashboard />} />
+
+        {/* Other routes */}
+        <Route path="/demonut" element={<DemoBoltNutMachine />} />
+        <Route path="/sheetdashboard" element={<SheetsDashboard />} />
+        <Route path="/sheets" element={<SheetForm />} />
+        <Route path="/channel" element={<ChannelPattaForm />} />
+        <Route path="/dc" element={<DeliveryChallanForm />} />
+        <Route path="/nuts" element={<NutBoltsForm />} />
+        <Route path="/quote" element={<QuotationGenerator />} />
       </Routes>
     </div>
   );

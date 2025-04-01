@@ -64,24 +64,25 @@ const SheetForm = () => {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/sheet-forms/sheetforms",
-        formData
-      );
-      alert(response.data.message);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      alert("Error submitting form.");
-    }
-    setFormData({
-      items: [{ sheetType: "", noOfSheets: "", weight: "", sheetSize: "" }],
-      datePurchased: "",
-      dateDelivered: "",
-      drawingSentDate: "",
-      sheetReturnedDate: "",
-      balanceSheet: "",
-    });
+    // try {
+    //   const response = await axios.post(
+    //     "http://localhost:5000/sheet-forms/sheetforms",
+    //     formData
+    //   );
+    //   alert(response.data.message);
+    // } catch (error) {
+    //   console.error("Error submitting form:", error);
+    //   alert("Error submitting form.");
+    // }
+    // setFormData({
+    //   items: [{ sheetType: "", noOfSheets: "", weight: "", sheetSize: "" }],
+    //   datePurchased: "",
+    //   dateDelivered: "",
+    //   drawingSentDate: "",
+    //   sheetReturnedDate: "",
+    //   balanceSheet: "",
+    // });
+    alert("Form Submmitted")
   };
 
   return (
