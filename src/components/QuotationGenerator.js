@@ -7,7 +7,7 @@ import { SidebarDemo } from "./SideComponent.js";
 const QuotationGenerator = () => {
   const [formData, setFormData] = useState({
     businessName: "",
-    customerName: "",
+    customerAddress: "",
     quotationDate: "",
     quotationNumber: "",
     validity: "",
@@ -71,35 +71,62 @@ const QuotationGenerator = () => {
     const doc = new jsPDF();
 
     // Add logo
-    const logoWidth = 200; // Adjust logo width
+    const logoWidth = 220; // Adjust logo width
     const logoHeight = 30; // Adjust logo height
-    doc.addImage(logoBase64, "PNG", 10, 10, logoWidth, logoHeight);
-    const companyStartY = 10 + logoHeight + 5;
+    doc.addImage(logoBase64, "PNG", 0, 0, logoWidth, logoHeight);
+    const companyStartY = 10 + logoHeight;
     const margin = 10;
     const maxWidth = doc.internal.pageSize.getWidth() - margin * 2;
+    const columnWidth = doc.internal.pageSize.getWidth() / 2 - margin * 2;
+    const column1X = margin; // Left column
+    const column2X = doc.internal.pageSize.getWidth() / 2 + 10; // Right column
+    const rowSpacing = 7; // Space between rows
 
     // Company Information
     doc.setFontSize(10);
-    doc.text("M/S Sri Tex Hitech Machines", margin, companyStartY);
+
+    // Company Information - Two Columns
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
     doc.setFont("helvetica", "normal");
+
+    // Left Column
+    doc.setFont("helvetica", "bold");
     doc.text(
-      "#4/96(4), Lakshmi Nagar, Kollupalayam, Kaniyur Post, Coimbatore 641 659.",
-      margin,
-      companyStartY + 5,
-      { maxWidth }
+      "Phone: 09443391712, 09487991712,",
+      column1X,
+      companyStartY + rowSpacing
     );
     doc.text(
-      "Phone: 0422-2270540 | Email: info@sritexhitechmachines.com",
-      margin,
-      companyStartY + 10,
-      { maxWidth }
+      "GSTIN: 33ABIFS9750L1ZL",
+      column1X,
+      companyStartY + rowSpacing * 2
+    );
+
+    // Right Column
+    const wrappedAddress2 = doc.splitTextToSize(
+      "#4/96(4), Lakshmi Nagar, Kollupalayam, Kaniyur Post, Coimbatore 641 659.",
+      maxWidth
+    );
+    doc.setFont("helvetica", "bold");
+    doc.text(
+      wrappedAddress2,
+      column2X - 80,
+      companyStartY - 25 + rowSpacing * 3
+    );
+    doc.setFont("helvetica", "normal");
+    doc.text(
+      "Email: info@sritexhitechmachines.com",
+      column2X,
+      companyStartY + rowSpacing
     );
     doc.text(
       "Website: www.sritexhitechmachines.com",
-      margin,
-      companyStartY + 15
+      column2X,
+      companyStartY + rowSpacing * 2
     );
-    doc.text("GSTIN: 33ABIFS9750L1ZL", margin, companyStartY + 20);
+
+    // Full Width Address (Wrap if needed)
 
     // Quotation Details
     const detailsStartY = companyStartY + 30;
@@ -108,35 +135,57 @@ const QuotationGenerator = () => {
     doc.text("Quotation Details", margin, detailsStartY);
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
+
+    // Left Column
+    doc.setFont("helvetica", "bold");
     doc.text(
       `Business Name: ${formData.businessName}`,
-      margin,
-      detailsStartY + 5
-    );
-    doc.text(
-      `Customer Name: ${formData.customerName}`,
-      margin,
-      detailsStartY + 10
-    );
-    doc.text(
-      `Quotation Date: ${formData.quotationDate}`,
-      margin,
-      detailsStartY + 15
-    );
-    doc.text(
-      `Quotation Number: ${formData.quotationNumber}`,
-      margin,
-      detailsStartY + 20
-    );
-    doc.text(`Validity: ${formData.validity}`, margin, detailsStartY + 25);
-    doc.text(
-      `Payment Terms: ${formData.paymentTerms}`,
-      margin,
-      detailsStartY + 30
+      column1X,
+      detailsStartY + rowSpacing
     );
 
-    // Table Headers
-    const tableStartY = detailsStartY + 50;
+    // Wrap Customer Address
+    const wrappedAddress = doc.splitTextToSize(
+      `Customer Address: ${formData.customerAddress}`,
+      columnWidth
+    );
+    doc.setFont("helvetica", "bold");
+    doc.text(wrappedAddress, column1X, detailsStartY + rowSpacing * 2);
+
+    // Calculate address height
+    const addressLines = wrappedAddress.length;
+    const addressHeight = addressLines * rowSpacing;
+
+    // Right Column
+    doc.text(
+      `Quotation Date: ${formData.quotationDate}`,
+      column2X,
+      detailsStartY + rowSpacing
+    );
+    const wrappedQuotationNumber = doc.splitTextToSize(
+      `Quotation Number: ${formData.quotationNumber}`,
+      columnWidth
+    );
+    doc.text(wrappedQuotationNumber, column2X, detailsStartY + rowSpacing * 2);
+
+    // Calculate right column height
+    const rightColumnLines = wrappedQuotationNumber.length;
+    const rightColumnHeight = rightColumnLines * rowSpacing;
+
+    // Determine max height between left and right columns
+    const maxHeight = Math.max(addressHeight, rightColumnHeight);
+    const adjustedNextRowY = detailsStartY + rowSpacing * 2 + maxHeight; 
+
+    doc.text(`Validity: ${formData.validity}`, column1X, adjustedNextRowY -10);
+    doc.text(
+      `Payment Terms: ${formData.paymentTerms}`,
+      column2X,
+      adjustedNextRowY -25
+      
+    );
+    // Dynamically set the table position below all content
+    const tableStartY = adjustedNextRowY + rowSpacing * 3;
+
     const columnWidths = [12, 90, 20, 20, 20, 25];
     const rowHeight = 10;
     let currentX = margin;
@@ -252,7 +301,7 @@ const QuotationGenerator = () => {
     doc.text(
       `Discount: ${formData.discount.toFixed(2)}`,
       150,
-      summaryStartY + 10  
+      summaryStartY + 10
     );
     doc.text(`Total: ${total.toFixed(2)}`, 150, summaryStartY + 15);
     doc.text(`unitTotal: ${unitTotal.toFixed(2)}`, 150, summaryStartY + 25);
@@ -283,10 +332,10 @@ const QuotationGenerator = () => {
             onChange={handleChange}
             className="w-full border p-2 rounded border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
-          <input
-            name="customerName"
-            placeholder="Customer Name"
-            value={formData.customerName}
+          <textarea
+            name="customerAddress"
+            placeholder="Customer Address"
+            value={formData.customerAddress}
             onChange={handleChange}
             className="w-full border p-2 rounded  border-customBorderColor focus:ring-2 focus:outline-none focus:ring-customBgColor"
           />
