@@ -252,7 +252,7 @@ const QuotationGenerator = () => {
     doc.text(
       `Discount: ${formData.discount.toFixed(2)}`,
       150,
-      summaryStartY + 10
+      summaryStartY + 10  
     );
     doc.text(`Total: ${total.toFixed(2)}`, 150, summaryStartY + 15);
     doc.text(`unitTotal: ${unitTotal.toFixed(2)}`, 150, summaryStartY + 25);
