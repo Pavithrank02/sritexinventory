@@ -223,7 +223,7 @@ const NutBoltsForm = () => {
     <div className="flex flex-row bg-gray-100 min-h-screen">
       <SidebarDemo />
       <div className="p-8 w-full max-w-7xl">
-        <h1 className="text-2xl font-bold mb-6 text-gray-800">
+        <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Nuts and Bolts Form
         </h1>
         <form
@@ -233,7 +233,7 @@ const NutBoltsForm = () => {
           {formData.items.map((item, index) => (
             <div
               key={index}
-              className="col-span-full border p-6 rounded-lg shadow-md bg-customBgColor-bg dark:bg-neutral-800"
+              className="col-span-full border p-6 rounded-lg shadow-md bg-customBgColor-bg "
             >
               <h3 className="text-lg font-semibold mb-4 text-gray-700 dark:text-cuborder-customBgColor-bg">
                 Item {index + 1}
@@ -296,7 +296,7 @@ const NutBoltsForm = () => {
             <div className="grid grid-cols-2 gap-4 mt-6">
               <button
                 type="submit"
-                className="w-full bg-customTextColor hover:bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-md"
+                className="w-full bg-customTextColor hover:bg-customTextColor-light text-white font-semibold py-3 rounded-lg shadow-md"
               >
                 {isUpdateMode ? "Update Stock" : "Submit"}
               </button>
