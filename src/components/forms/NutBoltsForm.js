@@ -191,7 +191,7 @@ const NutBoltsForm = () => {
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
         placeholder={placeholder}
-        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       />
     </div>
@@ -206,7 +206,7 @@ const NutBoltsForm = () => {
         name={name}
         value={formData.items[index][name]}
         onChange={(e) => handleChange(e, index)}
-        className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
+        className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
         required
       >
         <option value="">Select {label}</option>
