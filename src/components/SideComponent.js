@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import {
   IconBrandTabler,
-  IconNut,
+  IconReportMoney,
   IconPerspective,
   IconRuler2,
   IconTruckDelivery,
@@ -60,9 +60,9 @@ export function SidebarDemo() {
       ),
     },
     {
-      label: "Nuts and Bolts",
-      href: "/nuts",
-      icon: <IconNut className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
+      label: "Quotation",
+      href: "/quote",
+      icon: <IconReportMoney className="h-6 w-6 flex-shrink-0 text-customTextColor" />,
     },
     {
       label: "Machine",
