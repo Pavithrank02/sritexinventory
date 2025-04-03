@@ -176,11 +176,17 @@ const QuotationGenerator = () => {
     const maxHeight = Math.max(addressHeight, rightColumnHeight);
     const adjustedNextRowY = detailsStartY + rowSpacing * 2 + maxHeight; 
 
-    doc.text(`Validity: ${formData.validity}`, column1X, adjustedNextRowY -10);
+    doc.text(`Kind Attention: ${formData.validity}`, column1X, adjustedNextRowY -10);
     doc.text(
-      `Payment Terms: ${formData.paymentTerms}`,
+      `Mobile : ${formData.paymentTerms}`,
       column2X,
-      adjustedNextRowY -25
+      adjustedNextRowY -12
+      
+    );
+    doc.text(
+      `Email : ${formData.paymentTerms}`,
+      column2X,
+      adjustedNextRowY -20
       
     );
     // Dynamically set the table position below all content
