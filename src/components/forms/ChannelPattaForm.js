@@ -118,17 +118,17 @@ const ChannelPattaForm = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen w-full">
+    <div className="flex flex-col md:flex-row h-full md:h-screen w-full">
       <SidebarDemo />
-      <div className="flex-1 bg-gray-50 dark:bg-neutral-900 p-6">
-        <h1 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+      <div className="flex-1 bg-customTextColor-white p-4 sm:p-6">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 text-gray-800  text-center">
           Channel and Patta Form
         </h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Dates */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor  font-medium mb-2">
                 Date Purchased
               </label>
               <input
@@ -136,12 +136,12 @@ const ChannelPattaForm = () => {
                 name="datePurchased"
                 value={formData.datePurchased}
                 onChange={handleFormChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">
+              <label className="block text-customTextColor font-medium mb-2">
                 Date Delivered
               </label>
               <input
@@ -149,27 +149,27 @@ const ChannelPattaForm = () => {
                 name="dateDelivered"
                 value={formData.dateDelivered}
                 onChange={handleFormChange}
-                className="w-full border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
           </div>
 
           {/* Items Section */}
-          <div className="bg-customBgColor-bg dark:bg-neutral-900 p-6 rounded-lg shadow-lg">
-            <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200 mb-6">
+          <div className="bg-customBgColor-bg  p-4 sm:p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-customTextColor  mb-6">
               Items
             </h2>
             {formData.items.map((item, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 shadow-md rounded-lg p-6 mb-6 transition-transform transform hover:scale-[1.02]"
+                className="bg-white  border border-gray-200 shadow-md rounded-lg p-4 sm:p-6 mb-6 transition-transform transform hover:scale-[1.02]"
               >
                 {/* Row 1 */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <select
                     name="channelType"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.channelType}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -183,7 +183,7 @@ const ChannelPattaForm = () => {
                   </select>
                   <select
                     name="channelSize"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.channelSize}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -199,7 +199,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="noOfChannels"
                     placeholder="No. of Channels"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.noOfChannels}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -208,7 +208,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="channelWeight"
                     placeholder="Channel Weight (kg)"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.channelWeight}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -216,10 +216,10 @@ const ChannelPattaForm = () => {
                 </div>
 
                 {/* Row 2 */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <select
                     name="angleType"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.angleType}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -233,7 +233,7 @@ const ChannelPattaForm = () => {
                   </select>
                   <select
                     name="angleSize"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.angleSize}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -249,7 +249,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="angleWeight"
                     placeholder="Angle Weight (kg)"
-                    className="border border-customBorderColor dark:border-neutral-600 dark:bg-neutral-800 rounded-lg p-2 focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
                     value={item.angleWeight}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -271,7 +271,7 @@ const ChannelPattaForm = () => {
             <button
               type="button"
               onClick={addRow}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
               + Add Row
             </button>
@@ -281,7 +281,7 @@ const ChannelPattaForm = () => {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md"
+              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-md"
             >
               Submit
             </button>
