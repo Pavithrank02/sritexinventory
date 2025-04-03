@@ -29,7 +29,7 @@ export function SidebarDemo() {
       ),
       subLinks: [
         { label: "Sheet Dashboard", href: "/sheetdashboard" },
-        { label: "Machine Dashboard", href: "/demonut" },
+        { label: "Machine Dashboard", href: "/machine" },
         { label: "Nut and Bolt Dashboard", href: "/" },
       ],
     },
@@ -66,12 +66,12 @@ export function SidebarDemo() {
     },
     {
       label: "Machine",
-      href: "/demonut",
+      href: "/machine",
       icon: (
         <IconBuildingFactory className="h-6 w-6 flex-shrink-0 text-customTextColor" />
       ),
       subLinks: [
-        { label: "Nuts, Bolt and Washers", href: "/demonut" },
+        { label: "Nuts, Bolt and Washers", href: "/machine" },
         { label: "Sheet Types", href: "" },
         { label: "Shafts and Gears", href: "" },
         { label: "Dummy", href: "" },
