@@ -265,7 +265,7 @@ const BoltNutMachine = () => {
   };
 
   return (
-    <div className="flex flex-row h-screen bg-customBgColor-bg dark:bg-neutral-900">
+    <div className="flex flex-row h-screen bg-customBgColor-bg ">
       <SidebarDemo />
       <div className="flex-1 p-2  ">
         <HorizontalMenu />
