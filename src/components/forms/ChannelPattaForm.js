@@ -271,7 +271,7 @@ const ChannelPattaForm = () => {
             <button
               type="button"
               onClick={addRow}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
+              className="bg-customBgColor hover:bg-customTextColor-light text-white font-semibold py-2 px-4 md:px-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
             >
               + Add Row
             </button>
