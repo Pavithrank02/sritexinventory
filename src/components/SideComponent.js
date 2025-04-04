@@ -43,6 +43,7 @@ export function SidebarDemo() {
         { label: "Sheet Form", href: "/sheets" },
         { label: "Channel Patta Form", href: "/channel" },
         { label: "Nut and Bolt Form", href: "/nuts" },
+        { label: "SprocketForm", href: "/sprocket" },
       ],
     },
     {

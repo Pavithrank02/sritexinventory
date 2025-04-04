@@ -136,7 +136,7 @@ const ChannelPattaForm = () => {
                 name="datePurchased"
                 value={formData.datePurchased}
                 onChange={handleFormChange}
-                className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor  rounded-lg p-2  focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
@@ -149,7 +149,7 @@ const ChannelPattaForm = () => {
                 name="dateDelivered"
                 value={formData.dateDelivered}
                 onChange={handleFormChange}
-                className="w-full border border-customBorderColor rounded-lg p-2 focus:ring-2 focus:ring-customTextColor-light"
+                className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                 required
               />
             </div>
@@ -169,7 +169,7 @@ const ChannelPattaForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                   <select
                     name="channelType"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.channelType}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -183,7 +183,7 @@ const ChannelPattaForm = () => {
                   </select>
                   <select
                     name="channelSize"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.channelSize}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -199,7 +199,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="noOfChannels"
                     placeholder="No. of Channels"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.noOfChannels}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -208,7 +208,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="channelWeight"
                     placeholder="Channel Weight (kg)"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.channelWeight}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -219,7 +219,7 @@ const ChannelPattaForm = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   <select
                     name="angleType"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.angleType}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -233,7 +233,7 @@ const ChannelPattaForm = () => {
                   </select>
                   <select
                     name="angleSize"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.angleSize}
                     onChange={(e) => handleInputChange(e, index)}
                     required
@@ -249,7 +249,7 @@ const ChannelPattaForm = () => {
                     type="number"
                     name="angleWeight"
                     placeholder="Angle Weight (kg)"
-                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:ring-2 focus:ring-customBorderColor"
+                    className="w-full border border-customBorderColor  rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customTextColor-light"
                     value={item.angleWeight}
                     onChange={(e) => handleInputChange(e, index)}
                     required

@@ -106,7 +106,7 @@ const SheetForm = () => {
                     Sheet Type
                   </label>
                   <select
-                    className="border border-customBgColor rounded-lg p-2 w-full"
+                    className="border border-customBgColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                     value={item.sheetType}
                     onChange={(e) => handleChange(e, index)}
                     name="sheetType"
@@ -123,7 +123,7 @@ const SheetForm = () => {
                     Sheet Size
                   </label>
                   <select
-                    className="border border-customBorderColor rounded-lg p-2 w-full"
+                    className="border border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                     value={item.sheetSize}
                     onChange={(e) => handleChange(e, index)}
                     name="sheetSize"
@@ -142,7 +142,7 @@ const SheetForm = () => {
                   <input
                     type="text"
                     name="noOfSheets"
-                    className="border border-customBorderColor rounded-lg p-2 w-full"
+                    className="border border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                     value={item.noOfSheets}
                     onChange={(e) => handleChange(e, index)}
                   />
@@ -154,7 +154,7 @@ const SheetForm = () => {
                   <input
                     type="text"
                     name="weight"
-                    className="border border-customBorderColor rounded-lg p-2 w-full"
+                    className="border border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                     value={item.weight}
                     onChange={(e) => handleChange(e, index)}
                   />
@@ -179,7 +179,7 @@ const SheetForm = () => {
                 type="date"
                 placeholder="Enter date"
                 name="datePurchased"
-                className="border border-customBorderColor rounded-lg p-2 w-full"
+                className="border border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                 value={formData.datePurchased}
                 onChange={handleChange}
               />
@@ -193,7 +193,7 @@ const SheetForm = () => {
                 type="date"
                 placeholder="Enter date"
                 name="dateDelivered"
-                className="border border-customBorderColor rounded-lg p-2 w-full"
+                className="border border-customBorderColor focus:outline-none focus:ring-2 focus:ring-customTextColor-light rounded-lg p-2 w-full"
                 value={formData.dateDelivered}
                 onChange={handleChange}
               />
