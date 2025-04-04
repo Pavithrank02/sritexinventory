@@ -130,9 +130,9 @@ export function SidebarDemo() {
                     <NavLink
                       to={link.href}
                       className={({ isActive }) =>
-                        `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md ${
+                        `flex items-center gap-3 p-3 rounded-lg transition-all duration-300 shadow-sm hover:shadow-md hover:bg-customTextColor-light ${
                           isActive
-                            ? " bg-gradient-to-r from-customBgColor-bg to-customTextColor-light  "
+                            ? " bg-gradient-to-r from-customBgColor-bg to-customTextColor-light hover:bg-customTextColor-light "
                             : "bg-customBgColor-bg  hover:bg-customTextColor-light "
                         }`
                       }
@@ -177,11 +177,11 @@ export function SidebarDemo() {
                         </div>
                         {isSidebarOpen && (
                           <span
-                            className={`transition-transform duration-300 ${
+                            className={`transition-transform duration-300 text-customTextColor ${
                               dropdownOpen === idx ? "rotate-180" : "rotate-0"
                             }`}
                           >
-                            ▼
+                             ▼ 
                           </span>
                         )}
                       </div>
