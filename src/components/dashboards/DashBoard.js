@@ -171,155 +171,155 @@ const Dashboard = () => {
   calculateWeight(data);
   return (
     <div className="flex flex-col lg:flex-row">
-      <SidebarDemo />
-      <div className="p-4 sm:p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
-        <HorizontalMenu />
+    <SidebarDemo />
+    <div className="p-4 sm:p-6 bg-gradient-to-br from-customTextColor-white via-customBorderColor-light to-gray-300 min-h-screen w-full">
+      <HorizontalMenu />
 
-        <div className="mb-8">
-          <div className="flex flex-col sm:flex-row justify-between">
-            <h2 className="text-2xl font-bold mb-4 sm:mb-0 text-gray-800">
-              Inventory Summary
-            </h2>
-            <div className="mb-5">
-              
-                <AnimatedModalButton />
+      <div className="mb-8">
+        <div className="flex flex-col sm:flex-row justify-between">
+          <h2 className="text-2xl font-bold mb-4 sm:mb-0 text-gray-800">
+            Inventory Summary
+          </h2>
+          <div className="mb-5">
             
-            </div>
+              <AnimatedModalButton />
+          
           </div>
-
-          {/* Search Bar */}
-          <SearchBar data={data} />
-
-          {/* Dropdown Structure for Each Category */}
-          {Object.entries(data).map(([category, items], index) => (
-            <div key={index} className="mb-4">
-              <details className="rounded-lg shadow-md bg-customBgColor-bg border border-gray-300 group">
-                <summary className="px-4 py-3 flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 group-hover:bg-gray-100">
-                  <span className="capitalize">{category}</span>
-                  <svg
-                    className="w-5 h-5 transform group-open:rotate-180 transition-transform"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
-                </summary>
-
-                <div className="px-4 py-3">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {items.map((item, idx) => (
-                      <StockCard
-                        key={idx}
-                        size={item.size}
-                        stock={item.stock}
-                        totalWeight={item.totalWeight}
-                        required={item.required}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </details>
-            </div>
-          ))}
         </div>
 
-        {/* Existing Dynamic Visualizations */}
-        {Object.entries(data).map(([key, items], index) => (
-          <motion.div
-            key={index}
-            className="mb-8 bg-white p-4 sm:p-6 rounded-lg shadow-xl border-t-4 border-customBorderColor"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-xl font-bold mb-4 text-gray-800">
-              {key.charAt(0).toUpperCase() + key.slice(1)} Visualization
-            </h2>
+        {/* Search Bar */}
+        <SearchBar data={data} />
 
-            {/* Bar Chart */}
-            <div className="mb-6 w-full max-w-full overflow-x-auto">
-              <h3 className="text-lg font-semibold text-gray-700">
-                Stock Analysis
-              </h3>
-              <BarChart
-                width={Math.min(600, window.innerWidth - 50)}
-                height={300}
-                data={items}
-              >
-                <XAxis dataKey="size" stroke="#4B5563" />
-                <YAxis stroke="#4B5563" />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="stock" fill="#177643" name="Stock" />
-              </BarChart>
-            </div>
-
-            {/* Pie Chart */}
-            <div className="mb-6 flex justify-center">
-              <h3 className="text-lg font-semibold text-gray-700">
-                Stock Distribution
-              </h3>
-              <PieChart width={300} height={300}>
-                <Pie
-                  data={items}
-                  dataKey="stock"
-                  nameKey="size"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  fill="#10B981"
-                  label
+        {/* Dropdown Structure for Each Category */}
+        {Object.entries(data).map(([category, items], index) => (
+          <div key={index} className="mb-4">
+            <details className="rounded-lg shadow-md bg-customBgColor-bg border border-gray-300 group">
+              <summary className="px-4 py-3 flex items-center justify-between cursor-pointer text-lg font-semibold text-gray-700 group-hover:bg-gray-100">
+                <span className="capitalize">{category}</span>
+                <svg
+                  className="w-5 h-5 transform group-open:rotate-180 transition-transform"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  {items.map((_, i) => (
-                    <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip />
-              </PieChart>
-            </div>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </summary>
 
-            {/* Data Table */}
-            <div className="overflow-x-auto">
-              <h3 className="text-lg font-semibold text-gray-700">
-                Data Table
-              </h3>
-              <table className="w-full bg-white rounded-lg shadow">
-                <thead>
-                  <tr className="bg-customTextColor-light text-white">
-                    <th className="p-3 text-left text-sm">Size</th>
-                    <th className="p-3 text-left text-sm">Stock</th>
-                    <th className="p-3 text-left text-sm">Total Weight</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {items.map((item, i) => (
-                    <tr
-                      key={i}
-                      className={
-                        i % 2 === 0 ? "bg-gray-50" : "bg-customBgColor-bg"
-                      }
-                    >
-                      <td className="p-3 border-b text-sm">{item.size}</td>
-                      <td className="p-3 border-b text-sm">{item.stock}</td>
-                      <td className="p-3 border-b text-sm">
-                        {item.totalWeight}
-                      </td>
-                    </tr>
+              <div className="px-4 py-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {items.map((item, idx) => (
+                    <StockCard
+                      key={idx}
+                      size={item.size}
+                      stock={item.stock}
+                      totalWeight={item.totalWeight}
+                      required={item.required}
+                    />
                   ))}
-                </tbody>
-              </table>
-            </div>
-          </motion.div>
+                </div>
+              </div>
+            </details>
+          </div>
         ))}
       </div>
+
+      {/* Existing Dynamic Visualizations */}
+      {Object.entries(data).map(([key, items], index) => (
+        <motion.div
+          key={index}
+          className="mb-8 bg-white p-4 sm:p-6 rounded-lg shadow-xl border-t-4 border-customBorderColor"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            {key.charAt(0).toUpperCase() + key.slice(1)} Visualization
+          </h2>
+
+          {/* Bar Chart */}
+          <div className="mb-6 w-full max-w-full overflow-x-auto">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Stock Analysis
+            </h3>
+            <BarChart
+              width={Math.min(600, window.innerWidth - 50)}
+              height={300}
+              data={items}
+            >
+              <XAxis dataKey="size" stroke="#4B5563" />
+              <YAxis stroke="#4B5563" />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="stock" fill="#177643" name="Stock" />
+            </BarChart>
+          </div>
+
+          {/* Pie Chart */}
+          <div className="mb-6 flex justify-center">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Stock Distribution
+            </h3>
+            <PieChart width={300} height={300}>
+              <Pie
+                data={items}
+                dataKey="stock"
+                nameKey="size"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                fill="#10B981"
+                label
+              >
+                {items.map((_, i) => (
+                  <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
+
+          {/* Data Table */}
+          <div className="overflow-x-auto">
+            <h3 className="text-lg font-semibold text-gray-700">
+              Data Table
+            </h3>
+            <table className="w-full bg-white rounded-lg shadow">
+              <thead>
+                <tr className="bg-customTextColor-light text-white">
+                  <th className="p-3 text-left text-sm">Size</th>
+                  <th className="p-3 text-left text-sm">Stock</th>
+                  <th className="p-3 text-left text-sm">Total Weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item, i) => (
+                  <tr
+                    key={i}
+                    className={
+                      i % 2 === 0 ? "bg-gray-50" : "bg-customBgColor-bg"
+                    }
+                  >
+                    <td className="p-3 border-b text-sm">{item.size}</td>
+                    <td className="p-3 border-b text-sm">{item.stock}</td>
+                    <td className="p-3 border-b text-sm">
+                      {item.totalWeight}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </motion.div>
+      ))}
     </div>
+  </div>
   );
 };
 
