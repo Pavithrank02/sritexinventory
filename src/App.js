@@ -9,6 +9,7 @@ import SheetsDashboard from "./components/dashboards/SheetsDashboard";
 import BoltNutMachine from "./components/dashboards/BoltNutMachine";
 import QuotationGenerator from "./components/QuotationGenerator";
 import SprocketForm from "./components/forms/SprocketForm";
+import ShaftPintGearForm from "./components/forms/ShaftPintGearForm";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="nuts" element={<NutBoltsForm />} />
         <Route path="/quote" element={<QuotationGenerator />} />
         <Route path="/sprocket" element={<SprocketForm />} />
+        <Route path="/shaft" element={<ShaftPintGearForm />} />
       </Routes>
     </div>
   );

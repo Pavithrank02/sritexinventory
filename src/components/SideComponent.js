@@ -74,7 +74,7 @@ export function SidebarDemo() {
       subLinks: [
         { label: "Nuts, Bolt and Washers", href: "/machine" },
         { label: "Sheet Types", href: "" },
-        { label: "Shafts and Gears", href: "" },
+        { label: "Shafts and Gears", href: "/shaft" },
         { label: "Dummy", href: "" },
       ],
     },
