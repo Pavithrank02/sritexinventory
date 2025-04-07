@@ -130,9 +130,12 @@ const QuotationGenerator = () => {
 
     // Initial position for Quotation Details
     const detailsStartY = companyStartY + 30;
+    let currentY = detailsStartY;
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text("Quotation Details", margin, detailsStartY);
+    doc.text("Quotation Details", doc.internal.pageSize.getWidth() / 2.1, currentY, {
+      align: "center",
+    });
 
     // Prepare for fields
     doc.setFontSize(10);
