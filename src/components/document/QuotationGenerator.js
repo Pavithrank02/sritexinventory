@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import logoBase64 from "../assets/images/logobase.js";
-import { SidebarDemo } from "./SideComponent.js";
+import logoBase64 from "../../assets/images/logobase.js";
+import { SidebarDemo } from "../SideComponent.js";
 
 const QuotationGenerator = () => {
   const [formData, setFormData] = useState({

@@ -1,13 +1,13 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import ChannelPattaForm from "./components/forms/ChannelPattaForm";
-import DeliveryChallanForm from "./components/forms/DeliveryChallanForm";
+import DeliveryChallanForm from "./components/document/DeliveryChallanForm";
 import NutBoltsForm from "./components/forms/NutBoltsForm";
 import SheetForm from "./components/forms/SheetForm";
 import Dashboard from "./components/dashboards/DashBoard";
 import SheetsDashboard from "./components/dashboards/SheetsDashboard";
 import BoltNutMachine from "./components/dashboards/BoltNutMachine";
-import QuotationGenerator from "./components/QuotationGenerator";
+import QuotationGenerator from "./components/document/QuotationGenerator";
 import SprocketForm from "./components/forms/SprocketForm";
 import ShaftPintGearForm from "./components/forms/ShaftPintGearForm";
 

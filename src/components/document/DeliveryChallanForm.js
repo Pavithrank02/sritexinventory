@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 import "jspdf-yworks";
 import "jspdf-autotable";
 import { SidebarDemo } from "../SideComponent";
-import logoBase64 from "../../assets/images/logobase";
+import logoBase64 from "../../assets/images/logobase.js";
 
 const DeliveryChallanForm = () => {
   const [formData, setFormData] = useState({
