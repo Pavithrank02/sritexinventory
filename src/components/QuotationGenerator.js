@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import logoBase64 from "../assets/images/logobase.js";
-import { SidebarDemo } from "./SideComponent.js";
+import { SidebarDemo } from "../components/SideComponent.js";
 
 const QuotationGenerator = () => {
   const [formData, setFormData] = useState({
@@ -128,61 +128,81 @@ const QuotationGenerator = () => {
 
     // Full Width Address (Wrap if needed)
 
-    // Quotation Details
+    // Initial position for Quotation Details
     const detailsStartY = companyStartY + 30;
+    let currentY = detailsStartY;
     doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text("Quotation Details", margin, detailsStartY);
+    doc.text("Quotation Details", doc.internal.pageSize.getWidth() / 2.1, currentY, {
+      align: "center",
+    });
+
+    // Prepare for fields
     doc.setFontSize(10);
+    const labelSpacingX = 35;
+    const rowGap = 5;
+    let rowY = detailsStartY + 10; // Reduced spacing after title
+
+    // Row 1: Business Name & Quotation Date
+    doc.setFont("helvetica", "bold");
+    doc.text("Business Name:", column1X, rowY);
     doc.setFont("helvetica", "normal");
+    doc.text(formData.businessName, column1X + labelSpacingX, rowY);
 
-    // Left Column
     doc.setFont("helvetica", "bold");
-    doc.text(
-      `Business Name: ${formData.businessName}`,
-      column1X,
-      detailsStartY + rowSpacing
-    );
+    doc.text("Quotation Date:", column2X, rowY);
+    doc.setFont("helvetica", "normal");
+    doc.text(formData.quotationDate, column2X + labelSpacingX, rowY);
 
-    // Wrap Customer Address
+    // Row 2: Customer Address & Quotation Number
+    rowY += rowGap + 5;
+
+    doc.setFont("helvetica", "bold");
+    doc.text("Customer Address:", column1X, rowY);
     const wrappedAddress = doc.splitTextToSize(
-      `Customer Address: ${formData.customerAddress}`,
+      formData.customerAddress,
       columnWidth
     );
+    doc.setFont("helvetica", "normal");
+    doc.text(wrappedAddress, column1X + labelSpacingX, rowY);
+
+    // Calculate dynamic height for address
+    const addressHeight = wrappedAddress.length * rowGap;
+
+    // Quotation Number
     doc.setFont("helvetica", "bold");
-    doc.text(wrappedAddress, column1X, detailsStartY + rowSpacing * 2);
-
-    // Calculate address height
-    const addressLines = wrappedAddress.length;
-    const addressHeight = addressLines * rowSpacing;
-
-    // Right Column
-    doc.text(
-      `Quotation Date: ${formData.quotationDate}`,
-      column2X,
-      detailsStartY + rowSpacing
-    );
+    doc.text("Quotation Number:", column2X, rowY);
     const wrappedQuotationNumber = doc.splitTextToSize(
-      `Quotation Number: ${formData.quotationNumber}`,
+      formData.quotationNumber,
       columnWidth
     );
-    doc.text(wrappedQuotationNumber, column2X, detailsStartY + rowSpacing * 2);
+    doc.setFont("helvetica", "normal");
+    doc.text(wrappedQuotationNumber, column2X + labelSpacingX, rowY);
+    const quotationNumberHeight = wrappedQuotationNumber.length * rowGap;
 
-    // Calculate right column height
-    const rightColumnLines = wrappedQuotationNumber.length;
-    const rightColumnHeight = rightColumnLines * rowSpacing;
+    // Find max height between two columns
+    const maxBlockHeight = Math.max(addressHeight, quotationNumberHeight);
+    rowY += maxBlockHeight + rowGap; // Tighter space between blocks
 
-    // Determine max height between left and right columns
-    const maxHeight = Math.max(addressHeight, rightColumnHeight);
-    const adjustedNextRowY = detailsStartY + rowSpacing * 2 + maxHeight; 
+    // Row 3: Kind Attention, Mobile, Email (fewer gaps)
+    doc.setFont("helvetica", "bold");
+    doc.text("Kind Attention:", column1X, rowY);
+    doc.setFont("helvetica", "normal");
+    doc.text(formData.validity, column1X + labelSpacingX, rowY);
 
-    doc.text(`Validity: ${formData.validity}`, column1X, adjustedNextRowY -10);
-    doc.text(
-      `Payment Terms: ${formData.paymentTerms}`,
-      column2X,
-      adjustedNextRowY -25
-      
-    );
+    doc.setFont("helvetica", "bold");
+    doc.text("Mobile:", column2X, rowY);
+    doc.setFont("helvetica", "normal");
+    doc.text(formData.paymentTerms, column2X + labelSpacingX, rowY);
+
+    rowY += rowGap + 5;
+    doc.setFont("helvetica", "bold");
+    doc.text("Email:", column2X, rowY);
+    doc.setFont("helvetica", "normal");
+    doc.text(formData.paymentTerms, column2X + labelSpacingX, rowY);
+
+    // Final Y for next section
+    const adjustedNextRowY = rowY + rowGap;
     // Dynamically set the table position below all content
     const tableStartY = adjustedNextRowY + rowSpacing * 3;
 
