@@ -129,8 +129,6 @@ const ShaftPintGearForm = () => {
                 />
               </div>
             </div>
-
-            {/* Bearings */}
             <div>
               <label className="block text-customTextColor font-medium mb-2">Bearing Type</label>
               <select
