@@ -12,7 +12,9 @@ const ShaftPintGearForm = () => {
     gearAmount: "",
     motorQuantity: "",
     motorAmount: "",
-    bearingType: ""
+    bearingType: "",
+    bushQuanity:"",
+    cylinderQuanity:""
   });
 
   const handleChange = (e) => {
@@ -144,6 +146,28 @@ const ShaftPintGearForm = () => {
                 ))}
               </select>
             </div>
+            <div>
+                <label className="block text-customTextColor font-medium mb-2">Cylinder Details</label>
+                <input
+                  type="number"
+                  name="cylinderQuanity"
+                  value={formData.cylinderQuanity}
+                  onChange={handleChange}
+                  placeholder="Enter shaft quantity"
+                  className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
+            <div>
+                <label className="block text-customTextColor font-medium mb-2">Bush Details</label>
+                <input
+                  type="number"
+                  name="bushQuanity"
+                  value={formData.bushQuanity}
+                  onChange={handleChange}
+                  placeholder="Enter shaft quantity"
+                  className="w-full border border-customBorderColor rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-customBgColor"
+                />
+              </div>
 
             {/* Submit or Export Action (Optional) */}
             <div className="text-center">
