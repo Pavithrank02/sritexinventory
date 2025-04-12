@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SidebarDemo } from "../SideComponent";
-
+//
 const ShaftPintGearForm = () => {
   const BearingType = ["Select Bearing Type", "UCF207", "UCM206"];
   const [formData, setFormData] = useState({
